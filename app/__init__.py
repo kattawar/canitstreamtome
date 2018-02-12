@@ -16,3 +16,6 @@ def movies():
 @app.route('/countries')
 def countries():
     return render_template('countries.html')
+@app.route('/services')
+def services():
+    return render_template('services.html')    
