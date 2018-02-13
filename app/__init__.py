@@ -18,4 +18,18 @@ def countries():
     return render_template('countries.html')
 @app.route('/services')
 def services():
-    return render_template('services.html')    
+    return render_template('services.html')
+@app.route('/movie1')
+def movie1():
+    return render_template('movie1.html')
+@app.route('/movie2')
+def movie2():
+    return render_template('movie2.html')
+@app.route('/movie3')
+def movie3():
+    return render_template('movie3.html')
+@app.route('/movie4')
+def movie4():
+    return render_template('movie4.html')
+
+
