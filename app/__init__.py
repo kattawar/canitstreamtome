@@ -43,3 +43,15 @@ def service3():
 @app.route('/service4')
 def service4():
     return render_template('service4.html')
+@app.route('/country1')
+def country1():
+    return render_template('country1.html')
+@app.route('/country2')
+def country2():
+    return render_template('country2.html')
+@app.route('/country3')
+def country3():
+    return render_template('country3.html')
+@app.route('/country4')
+def country4():
+    return render_template('country4.html')
