@@ -55,3 +55,6 @@ def country3():
 @app.route('/country4')
 def country4():
     return render_template('country4.html')
+
+if __name__ == "__main__":
+    app.run()
