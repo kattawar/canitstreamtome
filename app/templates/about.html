@@ -62,7 +62,7 @@
 
     <section>
       <div class="container text-center">
-              <div class="row align-items-center" style = "margin-top: 40px; margin-bottom:50px">
+              <div class="row" style = "margin-top: 40px; margin-bottom:50px">
               <div class="col-sm-4">
                 <img class="img-responsive" style="width: 70%" src="/static/img/erin_headshot.png" alt="">
                 <h4>Erin Jensby</h4>
@@ -96,9 +96,8 @@
     </section>
 
     <section>
-      <div class="row align-items-center">
         <div class="container text-center">
-              <div class="row align-items-center" style = "margin-top: 40px; margin-bottom:50px">
+              <div class="row" style = "margin-top: 40px; margin-bottom:50px">
               <div class="col-sm-4">
               <img class="img-responsive" style="width: 70%" src="/static/img/zach.png" alt="">
               <h4>Zach Kattawar</h4>
@@ -118,7 +117,6 @@
               <p>No. Unit Tests: 0</p>
               </div>
         </div>
-      </div>
     </section>
 
     <section>
@@ -144,6 +142,17 @@
 
     <section>
       <div class="container text-center">
+            <div class="p-4">
+              <h3 class="display-4">TOOLS</h3>
+              <p>Slack: team communication and Github updates</p>
+              <p>Flask: backend framework</p>
+              <p>Github: version control and collaboration</p>
+            </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container text-center">
               <h3 class="display-4">LINKS</h3>
               <p></p>
               <p> <a href="https://www.gitbook.com/book/kevinsalcedo/report/welcome">GitBook Report</a> </p>
@@ -152,14 +161,7 @@
       </div>
     </section>
 
-
-    <!-- Footer -->
-    <footer class="py-5 bg-black">
-      <div class="container">
-        <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2018</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+    {% include 'includes/_footer.html' %}
 
     <!-- Bootstrap core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
