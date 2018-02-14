@@ -16,12 +16,31 @@ def about():
     r = urllib.request.urlopen(req).read()
     cont = json.loads(r.decode('utf-8'))
     jordan_commits = cont[0]['total']
-    kattawar_commits = cont[1]['total']
+    kattawar_commits = cont[1]['total'] + cont[2]['total']
     erin_commits = cont[3]['total']
     nick_commits = cont[4]['total']
     kevin_commits = cont[5]['total']
-    return render_template('about.html', erin_bio='test bio', erin_responsibilities='mr', erin_commits= erin_commits, erin_no_issues= '1issues', erin_tests='3 tests',
-        jordan_commits=jordan_commits, kattawar_commits=kattawar_commits, nick_commits=nick_commits, kevin_commits=kevin_commits)
+    req = urllib.request.Request("https://api.github.com/repos/kattawar/canitstreamtome/issues?creator=erinjensby&state=all")
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    erin_issues = len(cont)
+    req = urllib.request.Request("https://api.github.com/repos/kattawar/canitstreamtome/issues?creator=kevinsalcedo&state=all")
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    kevin_issues = len(cont)
+    req = urllib.request.Request("https://api.github.com/repos/kattawar/canitstreamtome/issues?creator=kattawar&state=all")
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    kattawar_issues = len(cont)
+    req = urllib.request.Request("https://api.github.com/repos/kattawar/canitstreamtome/issues?creator=QuantumSoundings&state=all")
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    jordan_issues = len(cont)
+    req = urllib.request.Request("https://api.github.com/repos/kattawar/canitstreamtome/issues?creator=nico1utaustin&state=all")
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    nick_issues = len(cont)
+    return render_template('about.html', erin_commits= erin_commits, erin_no_issues= erin_issues, jordan_commits=jordan_commits, jordan_no_issues= jordan_issues, kattawar_commits=kattawar_commits, kattawar_no_issues= kattawar_issues, nick_commits=nick_commits, nick_no_issues= nick_issues, kevin_commits=kevin_commits, kevin_no_issues= kevin_issues)
 @app.route('/movies')
 def movies():
     return render_template('movies.html')
