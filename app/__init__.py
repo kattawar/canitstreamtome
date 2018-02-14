@@ -40,7 +40,9 @@ def about():
     r = urllib.request.urlopen(req).read()
     cont = json.loads(r.decode('utf-8'))
     nick_issues = len(cont)
-    return render_template('about.html', erin_commits= erin_commits, erin_no_issues= erin_issues, jordan_commits=jordan_commits, jordan_no_issues= jordan_issues, kattawar_commits=kattawar_commits, kattawar_no_issues= kattawar_issues, nick_commits=nick_commits, nick_no_issues= nick_issues, kevin_commits=kevin_commits, kevin_no_issues= kevin_issues)
+    total_commits = erin_commits + kevin_commits + nick_commits + kattawar_commits + jordan_commits
+    total_issues = erin_issues + kevin_issues + nick_issues + kattawar_issues + jordan_issues
+    return render_template('about.html', erin_commits = erin_commits, erin_no_issues = erin_issues, jordan_commits = jordan_commits, jordan_no_issues = jordan_issues, kattawar_commits = kattawar_commits, kattawar_no_issues = kattawar_issues, nick_commits = nick_commits, nick_no_issues = nick_issues, kevin_commits = kevin_commits, kevin_no_issues = kevin_issues, total_commits = total_commits, total_issues = total_issues)
 @app.route('/movies')
 def movies():
     return render_template('movies.html')
