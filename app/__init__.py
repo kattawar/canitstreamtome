@@ -1,4 +1,7 @@
 from flask import Flask, render_template
+import urllib.request
+import json
+import pdb
 
 app = Flask(__name__)
 
@@ -9,7 +12,16 @@ def index():
     return render_template('home.html')
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    req = urllib.request.Request("https://api.github.com/repos/kattawar/canitstreamtome/stats/contributors")
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    jordan_commits = cont[0]['total']
+    kattawar_commits = cont[1]['total']
+    erin_commits = cont[3]['total']
+    nick_commits = cont[4]['total']
+    kevin_commits = cont[5]['total']
+    return render_template('about.html', erin_bio='test bio', erin_responsibilities='mr', erin_commits= erin_commits, erin_no_issues= '1issues', erin_tests='3 tests',
+        jordan_commits=jordan_commits, kattawar_commits=kattawar_commits, nick_commits=nick_commits, kevin_commits=kevin_commits)
 @app.route('/movies')
 def movies():
     return render_template('movies.html')
@@ -57,4 +69,5 @@ def country4():
     return render_template('country4.html')
 
 if __name__ == "__main__":
+    #app.run(host='0.0.0.0', port=80)
     app.run()
