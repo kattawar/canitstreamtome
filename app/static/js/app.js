@@ -1,5 +1,5 @@
-import Hello from './Hello';
+import ModelItem from './Hello';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<Hello/>, document.getElementById('reactEntry'));
+ReactDOM.render(<ModelItem/>, document.getElementById('reactEntry'));
