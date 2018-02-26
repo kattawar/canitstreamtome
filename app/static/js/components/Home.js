@@ -19,28 +19,33 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div>
+				
 
-				<Carousel controls={true}>
-					<Carousel.Item>
-						<img class="center-block" alt="900x500"
-								src="/static/img/usa.png"
-								style={imageStyles} />
-					</Carousel.Item>
-					<Carousel.Item>
-						<img class="center-block" alt="900x500"
-								src="/static/img/brazil.png"
-								style={imageStyles} />
-					</Carousel.Item>
-					<Carousel.Item>
-						<img class="center-block" alt="900x500"
-								src="/static/img/germany.png"
-								style={imageStyles} />
-					</Carousel.Item>
-				</Carousel>
+				<Carousel>
+  <Carousel.Item>
+    <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
+    <Carousel.Caption>
+      <h3>First slide label</h3>
+      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item>
+    <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
+    <Carousel.Caption>
+      <h3>Second slide label</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item>
+    <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
+    <Carousel.Caption>
+      <h3>Third slide label</h3>
+      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+    </Carousel.Caption>
+  </Carousel.Item>
+</Carousel>;
 
-				<div>
-					<h1 style={headerStyle}><b>CanItStreamToMe</b></h1>
-				</div>
+    
 			</div>
 
 
