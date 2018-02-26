@@ -25,21 +25,21 @@ class Home extends React.Component {
   <Carousel.Item>
     <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
     <Carousel.Caption>
-      <h3>First slide label</h3>
+      <h3>Welcome!</h3>
       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
     </Carousel.Caption>
   </Carousel.Item>
   <Carousel.Item>
-    <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
+    <img width={900} height={500} alt="900x500" src="/static/img/usa.png" />
     <Carousel.Caption>
-      <h3>Second slide label</h3>
+      <h3>Movies!</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     </Carousel.Caption>
   </Carousel.Item>
   <Carousel.Item>
-    <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
+    <img width={900} height={500} alt="900x500" src="/static/img/germany.png" />
     <Carousel.Caption>
-      <h3>Third slide label</h3>
+      <h3>Streaming Services!</h3>
       <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
     </Carousel.Caption>
   </Carousel.Item>

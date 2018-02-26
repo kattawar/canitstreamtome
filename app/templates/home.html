@@ -11,7 +11,7 @@
   <title>CanItStreamTo.me</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -24,114 +24,15 @@
 
 <body>
 
-  {% include 'includes/_navbar.html' %}
-  <!--
-    <header class="masthead text-center text-white">
-      <div class="masthead-content">
-        <div class="container">
-          <h1 class="masthead-heading mb-0">Welcome to</h1>
-          <h2 class="masthead-subheading mb-0">Canitstreamto.me</h2>
-          <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
-        </div>
-      </div>
-      <div class="bg-circle-1 bg-circle"></div>
-      <div class="bg-circle-2 bg-circle"></div>
-      <div class="bg-circle-3 bg-circle"></div>
-      <div class="bg-circle-4 bg-circle"></div>
-    </header> -->
-
-  <div id="demo" class="carousel slide" data-ride="carousel">
-
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-      <li data-target="#demo" data-slide-to="0" class="active"></li>
-      <li data-target="#demo" data-slide-to="1"></li>
-      <li data-target="#demo" data-slide-to="2"></li>
-      <li data-target="#demo" data-slide-to="3"></li>
-    </ul>
-
-    <!-- The slideshow -->
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <header class="masthead text-center text-white">
-          <div class="masthead-content">
-            <div class="container">
-              <h1 class="masthead-heading mb-0">Welcome to</h1>
-              <h2 class="masthead-subheading mb-0">Canitstreamto.me</h2>
-              <a href="/about" class="btn btn-primary btn-xl rounded-pill mt-5">About Us</a>
-            </div>
-          </div>
-          <div class="bg-circle-1 bg-circle"></div>
-          <div class="bg-circle-2 bg-circle"></div>
-          <div class="bg-circle-3 bg-circle"></div>
-          <div class="bg-circle-4 bg-circle"></div>
-        </header>
-      </div>
-      <div class="carousel-item">
-        <header class="masthead text-center text-white">
-          <div class="masthead-content">
-            <div class="container">
-              <h1 class="masthead-heading mb-0">Movies</h1>
-              <h2 class="masthead-subheading mb-0">What's On?</h2>
-              <a href="/movies" class="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
-            </div>
-          </div>
-          <div class="bg-circle-1 bg-circle"></div>
-          <div class="bg-circle-2 bg-circle"></div>
-          <div class="bg-circle-3 bg-circle"></div>
-          <div class="bg-circle-4 bg-circle"></div>
-        </header>
-      </div>
-      <div class="carousel-item">
-        <header class="masthead text-center text-white">
-          <div class="masthead-content">
-            <div class="container">
-              <h1 class="masthead-heading mb-0">Streaming Services</h1>
-              <h2 class="masthead-subheading mb-0">Where To Watch?</h2>
-              <a href="/services" class="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
-            </div>
-          </div>
-          <div class="bg-circle-1 bg-circle"></div>
-          <div class="bg-circle-2 bg-circle"></div>
-          <div class="bg-circle-3 bg-circle"></div>
-          <div class="bg-circle-4 bg-circle"></div>
-        </header>
-      </div>
-      <div class="carousel-item">
-        <header class="masthead text-center text-white">
-          <div class="masthead-content">
-            <div class="container">
-              <h1 class="masthead-heading mb-0">Countries</h1>
-              <h2 class="masthead-subheading mb-0">Where's It Popular?</h2>
-              <a href="/countries" class="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
-            </div>
-          </div>
-          <div class="bg-circle-1 bg-circle"></div>
-          <div class="bg-circle-2 bg-circle"></div>
-          <div class="bg-circle-3 bg-circle"></div>
-          <div class="bg-circle-4 bg-circle"></div>
-        </header>
-      </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </a>
-
-      <div id="reactEntry"></div>
+  <div id="reactEntry"></div>
 
   <!-- Attach React components -->
   <script type="text/javascript" src="{{ url_for('static', filename='bundle.js') }}"></script>
 
-{% include 'includes/_footer.html' %}
 
   <!-- Bootstrap core JavaScript -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 
