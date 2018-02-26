@@ -1,15 +1,21 @@
 import React from 'react';
 
 export class ModelGrid extends React.Component {
+		constructor(props) {
+		super(props);
+	}
+
 	render() {
+		
+
 		return (
 			<section>
 			<div class="container">
 			<div class="row align-items-center">
-				<ModelItem ref="/movie1" src="/static/img/br.png" alt="" />
-				<ModelItem ref="/movie2" src="/static/img/toy.png" alt="" />
-				<ModelItem ref="/movie3" src="/static/img/tgf.png" alt="" />
-				<ModelItem ref="/movie4" src="/static/img/ww.png" alt="" />
+				{this.props.info}.map{function(index, photo) {
+			return <ModelItem ref={`/${this.props.type}${index}`} src={`/static/img/${photo}`} />
+		}
+	}
 			</div>
 			</div>
 			</section>
@@ -19,6 +25,10 @@ export class ModelGrid extends React.Component {
 }
 
 export class ModelItem extends React.Component {
+		constructor(props) {
+		super(props);
+	}
+
 	render() {
 		return (
 			<div class="col-sm-3">

@@ -16,7 +16,7 @@ class NavBar extends React.Component {
             <div className="navbar-collapse collapse">
                 <ul className="nav navbar-nav">
                   <li><a href="/">Home</a></li>
-                  <li><a href="/movies">Movies</a></li>
+                  <li><a href="/">Movies</a></li>
                   <li><a href="/services">Streaming Services</a></li>
                   <li><a href="/countries">Countries</a></li>
                      <li><a href="/#about">About</a></li>

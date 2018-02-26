@@ -4,14 +4,20 @@ import ReactDOM from 'react-dom';
 import NavBar from './NavBar';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import Home from './Home';
+import Movies from './Movies'
 
 class App extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		return (
 			<div className="App">
 				<NavBar />
 				<Switch>
 					<Route exact path="/" component={Home} />
+					<Route exact path="/movies" component={Movies} />
 				</Switch>
 			</div>
 		);
