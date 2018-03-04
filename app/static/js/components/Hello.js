@@ -6,16 +6,15 @@ export class ModelGrid extends React.Component {
 	}
 
 	render() {
-		
+		const movieList = this.props.info;
 
 		return (
 			<section>
-			<div class="container">
-			<div class="row align-items-center">
-				{this.props.info}.map{function(index, photo) {
-			return <ModelItem ref={`/${this.props.type}${index}`} src={`/static/img/${photo}`} />
-		}
-	}
+			<div className="container">
+			<div className="row align-items-center">
+				{movieList.map(function(value){
+					return <ModelItem src={`/static/img/${value}`} alt="" />
+				})}
 			</div>
 			</div>
 			</section>
@@ -31,9 +30,9 @@ export class ModelItem extends React.Component {
 
 	render() {
 		return (
-			<div class="col-sm-3">
+			<div className="col-sm-3">
 				<a href={this.props.ref}>
-					<img class="img-responsive" src={this.props.src} alt={this.props.alt} onClick={this.handleClick} />
+					<img className="img-responsive" src={this.props.src} alt={this.props.alt} />
 				</a>
 			</div>
 		);
