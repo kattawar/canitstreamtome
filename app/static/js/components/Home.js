@@ -18,33 +18,76 @@ var headerStyle={
 class Home extends React.Component {
 	render() {
 		return (
+
 			<div>
-				
 
-				<Carousel>
-  <Carousel.Item>
-    <img width={900} height={500} alt="900x500" src="/static/img/brazil.png" />
-    <Carousel.Caption>
-      <h3>Welcome!</h3>
-      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-    </Carousel.Caption>
-  </Carousel.Item>
-  <Carousel.Item>
-    <img width={900} height={500} alt="900x500" src="/static/img/usa.png" />
-    <Carousel.Caption>
-      <h3>Movies!</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </Carousel.Caption>
-  </Carousel.Item>
-  <Carousel.Item>
-    <img width={900} height={500} alt="900x500" src="/static/img/germany.png" />
-    <Carousel.Caption>
-      <h3>Streaming Services!</h3>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-    </Carousel.Caption>
-  </Carousel.Item>
-</Carousel>;
+<Carousel>
+       <Carousel.Item>
+      <header className="masthead text-center text-white">
+        <div className="masthead-content">
+            <div className="container">
+              <h1 className="masthead-heading mb-0">Movies</h1>
+              <h2 className="masthead-subheading mb-0">What's On?</h2>
+              <a href="/movies" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+            </div>
+          </div>
+      <div className="bg-circle-1 bg-circle"></div>
+          <div className="bg-circle-2 bg-circle"></div>
+          <div className="bg-circle-3 bg-circle"></div>
+          <div className="bg-circle-4 bg-circle"></div>
 
+    </header>
+
+  </Carousel.Item>
+  <Carousel.Item>
+    <header className="masthead text-center text-white">
+        <div className="masthead-content">
+            <div className="container">
+              <h1 className="masthead-heading mb-0">Movies</h1>
+              <h2 className="masthead-subheading mb-0">What's On?</h2>
+              <a href="/movies" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+            </div>
+          </div>
+      <div className="bg-circle-1 bg-circle"></div>
+          <div className="bg-circle-2 bg-circle"></div>
+          <div className="bg-circle-3 bg-circle"></div>
+          <div className="bg-circle-4 bg-circle"></div>
+
+    </header>
+  </Carousel.Item>
+   <Carousel.Item>
+    <header className="masthead text-center text-white">
+        <div className="masthead-content">
+            <div className="container">
+              <h1 className="masthead-heading mb-0">Movies</h1>
+              <h2 className="masthead-subheading mb-0">What's On?</h2>
+              <a href="/movies" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+            </div>
+          </div>
+      <div className="bg-circle-1 bg-circle"></div>
+          <div className="bg-circle-2 bg-circle"></div>
+          <div className="bg-circle-3 bg-circle"></div>
+          <div className="bg-circle-4 bg-circle"></div>
+
+    </header>
+  </Carousel.Item>
+   <Carousel.Item>
+    <header className="masthead text-center text-white">
+        <div className="masthead-content">
+            <div className="container">
+              <h1 className="masthead-heading mb-0">Movies</h1>
+              <h2 className="masthead-subheading mb-0">What's On?</h2>
+              <a href="/movies" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+            </div>
+          </div>
+      <div className="bg-circle-1 bg-circle"></div>
+          <div className="bg-circle-2 bg-circle"></div>
+          <div className="bg-circle-3 bg-circle"></div>
+          <div className="bg-circle-4 bg-circle"></div>
+
+    </header>
+  </Carousel.Item>
+			</Carousel>;
     
 			</div>
 
