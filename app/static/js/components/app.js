@@ -1,7 +1,7 @@
 import {ModelItem, ModelGrid} from './Hello';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NavBar from './NavBar';
+import NavBarr from './NavBar';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import Home from './Home';
 import Movies from './Movies'
@@ -14,7 +14,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<NavBar />
+				<NavBarr />
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/movies" component={Movies} />
