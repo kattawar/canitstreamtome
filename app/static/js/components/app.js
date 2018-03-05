@@ -5,6 +5,7 @@ import NavBarr from './NavBar';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import Home from './Home';
 import Movies from './Movies'
+import Bottom from './Footer'
 
 class App extends React.Component {
 	constructor(props) {
@@ -19,6 +20,7 @@ class App extends React.Component {
 					<Route exact path="/" component={Home} />
 					<Route exact path="/movies" component={Movies} />
 				</Switch>
+				<Bottom />
 			</div>
 		);
 	}

@@ -87,7 +87,7 @@ class Home extends React.Component {
 
     </header>
   </Carousel.Item>
-			</Carousel>;
+			</Carousel>
     
 			</div>
 

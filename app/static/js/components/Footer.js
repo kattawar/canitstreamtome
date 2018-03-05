@@ -1,14 +1,19 @@
 import React from 'react';
 
+const pStyle = {
+	margin: 15
+}
 class Bottom extends React.Component {
 	render() {
 		return (
 		<footer className="py-5 bg-black">
  			<div className="container">
-    			<p className="m-0 text-center text-white small">Copyright &copy; Approve Us, Inc. 2018</p>
+    			<p className="text-center text-white medium" style={pStyle}>Copyright &copy; Approve Us, Inc. 2018</p>
   			</div>
 		</footer>
 
 		);
 	}
 }
+
+export default Bottom;
