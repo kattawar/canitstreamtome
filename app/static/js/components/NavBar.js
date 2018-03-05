@@ -5,29 +5,6 @@ import { Link } from 'react-router-dom';
 class NavBarr extends React.Component {
 	render() {
 		return (
-<<<<<<< HEAD
-        <div className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <h1 className="title-nav" onClick={console.log('clicked')}>CanItStreamToMe</h1>
-              <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span className="icon-bar"/>
-                <span className="icon-bar"/>
-                <span className="icon-bar"/>
-              </button>
-            </div>
-            <div className="navbar-collapse collapse">
-                <ul className="nav navbar-nav">
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/Movies">Movies</Link></li>
-                  <li><Link to="/services">Streaming Services</Link></li>
-                  <li><Link to="/countries">Countries</Link></li>
-                  <li><Link to="/about">About</Link></li>
-                </ul>
-            </div>
-          </div>
-        </div>
-=======
        <Navbar inverse collapseOnSelect>
   <Navbar.Header>
     <Navbar.Brand>
@@ -38,7 +15,7 @@ class NavBarr extends React.Component {
   <Navbar.Collapse>
     <Nav>
       <NavItem eventKey={1} href="#">
-        Link
+        <Link to="/Movies">Movies</Link>
       </NavItem>
       <NavItem eventKey={2} href="#">
         Link
@@ -61,7 +38,6 @@ class NavBarr extends React.Component {
     </Nav>
   </Navbar.Collapse>
 </Navbar>
->>>>>>> 047f7c85cb83ac7ee3248f1f7fa55bcde40b5a4a
     );
 	}
 }
