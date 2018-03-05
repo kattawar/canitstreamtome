@@ -27,7 +27,9 @@ h6 {
 .rounded-pill {
   border-radius: 5rem;
 }
-
+.navbar a{
+  color: #9d9d9d;
+}
 .navbar {
  
 
