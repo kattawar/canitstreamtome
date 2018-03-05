@@ -1,5 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 class NavBarr extends React.Component {
 	render() {
 		return (
@@ -16,11 +18,11 @@ class NavBarr extends React.Component {
             </div>
             <div className="navbar-collapse collapse">
                 <ul className="nav navbar-nav">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="/Movies">Movies</a></li>
-                  <li><a href="/services">Streaming Services</a></li>
-                  <li><a href="/countries">Countries</a></li>
-                     <li><a href="/#about">About</a></li>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/Movies">Movies</Link></li>
+                  <li><Link to="/services">Streaming Services</Link></li>
+                  <li><Link to="/countries">Countries</Link></li>
+                  <li><Link to="/about">About</Link></li>
                 </ul>
             </div>
           </div>
