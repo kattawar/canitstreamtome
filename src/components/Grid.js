@@ -1,9 +1,7 @@
 import React from 'react';
 
 export class ModelGrid extends React.Component {
-		constructor(props) {
-		super(props);
-	}
+
 
 	render() {
 		const movieList = this.props.info;
@@ -24,9 +22,7 @@ export class ModelGrid extends React.Component {
 }
 
 export class ModelItem extends React.Component {
-		constructor(props) {
-		super(props);
-	}
+
 
 	render() {
 		return (
