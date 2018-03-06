@@ -11,7 +11,7 @@ export class ModelGrid extends React.Component {
 			<div className="container">
 			<div className="row align-items-center">
 				{movieList.map(function(value){
-					return <ModelItem src={`/static/img/${value}`} alt="" />
+					return <ModelItem key={value} src={`/${value}`} alt="" />
 				})}
 			</div>
 			</div>
@@ -27,9 +27,7 @@ export class ModelItem extends React.Component {
 	render() {
 		return (
 			<div className="col-sm-3">
-				<a href={this.props.ref}>
-					<img className="img-responsive" src={this.props.src} alt={this.props.alt} />
-				</a>
+				<img className="img-responsive" src={this.props.src} alt={this.props.alt} />
 			</div>
 		);
 	}
