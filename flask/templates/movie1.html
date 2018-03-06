@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Movies</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Lato" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/one-page-wonder.min.css" rel="stylesheet">
+  <link href="/static/css/movie-details.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  {% include 'includes/_navbar.html' %}
+
+  <section>
+
+    <div class="container">
+      <div class="row" style="margin-top: 150px; margin-bottom:50px">
+        <div class="card">
+          <div class="col-lg-4">
+            <img class="img-responsive" src="/static/img/br.png" alt="">
+          </div>
+          <div class="col-lg-8">
+            <h3 class="display-4"> Blade Runner </h3>
+            <hr>
+
+            <h4>Rating</h4>
+            <p>8.2/10 IMDB</p>
+            <hr>
+            <h4>Desc</h4>
+            <p>A young blade runner's discovery of a long-buried secret leads him to track down former blade runner Rick Deckard, who's been missing for thirty years.</p>
+            <hr>
+            <h4>Cast</h4>
+            <p>Ryan Gosling, Dave Bautista, Robin Wright, Mark Arnold</p>
+            <hr>
+            <h4>Popular Countries</h4>
+            <p><a href="/country1">USA,</a> <a href="/country2">Brazil,</a> <a href="/country3">Germany,</a> <a href="/country4">South Korea</a></p>
+            <hr>
+            <h4>Compatible Streaming Services</h4>
+            <p><a href="/service1"> Hulu,</a> <a href="/service2">Netflix,</a> <a href="/service3">Amazon Video,</a> <a href="/service4">Epix</a></p>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 0px; margin-bottom:50px">
+        <div class="card">
+          <div class="col">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gCcx85zbxz4?rel=0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include 'includes/_footer.html' %}
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

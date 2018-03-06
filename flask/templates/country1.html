@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Movies</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Lato" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/one-page-wonder.min.css" rel="stylesheet">
+    <link href="/static/css/movie-details.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    {% include 'includes/_navbar.html' %}
+
+
+     <section>
+
+      <div class="container">
+        <div class="row" style = "margin-top: 150px; margin-bottom:50px">
+          <div class = "card">
+           <div class="col-lg-4">
+
+              <img class="img-responsive" src="/static/img/usa.png" alt="">
+
+
+          </div>
+
+          <div class="col-lg-8">
+
+              <h3 class="display-4">USA </h3>
+              <hr>
+
+              <h4>Population</h4>
+              <p>318,892,103 </p>
+              <hr>
+              <h4>Languages Spoken</h4>
+              <p>English 79%, Spanish 13%, other Indo-European 3.7%, Asian and Pacific island 3.4%</p>
+              <hr>
+              <h4>Current Top Movies</h4>
+                <p><a href="/movie1">Blade Runner 2049,</a> <a href="/movie2"> Toy Story,</a> <a href="/movie3">The Godfather,</a> <a href="/movie4"> Wonder Woman</a> </p>
+              <hr>
+              <h4>Compatible Streaming Services</h4>
+                <p><a href="/service1"> Hulu,</a> <a href="/service2">Netflix,</a> <a href="/service3">Amazon Video,</a> <a href="/service4">Epix</a></p>
+              <hr>
+          </div>
+         </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    {% include 'includes/_footer.html' %}
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>
