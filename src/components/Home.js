@@ -22,9 +22,7 @@ class Home extends React.Component {
           <div className="bg-circle-2 bg-circle"></div>
           <div className="bg-circle-3 bg-circle"></div>
           <div className="bg-circle-4 bg-circle"></div>
-
     </header>
-
   </Carousel.Item>
   <Carousel.Item>
     <header className="masthead text-center text-white">
@@ -55,7 +53,6 @@ class Home extends React.Component {
           <div className="bg-circle-2 bg-circle"></div>
           <div className="bg-circle-3 bg-circle"></div>
           <div className="bg-circle-4 bg-circle"></div>
-
     </header>
   </Carousel.Item>
    <Carousel.Item>
