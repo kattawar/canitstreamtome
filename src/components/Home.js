@@ -1,19 +1,6 @@
 import React from 'react';
-import {Carousel, Container, Slide} from 'react-bootstrap';
+import {Carousel} from 'react-bootstrap';
 
-var imageStyles = {
-	height: "850:px",
-	width: "1700px"
-}
-
-var headerStyle={
-    fontSize: '300px',
-    color: 'black',
-    textDecoration: 'bold',
-    textShadow: '2px 1px gray',
-    textAlign: 'center',
-    opacity: '0.0',
-}
 
 class Home extends React.Component {
 	render() {
