@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import  '../movies.css';
 
 function splitArray(input, spacing) {
@@ -12,6 +13,9 @@ function splitArray(input, spacing) {
 
 export class ModelGrid extends React.Component {
 
+    handleClick = () => {
+    	console.log('this is:', this);
+    }
 
 	render() {
 		const movieList = this.props.info;
@@ -24,8 +28,10 @@ export class ModelGrid extends React.Component {
 					!rowList ? null :
 					<div className="row">
 						{rowList.map(movie =>
-							<div className="col-sm-2">
+							<div className="col-sm-2" onClick={this.handleClick}>
+								<Link to={"/movies/movieInstance"}>
 								<img src={movie}  alt=""/>
+								</Link>
 							</div>
 						)}
 					</div>
