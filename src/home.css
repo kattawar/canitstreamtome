@@ -10,6 +10,18 @@ header.masthead {
   background-size: cover;
 }
 
+header.masthead {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(7rem + 72px);
+  padding-bottom: 7rem;
+  background: linear-gradient(0deg, #36D1DC 0%, #3F5EFB 100%);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
 header.masthead .bg-circle {
   z-index: 0;
   position: absolute;
@@ -22,7 +34,18 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 800 !important;
     color:white;
 }
-
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 15;
+    width: 60%;
+    padding-left: 0;
+    margin-left: -30%;
+    text-align: center;
+    list-style: none;
+    display: none;
+}
 .carousel-control.right {
     right: 0;
     left: auto;
