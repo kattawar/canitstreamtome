@@ -1,4 +1,5 @@
 import React from 'react';
+import  '../movies.css';
 
 function splitArray(input, spacing) {
     var output = [];
@@ -14,7 +15,7 @@ export class ModelGrid extends React.Component {
 
 	render() {
 		const movieList = this.props.info;
-		const movieGrouped = splitArray(movieList, 3);
+		const movieGrouped = splitArray(movieList, 6);
 
 		return (
 			<section>
@@ -23,8 +24,8 @@ export class ModelGrid extends React.Component {
 					!rowList ? null :
 					<div className="row">
 						{rowList.map(movie =>
-							<div className="col-sm-4">
-								<img src={movie} alt=""/>
+							<div className="col-sm-2">
+								<img src={movie}  alt=""/>
 							</div>
 						)}
 					</div>
