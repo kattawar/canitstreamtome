@@ -4,7 +4,7 @@ import {Route, Switch} from 'react-router-dom';
 import Home from './components/Home';
 import Movies from './components/Movies';
 import Services from './components/Services';
-import Countries from './components/Countres';
+import Countries from './components/Countries';
 import Bottom from './components/Footer';
 
 class App extends React.Component {

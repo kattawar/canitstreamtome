@@ -1,7 +1,7 @@
 import React from 'react';
 import { ModelGrid } from './Grid';
 import usa from '../img/usa.png';
-import sk from '../img/sk.png';
+import sk from '../img/southkorea.png';
 import germany from '../img/germany.png';
 import brazil from '../img/brazil.png';
 
