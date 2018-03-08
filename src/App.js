@@ -6,6 +6,7 @@ import Movies from './components/Movies';
 import Services from './components/Services';
 import Countries from './components/Countries';
 import Bottom from './components/Footer';
+import About from './components/About';
 
 class App extends React.Component {
 
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Route exact path="/movies" component={Movies} />
           <Route exact path="/countries" component={Countries} />
           <Route exact path="/services" component={Services} />
+          <Route exact path="/about" component={About} />
         </Switch>
         <Bottom />
       </div>
