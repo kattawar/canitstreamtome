@@ -15,6 +15,7 @@ export class ModelGrid extends React.Component {
 
     handleClick = () => {
     	console.log('this is:', this);
+		
     }
 
 	render() {
@@ -29,8 +30,8 @@ export class ModelGrid extends React.Component {
 					<div className="row">
 						{rowList.map(movie =>
 							<div className="col-sm-2" onClick={this.handleClick}>
-								<Link to={"/movies/movieInstance"}>
-								<img src={movie}  alt=""/>
+								<Link to={`/${this.props.type}/${this.props.type}Instance`}>
+									<img src={movie}  alt=""/>
 								</Link>
 							</div>
 						)}

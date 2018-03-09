@@ -1,5 +1,10 @@
 import React from 'react';
 import '../about.css';
+import erin_hs from '../img/erin_headshot.png';
+import nick_hs from '../img/nick_lavigne.jpeg';
+import kevin_hs from '../img/kevin-headshot.jpg';
+import jordan_hs from '../img/jordan_howe.jpg';
+import zach_hs from '../img/zach.png';
 
 class About extends React.Component {
 	render() {
@@ -41,7 +46,7 @@ class About extends React.Component {
       <div className="container text-center">
               <div className="row">
               <div className="col-sm-4">
-              <img class="img-responsive" src="/static/img/erin_headshot.png" alt=""></img>
+              <img class="img-responsive" src={erin_hs} alt=""></img>
                 <h4>Erin Jensby</h4>
                 <p>This is my last semester at UT majoring in Computer Science. Outside of school I love to be outdoors, hang out with puppers, and eat pizza.</p>
                 <p>Major Responsibilities: Front-End CSS & HTML</p>
@@ -50,7 +55,7 @@ class About extends React.Component {
                 <p>No. Unit Tests: </p>
               </div>
               <div className="col-sm-4">
-              <img class="img-responsive" src="/static/img/erin_headshot.png" alt=""></img>
+              <img class="img-responsive" src={nick_hs} alt=""></img>
                 <h4>Nick Lavigne</h4>
                 <p>I am a senior studying computer science at UT Austin. I hope to one day go into web development or mobile development. I am also an avid basketball fan, go Bulls!</p>
                 <p>Major Responsibilities: Front End CSS/HTML React</p>
@@ -59,7 +64,7 @@ class About extends React.Component {
                 <p>No. Unit Tests: </p>
               </div>
               <div className="col-sm-4">
-              <img class="img-responsive" src="/static/img/erin_headshot.png" alt=""></img>
+              <img class="img-responsive" src={kevin_hs} alt=""></img>
                 <h4>Kevin Salcedo</h4>
                 <p>I am a student at the University of Texas and I enjoy rock climbing in my free time when I'm not coding.</p>
                 <p>Major Responsibilities: Frontend</p>
@@ -76,7 +81,7 @@ class About extends React.Component {
         <div className="container text-center">
               <div className="row">
               <div className="col-sm-4">
-              <img  src="/static/img/zach.png" alt=""></img>
+              <img  src={zach_hs} alt=""></img>
               <h4>Zach Kattawar</h4>
               <p>I am currently a college student at the University of Texas studying computer science. In my free time I enjoy making electronic music and playing video games.</p>
               <p>Major Responsibilities: Flask and Deployment</p>
@@ -85,7 +90,7 @@ class About extends React.Component {
               <p>No. Unit Tests: 0</p>
               </div>
               <div class="col-sm-4">
-              <img  src="/static/img/jordan_howe.jpg" alt=""></img>
+              <img  src={jordan_hs} alt=""></img>
               <h4>Jordan Howe</h4>
               <p>I'm a senior at the University of Texas at Austin studying Computer Science and Music major.</p>
               <p>Major Responsibilities: Database and API</p>
