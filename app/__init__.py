@@ -1,12 +1,19 @@
 from flask import Flask, render_template
+from flask import request
+from flask import jsonify
 import urllib.request
 import json
 import pdb
-
+from .api import *
 app = Flask(__name__)
 
 
-
+@app.route('/',subdomain="api")
+def callmovieapi():
+    #print("In the api call")
+    title = request.args.get('title')
+    json = api.movieapi(title)
+    return jsonify(json)
 @app.route('/')
 def index():
     return render_template('home.html')
@@ -91,4 +98,4 @@ def country4():
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=80)
-    app.run('0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80)
