@@ -9,6 +9,7 @@ cur = None
 movie_filter_values = None
 country_filter_values = None
 person_filter_values = None
+tweet_filter_values = None
 schema = "set schema 'jordan_dev';"
 
 ### Database connection startup and shutdone functions
@@ -42,6 +43,11 @@ def update_filter_values():
         send_sql_query(query)
         list = get_sql_results()
         country_filter_values = [element for tupl in list for element in tupl]
+
+        query = schema+"select column_name from information_schema.columns where table_name = 'streamit_tweet_storage';"
+        send_sql_query(query)
+        list = get_sql_results()
+        tweet_filter_values = [element for tupl in list for element in tupl]
 ### Helper Functions
 def send_sql_query(query):
         global dbconnection
@@ -70,6 +76,10 @@ def db_insert_person(last_name,first_name,dob,gender):
 def db_insert_country(name,population,languages,flag_url):
         sql_query = schema+"insert into streamit_country (name,population,languages,flag_url) values ({0},{1},{2},{3})".format(name,population,languages,flag_url)
         send_sql_query(sql_query)
+def db_insert_tweet(date,twitter_handle,tweet_body,country):
+        sql_query = schema+"insert into streamit_tweet_storage (date,twitter_handle,tweet_body,country) values ({0},{1},{2},{3})".format(date,twitter_handle,tweet_body,country)
+        send_sql_query(sql_query)
+        
 
 ### Functions to update DB entries
 def db_update_movie(movie_id, column, value):
@@ -81,7 +91,6 @@ def db_update_person(person_id,column,value):
 def db_update_country(country_id,column,value):
         sql_query = schema+"update streamit_country set {0} = {1} where streamit_country.country_id = {2}".format(column,value,country_id)
         set_sql_query(sql_query)
-
 ### Functions to select DB entries with filters
 def db_select_movie(filtertype = None, value = None, comparison = "="):
         global movie_filter_values
@@ -105,6 +114,14 @@ def db_select_person(filtertype = None, value = None, comparison = "="):
                 sql_query = schema+"select last_name,first_name,photo_url,dob,gender from streamit_person where {0} {1} {2}".format(filtertype,comparison,value)
         else:
                 sql_query = schema+"select last_name,first_name,photo_url,dob,gender from streamit_person"
+        send_sql_query(sql_query)
+        return get_sql_results()
+def db_select_tweet(filtertype = None, value = None, comparison = "="):
+        global tweet_filter_values
+        if filtertype in tweet_filter_values:
+                sql_query = schema+"select date_posted,twitter_handle,tweet_body,country_id from streamit_tweet_storage where {0} {1} {2}".format(filtertype,comparison,value)
+        else:
+                sql_query = schema+"select date_posted,twitter_handle,tweet_body,country_id from streamit_tweet_storage"
         send_sql_query(sql_query)
         return get_sql_results()
 
