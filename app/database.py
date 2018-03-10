@@ -1,8 +1,8 @@
 ###
-### Database Manipulation functions                     
+### Database Manipulation functions
 ###
 import psycopg2
-#Database connection variables          
+#Database connection variables
 dbconnection = None
 cur = None
 #Filter variables
@@ -15,7 +15,7 @@ schema = "set schema 'jordan_dev';"
 def close_database_connection():
         global dbconnection
         if dbconnection is not None:
-              dbconnection.close()  
+              dbconnection.close()
 def startup_database_connection():
         connect_to_database()
         update_filter_values()
@@ -25,19 +25,19 @@ def connect_to_database():
         global cur
         dbconnection = psycopg2.connect(host="swe-db.coznr5ylokhg.us-east-2.rds.amazonaws.com",database="canitstreamtome_db", user="canitstreamtome", password="swegrp18")
         cur = dbconnection.cursor()
-        
+
 def update_filter_values():
         global movie_filter_values,country_filter_values,person_filter_values
         query = schema+"select column_name from information_schema.columns where table_name = 'streamit_movie';"
         send_sql_query(query)
         list = get_sql_results()
         movie_filter_values = [element for tupl in list for element in tupl]
-        
+
         query = schema+"select column_name from information_schema.columns where table_name = 'streamit_person';"
         send_sql_query(query)
         list = get_sql_results()
         person_filter_values = [element for tupl in list for element in tupl]
-        
+
         query = schema+"select column_name from information_schema.columns where table_name = 'streamit_country';"
         send_sql_query(query)
         list = get_sql_results()
@@ -47,10 +47,13 @@ def send_sql_query(query):
         global dbconnection
         global cur
         if dbconnection is None:
+                print("CREATING DB CONNECTION")
                 dbconnection = psycopg2.connect(host="swe-db.coznr5ylokhg.us-east-2.rds.amazonaws.com",database="canitstreamtome_db", user="canitstreamtome", password="swegrp18")
         try:
                 cur = dbconnection.cursor()
                 cur.execute(query)
+                lastid = cur.fetchone()[0]
+                return lastid
         except psycopg2.DatabaseError as error:
                 print("ERROR%")
                 print(error)
@@ -59,7 +62,29 @@ def get_sql_results():
         global cur
         return cur.fetchall()
 
-### Functions to insert DB entries      
+### Functions to insert DB entries
+def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
+    global dbconnection
+    global schema
+    sql_query = schema+"insert into streamit_guidebox_movies (title,guidebox_id,streaming_service_id) values ('{0}','{1}','{2}')".format(title.replace("'","''"), guidebox_id, streaming_service_id)
+    print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    res = send_sql_query(sql_query)
+    print("ID: ",res)
+    dbconnection.commit()
+
+def get_db_id():
+    global dbconnection
+    global schema
+    sql_query = schema+"select lastval();"
+    print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+
+
+
 def db_insert_movie(title, description,rating,release_date,language,poster_url):
         sql_query = schema+" insert into {0} (title,description,rating,release_date,language,poster_url) values ({1},{2},{3},{4},{5},{6})".format('streamit_movies',title,description,rating,release_date,language,poster_url)
         send_sql_query(sql_query)
@@ -110,7 +135,7 @@ def db_select_person(filtertype = None, value = None, comparison = "="):
 
 ### Testing functions
 
-def test_db():   
+def test_db():
         startup_database_connection()
         print("Openned connection succesfully")
         print(movie_filter_values)
