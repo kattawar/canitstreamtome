@@ -61,31 +61,57 @@ def send_sql_query(query):
                 lastid = cur.fetchone()[0]
                 return lastid
         except psycopg2.DatabaseError as error:
-                print("ERROR%")
+                print("ERROR FETCHING%")
                 print(error)
 
 def get_sql_results():
         global cur
         return cur.fetchall()
 
-### Functions to insert DB entries
-def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
+def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast):
     global dbconnection
     global schema
-    sql_query = schema+"insert into streamit_guidebox_movies (title,guidebox_id,streaming_service_id) values ('{0}','{1}','{2}')".format(title.replace("'","''"), guidebox_id, streaming_service_id)
-    print(sql_query)
+    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"))
+    #print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
     sql_query = schema+"select lastval();"
     res = send_sql_query(sql_query)
     print("ID: ",res)
     dbconnection.commit()
+    return res
+
+### Functions to insert DB entries
+def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
+    global dbconnection
+    global schema
+    sql_query = schema+"insert into streamit_guidebox_movies (title,guidebox_id,streaming_service_id) values ('{0}','{1}','{2}')".format(title.replace("'","''"), guidebox_id, streaming_service_id)
+    #print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    res = send_sql_query(sql_query)
+    print("ID: ",res)
+    dbconnection.commit()
+    return res
+
+def db_insert_relationship_gbm_sss(guidebox_movie_id, streaming_service_id):
+    global dbconnection
+    global schema
+    sql_query = schema+"insert into streamit_gbm_to_sss (guidebox_movie_id,streaming_service_id) values ('{0}','{1}')".format(guidebox_movie_id, streaming_service_id)
+    #print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    res = send_sql_query(sql_query)
+    print("REL ID: ",res)
+    dbconnection.commit()
 
 def get_db_id():
     global dbconnection
     global schema
     sql_query = schema+"select lastval();"
-    print(sql_query)
+    #print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
 
@@ -104,7 +130,7 @@ def db_insert_country(name,population,languages,flag_url):
 def db_insert_tweet(date,twitter_handle,tweet_body,country):
         sql_query = schema+"insert into streamit_tweet_storage (date,twitter_handle,tweet_body,country) values ({0},{1},{2},{3})".format(date,twitter_handle,tweet_body,country)
         send_sql_query(sql_query)
-        
+
 
 ### Functions to update DB entries
 def db_update_movie(movie_id, column, value):
