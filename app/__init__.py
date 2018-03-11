@@ -1,19 +1,26 @@
 from flask import Flask, render_template
 from flask import request
-from flask import jsonify
 import urllib.request
 import json
 import pdb
-from .api import *
+import canitstreamtome_api as api
+import sys
 app = Flask(__name__)
+app.config['SERVER_NAME']='canitstreamto.me'
+#app.config['SERVER_NAME']='localhost:5000'
 
+api.startdbconnection()
 
-@app.route('/',subdomain="api")
+@app.route('/v1/movie',subdomain="api")
 def callmovieapi():
-    #print("In the api call")
-    title = request.args.get('title')
-    json = api.movieapi(title)
-    return jsonify(json)
+    print("In api call",file=sys.stderr)
+    return api.singlemovieapi()
+@app.route('/v1/country',subdomain="api")
+def callcountryapi():
+    return api.singlecountryapi()
+@app.route('/v1/streaming_service',subdomain="api")
+def callstreamingapi():
+    return api.singleserviceapi()
 @app.route('/')
 def index():
     return render_template('home.html')
@@ -97,5 +104,5 @@ def country4():
     return render_template('country4.html')
 
 if __name__ == "__main__":
-    #app.run(host='0.0.0.0', port=80)
+    #app.run(host='localhost', port=5000)
     app.run(host='0.0.0.0', port=80)
