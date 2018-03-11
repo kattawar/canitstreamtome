@@ -81,6 +81,14 @@ def db_insert_omdb_movie(title, description, rating, release_date, language, pos
     dbconnection.commit()
     return res
 
+def db_get_omdb_movies():
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_omdb_movies"
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
 ### Functions to insert DB entries
 def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
     global dbconnection
@@ -94,6 +102,14 @@ def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
     print("ID: ",res)
     dbconnection.commit()
     return res
+
+def db_get_guidebox_movies():
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_guidebox_movies"
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
 
 def db_insert_relationship_gbm_sss(guidebox_movie_id, streaming_service_id):
     global dbconnection

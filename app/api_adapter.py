@@ -43,6 +43,8 @@ def get_omdb_show(title):
     print("The count is ", count)
     return results
 
+
+
 def insert_omdb_movie_row(title, description, rating, release_date, language, poster_url, movie_cast):
     database.startup_database_connection()
     res = database.db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast)
@@ -169,6 +171,9 @@ if __name__ == "__main__":
             res = get_omdb_show("batman")
             print("RES: ", res[0])
             insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"])
+            database.db_get_guidebox_movies()
+            for k in database.get_sql_results():
+                print(k)
             y = 1
             #do imdb
             #
