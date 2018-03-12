@@ -3,7 +3,7 @@ import sys
 import urllib.request
 import json
 import database
-
+import time
 
 "netflix"
 "hulu"
@@ -23,22 +23,32 @@ api = twitter.Api(consumer_key='01cakDvOdyw9ytVgVgA2e1loV',
 
 
 def get_omdb_show(title):
-    print("GETTING GUIDEBOX")
+    print("GETTING OMDB")
     #zachs
     key1="b01da4ef"
     #kevins
     key2 = "37c990e3"
-    omdb_url = "http://www.omdbapi.com/?t="+title+"&apikey=b01da4ef"
-    print("URL: ", omdb_url)
 
-    results = []
-    req = urllib.request.Request(omdb_url)
-    r = urllib.request.urlopen(req).read()
-    cont = json.loads(r.decode('utf-8'))
     count = 0
-    print(cont)
-    results.append({"title": cont['Title'], "description": cont['Plot'], "rating": cont['Rated'], "released": cont['Released'], "language": cont['Language'], "poster_url": cont['Poster'], "movie_cast": cont['Actors']})
+    try:
+        omdb_url = "http://www.omdbapi.com/?t="+title+"&apikey=37c990e3"
+        print("URL: ", omdb_url)
 
+        results = []
+        req = urllib.request.Request(omdb_url)
+        r = urllib.request.urlopen(req).read()
+        cont = json.loads(r.decode('utf-8'))
+
+        print(cont)
+
+
+        results.append({"title": cont['Title'], "description": cont['Plot'], "rating": cont['Rated'], "released": cont['Released'], "language": cont['Language'], "poster_url": cont['Poster'], "movie_cast": cont['Actors']})
+    except:
+        print("OMDB MOVIE NOT FOUND")
+        print("OMDB MOVIE NOT FOUND")
+        print("OMDB MOVIE NOT FOUND")
+        print("OMDB MOVIE NOT FOUND")
+        print("OMDB MOVIE NOT FOUND")
 
     print("The count is ", count)
     return results
@@ -48,6 +58,11 @@ def get_omdb_show(title):
 def insert_omdb_movie_row(title, description, rating, release_date, language, poster_url, movie_cast):
     database.startup_database_connection()
     res = database.db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast)
+    return res[0][0]
+
+def insert_om_to_ss_row(om_id, ss_id):
+    res = database.db_insert_om_to_ss(om_id, ss_id)
+    return res[0][0]
 
 
 #
@@ -109,6 +124,21 @@ def insert_relationship_gbm_sss_row(guidebox_movie_id, streaming_service_id):
 
 
 
+def translate_relationships():
+    query = "SELECT * FROM jordan_dev.streamit_gbm_to_sss"
+    database.startup_database_connection()
+    database.send_sql_query(query)
+    res = database.get_sql_results()
+    for k in res:
+        #print(k[1])
+        query = "SELECT title FROM jordan_dev.streamit_guidebox_movies WHERE guidebox_movie_id = {0}".format(k[1])
+        database.send_sql_query(query)
+        res = database.get_sql_results()
+        #print(res[0][0])
+        query = "SELECT omdb_movie_id FROM jordan_dev.streamit_omdb_movies WHERE title = '{0}'".format(res[0][0].replace("'", "''"))
+        database.send_sql_query(query)
+        res = database.get_sql_results()
+        print(res)
 
 
 
@@ -168,12 +198,43 @@ if __name__ == "__main__":
 
         elif k == "omdb":
             print("OMBD HOOK")
-            res = get_omdb_show("batman")
-            print("RES: ", res[0])
-            insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"])
+            # res = get_omdb_show("batman")
+            # print("RES: ", res[0])
+            # insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"])
             database.db_get_guidebox_movies()
+            sr = 0
+            count = 0
             for k in database.get_sql_results():
-                print(k)
+
+
+
+                print("k0: "+str(k[0]))
+                print("SKIP: ",count)
+                count+=1
+                if sr == 1:
+                    print("SLEEPIN")
+                    guidebox_movie_id = k[0]
+                    query = "SELECT streaming_service_id FROM jordan_dev.streamit_gbm_to_sss WHERE guidebox_movie_id = {0}".format(guidebox_movie_id)
+                    database.send_sql_query(query)
+                    res = database.get_sql_results()
+                    streaming_service_id = res[0][0]
+
+                    time.sleep(3)
+                    print(k[1].lower().replace(" ", "_"))
+                    res = get_omdb_show(k[1].lower().replace(" ", "_"))
+                    #print("RES: ", res[0])
+                    if res != []:
+                        om_id = insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"])
+                        print(om_id)
+                        insert_om_to_ss_row(om_id, streaming_service_id)
+                # toggle point to run data from guidebox_movies table based on ID
+                if k[0] == -1:
+                    print("FLIPPING SR")
+                    sr = 1
             y = 1
+
+        elif k == "translate":
+            translate_relationships()
+
             #do imdb
             #

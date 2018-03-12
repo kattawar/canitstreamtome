@@ -85,8 +85,23 @@ def db_insert_omdb_movie(title, description, rating, release_date, language, pos
     send_sql_query(sql_query)
     dbconnection.commit()
     sql_query = schema+"select lastval();"
-    res = send_sql_query(sql_query)
-    print("ID: ",res)
+    send_sql_query(sql_query)
+    res = get_sql_results()
+    dbconnection.commit()
+    return res
+
+def db_insert_om_to_ss(om_id, ss_id):
+    global dbconnection
+    global schema
+
+    sql_query = schema+"insert into streamit_om_to_ss (omdb_movie_id, streaming_service_id) values ({0},{1})".format(om_id, ss_id)
+    #print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    send_sql_query(sql_query)
+    res = get_sql_results()
+    print("RELATIONSHIP ID HERE: ",res[0][0])
     dbconnection.commit()
     return res
 
@@ -245,7 +260,7 @@ def format_db_reply(typeofreply,reply):
                         out["streamingservices"][index]["pricing"]             = x[1]
                         out["streamingservices"][index]["available_countries"] = x[2]
                         index +=1
-                        
+
         return out
 
 ### Testing functions
