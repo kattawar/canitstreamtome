@@ -12,7 +12,11 @@ def startdbconnection():
 
 def singlemovieapi():
     title = request.args.get("title",default=None)
+    getall = request.args.get("all",default=None)
     if title == None:
+        if getall == "true":
+            out = database.db_select_movie()
+            return jsonify(out)
         return abort(400)
     else:
         #print(title,file=sys.stderr)

@@ -186,9 +186,9 @@ def db_update_country(country_id,column,value):
 def db_select_movie(filtertype = None, value = None, comparison = "="):
         global movie_filter_values
         if filtertype in movie_filter_values:
-                sql_query = schema+"select title,description,rating,release_date,language,poster_url,movie_cast from streamit_omdb_movies where {0} {1} '{2}'".format(filtertype,comparison,value)
+                sql_query = "set schema 'public';select title,description,rating,release_date,language,poster_url,movie_cast from streamit_omdb_movies where {0} {1} '{2}'".format(filtertype,comparison,value)
         else:
-                sql_query = schema+"select title,description,rating,release_date,language,poster_url,movie_cast from streamit_movie"
+                sql_query = "set schema 'public';select title,description,rating,release_date,language,poster_url,movie_cast from streamit_omdb_movies limit 100"
         send_sql_query(sql_query)
         return format_db_reply("movies",get_sql_results())
 def db_select_country(filtertype = None, value = None, comparison = "="):
@@ -219,9 +219,9 @@ def db_select_streaming_service(filtertype = None, value = None, comparison = "=
         global stream_filter_values,cur
         print(value, file=sys.stderr)
         if filtertype in stream_filter_values:
-                sql_query = schema+"select name, pricing, available_countries from streamit_streaming_service where {0} {1} '{2}'".format(filtertype,comparison,value)
+                sql_query = "set schema 'public';select name, pricing, available_countries from streamit_streaming_service where {0} {1} '{2}'".format(filtertype,comparison,value)
         else:
-                sql_query = schema+"select name, pricing, available_countries from streamit_streaming_service"
+                sql_query = "set schema 'public';select name, pricing, available_countries from streamit_streaming_service"
         send_sql_query(sql_query)
         return format_db_reply("streamingservices",get_sql_results())
 ### JSON FORMATTING
