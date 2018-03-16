@@ -13,6 +13,11 @@ app.config['SERVER_NAME']='canitstreamto.me'
 
 api.startdbconnection()
 
+@app.route('/.well-known/acme-challenge/<token_value>')
+def letsencrpyt(tmp):
+    with open('.well-known/acme-challenge/{}'.format(token_value)) as f:
+        answer = f.readline().strip()
+    return answer
 
 ### Authentication functions
 @auth.get_password
