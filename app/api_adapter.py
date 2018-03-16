@@ -16,7 +16,7 @@ import time
 
 
 # Verifies twitter api account works
-api = twitter.Api(consumer_key='01cakDvOdyw9ytVgVgA2e1loV',
+twitter_api = twitter.Api(consumer_key='01cakDvOdyw9ytVgVgA2e1loV',
                       consumer_secret='57Mmg8pz20J8NfFf3cL5QkiFw1gGBDL2nPgf4Dbj7J6daUaXTA',
                       access_token_key='4700491069-O7FycZmg158kJuGLALlLTBJ5CuTmi98mGs5vZ08',
                       access_token_secret='Em1V2RG2vXsMFtQNPuTM4bHPsehFnSNpi0yz0AsXx8eGF')
@@ -140,12 +140,22 @@ def translate_relationships():
         res = database.get_sql_results()
         print(res)
 
+def get_twitter_response():
+    #print(twitter_api.VerifyCredentials())
+    #print(twitter_api.GetSearch(term="austin", geocode="30.143347,-97.833595,30mi"))
+    count = 0
+    results = twitter_api.GetSearch(raw_query="q=altered%20carbon&result_type=recent&count=100&geocode=30.143347,-97.833595,30mi")
+    for k in results:
+        count+=1
+        print(k)
+
+    print("COUNT: ", count)
 
 
 
 
 if __name__ == "__main__":
-    #print(api.VerifyCredentials())
+    get_twitter_response()
     #loop over command line args
     #used for flipping api scrapers on and off ect...
     netflix_id = 266
@@ -205,9 +215,6 @@ if __name__ == "__main__":
             sr = 0
             count = 0
             for k in database.get_sql_results():
-
-
-
                 print("k0: "+str(k[0]))
                 print("SKIP: ",count)
                 count+=1
