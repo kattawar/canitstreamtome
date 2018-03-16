@@ -147,9 +147,21 @@ def get_twitter_response():
     results = twitter_api.GetSearch(raw_query="q=altered%20carbon&result_type=recent&count=100&geocode=30.143347,-97.833595,30mi")
     for k in results:
         count+=1
-        print(k)
+        #print(k)
 
     print("COUNT: ", count)
+
+    with open("worldcitiespop.txt") as fileobj:
+        for line in fileobj:
+            try:
+                for ch in line:
+                    if ch > 32 or ch < 126:
+                        print(ch)
+            except Exception:
+                print("SKIPPING CHAR")
+
+    # for p in lines:
+    #     print(p.split(","))
 
 
 
