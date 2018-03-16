@@ -12,6 +12,7 @@ country_filter_values = None
 person_filter_values = None
 tweet_filter_values = None
 stream_filter_values = None
+comparison_values = ["=",">=","<=","like"]
 schema = "set schema 'public';"
 
 ### Database connection startup and shutdone functions
@@ -185,11 +186,13 @@ def db_update_country(country_id,column,value):
 ### Functions to select DB entries with filters
 
 ###UPDATED SELECTION FUNCTIONS
-def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="desc"):
-        global movie_filter_values
+def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
+        global movie_filter_values,comparison_values
         offset = pagenum*pagesize
         sql_query = schema+"select title,description,rating,release_date,language,poster_url,movie_cast from streamit_omdb_movies "
-        if filtertype in movie_filter_values:
+        if filtertype in movie_filter_values and comparison in comparison_values and value != None:
+                if comparison == "like":
+                        value+="%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
         if sortby in movie_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -197,11 +200,13 @@ def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize =
         send_sql_query(sql_query)
         return format_db_reply("movies",get_sql_results())
 
-def db_select_country(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="desc"):
-        global country_filter_values
+def db_select_country(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
+        global country_filter_values,comparison_values
         offset = pagenum*pagesize
         sql_query = "set schema 'jordan_dev';"+"select name,population,languages,flag_url from streamit_country "
-        if filtertype in country_filter_values:
+        if filtertype in country_filter_values and comparison in comparison_values and value != None:
+                if comparison == "like":
+                        value+="%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
         if sortby in country_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -209,11 +214,13 @@ def db_select_country(filtertype = None, value = None, comparison = "=",pagesize
         send_sql_query(sql_query)
         return format_db_reply("countries",get_sql_results())
 
-def db_select_streaming_service(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="desc"):
-        global stream_filter_values,cur
+def db_select_streaming_service(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
+        global stream_filter_values,comparison_values
         offset = pagenum*pagesize
         sql_query = "set schema 'jordan_dev';"+"select name, pricing, available_countries from streamit_streaming_service "
-        if filtertype in stream_filter_values:
+        if filtertype in stream_filter_values and comparison in comparison_values and value != None:
+                if comparison == "like":
+                        value+="%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
         if sortby in stream_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
