@@ -10,43 +10,43 @@ import database
 def startdbconnection():
     database.startup_database_connection()
 
-def singlemovieapi():
-    title = request.args.get("title",default=None)
-    getall = request.args.get("all",default=None)
-    if title == None:
-        if getall == "true":
-            out = database.db_select_movie()
-            return jsonify(out)
-        return abort(400)
-    else:
-        #print(title,file=sys.stderr)
-        #abort(400)
-        out = database.db_select_movie("title",title)
-        print(out,file=sys.stderr)
+
+
+
+def singlemovieapi(title):
+    out = database.db_select_movie(filtertype="title",value=title)
+    if len(out) == 0:
+        abort(404)
     return jsonify(out)  
 
-def singlecountryapi():
-    name = request.args.get("name",default=None)
-    getall = request.args.get("all",default=None)
-    if name == None:
-        if getall == "true":
-            out = database.db_select_country()
-            return jsonify(out)
-        return abort(400)
-    else:
-        out = database.db_select_country("name",name)
+def singlecountryapi(name):
+    out = database.db_select_country(filtertype="name",value=name)
+    if len(out) == 0:
+        abort(404)
     return jsonify(out)
 
-def singleserviceapi():
-    name = request.args.get("name",default=None)
-    getall = request.args.get("all",default=None)
-    if name == None:
-        if getall == "true":
-            out = database.db_select_streaming_service()
-            return jsonify(out)
-        return abort(400)
-    else:
-        out = database.db_select_streaming_service("name",name)
+def singlestreamingapi(name):
+    out = database.db_select_streaming_service(filtertype="name",value=name)
+    if len(out) == 0:
+        abort(404)
     return jsonify(out)
-        
-        
+
+def getGeneralArgs():
+    return request.args.get("filter",default=None),int(request.args.get("pagesize",default=25)),int(request.args.get(
+        "pagenum",default=0)),request.args.get("sortdir",default="desc")
+def movieapi():
+    filtertype,pagesize,pagenum,sortdir = getGeneralArgs()
+    sort = request.args.get("sortby",default="title")
+    out = database.db_select_movie(filtertype=filtertype, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
+    return jsonify(out)
+def countryapi():
+    filtertype,pagesize,pagenum,sortdir = getGeneralArgs()
+    sort = request.args.get("sortby",default="name")
+    out = database.db_select_country(filtertype=filtertype, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
+    return jsonify(out)
+def streamingapi():
+    filtertype,pagesize,pagenum,sortdir = getGeneralArgs()
+    sort = request.args.get("sortby",default="name")
+    out = database.db_select_streaming_service(filtertype=filtertype, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
+    return jsonify(out)
+    
