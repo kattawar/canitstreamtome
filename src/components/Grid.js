@@ -71,6 +71,7 @@ export class ModelGrid extends React.Component {
 	render() {
 
 
+
 	 //movieList = this.props.info;
 		//const movieGrouped = movieList;
     //console.log(movieList.movies);
@@ -84,7 +85,12 @@ export class ModelGrid extends React.Component {
 
      const posterRows = splitArray(movieGrouped, 6);
 
+
      console.log(posterRows);
+
+   if(posters){
+     const posterRows = splitArray(posters, 6);
+
 		return (
 
 			<section>
@@ -96,7 +102,7 @@ export class ModelGrid extends React.Component {
 
 
 							<div className="col-sm-2" onClick={this.handleClick}>
-								<Link to={`/${this.props.type}/${this.props.type}Instance`}>
+								<Link to={{pathname:`/${this.props.type}/${item.title}`, state:{item: {item}}}}>
 									<img src={item.poster_url}  alt=""/>
 								</Link>
 							</div>
