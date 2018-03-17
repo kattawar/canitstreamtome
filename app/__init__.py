@@ -13,12 +13,6 @@ app.config['SERVER_NAME']='canitstreamto.me'
 
 api.startdbconnection()
 
-@app.route('/.well-known/acme-challenge/<token_value>')
-def letsencrpyt(tmp):
-    with open('.well-known/acme-challenge/{}'.format(token_value)) as f:
-        answer = f.readline().strip()
-    return answer
-
 ### Authentication functions
 @auth.get_password
 def getpassword(username):
@@ -140,5 +134,5 @@ def country4():
     return render_template('country4.html')
 
 if __name__ == "__main__":
-    #app.run(host='localhost', port=5000)
-    app.run(host='0.0.0.0', port=80,ssl_context=('/etc/letsencrypt/live/canitstreamto.me/fullchain.pem','/etc/letsencrypt/live/canitstreamto.me/privkey.pem'))
+    #app.run(host='localhost', port=5000,ssl_context='adhoc')
+    app.run(host='0.0.0.0', port=80)#,ssl_context=('/etc/letsencrypt/live/canitstreamto.me/fullchain.pem','/etc/letsencrypt/live/canitstreamto.me/privkey.pem'))
