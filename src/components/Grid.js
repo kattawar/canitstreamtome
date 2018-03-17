@@ -88,8 +88,7 @@ export class ModelGrid extends React.Component {
 
      console.log(posterRows);
 
-   if(posters){
-     const posterRows = splitArray(posters, 6);
+
 
 		return (
 
