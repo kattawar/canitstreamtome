@@ -15,10 +15,10 @@ class MovieInstance extends React.Component {
     return (<div class="container">
       <div class="row">
         <div class="card">
-          <div class="col-lg-4">
+          <div class="col-sm-4">
             <img class="img-responsive" src={this.state.movieItem.poster_url} alt=""/>
           </div>
-          <div class="col-lg-8">
+          <div class="col-sm-8">
             <h3 class="display-4">
               {this.state.movieItem.title}</h3>
 
