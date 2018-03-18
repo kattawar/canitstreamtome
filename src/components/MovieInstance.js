@@ -21,20 +21,26 @@ class MovieInstance extends React.Component {
           <div class="col-sm-8">
             <h3 class="display-4">
               {this.state.movieItem.title}</h3>
+              <hr></hr>
 
             <h4>Rating</h4>
             <p>{this.state.movieItem.rating}</p>
+              <hr></hr>
             <h4>Desc</h4>
             <p>{this.state.movieItem.description}</p>
+              <hr></hr>
             <h4>Cast</h4>
             <p>{this.state.movieItem.movie_cast}</p>
+              <hr></hr>
             <h4>Popular Countries</h4>
+
             <p>
               <a href="/country1">USA,</a>
               <a href="/country2">Brazil,</a>
               <a href="/country3">Germany,</a>
               <a href="/country4">South Korea</a>
             </p>
+              <hr></hr>
             <h4>Compatible Streaming Services</h4>
             <p>
               <a href="/service1">

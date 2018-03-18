@@ -91,7 +91,7 @@ export class ModelGrid extends React.Component {
 
 
 		return (
-
+      <div>
 			<section>
 			<div className="container">
       {posterRows.map(rowList=>
@@ -109,8 +109,15 @@ export class ModelGrid extends React.Component {
           </div>
         )}
 
+
+
 			</div>
 
+
+
+
+			</section>
+      <div className="text-center">
       <Pagination
           activePage={this.state.activePage}
           itemsCountPerPage={24}
@@ -118,7 +125,8 @@ export class ModelGrid extends React.Component {
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
         />
-			</section>
+        </div>
+        </div>
 		);
   }
   return (<div></div>);
