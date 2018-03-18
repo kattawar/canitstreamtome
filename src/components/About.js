@@ -96,7 +96,7 @@ class About extends React.Component {
       <section>
         <div className="container text-center">
           <div className="p-4">
-            <h3 className="display-4">ACCEPT US, INC. MEMBERS</h3>
+            <h3 className="display-4">APPROVE US, INC. MEMBERS</h3>
           </div>
         </div>
       </section>
