@@ -105,7 +105,7 @@ class About extends React.Component {
         <div className="container text-center">
           <div className="row">
             <div className="col-sm-4">
-              <img class="img-responsive" src={erin_hs} alt=""></img>
+              <img className="img-responsive" src={erin_hs} alt=""></img>
               <h4>Erin Jensby</h4>
               <p>This is my last semester at UT majoring in Computer Science. Outside of school I love to be outdoors, hang out with puppers, and eat pizza.</p>
               <p>Major Responsibilities: Front-End CSS & HTML</p>
@@ -114,7 +114,7 @@ class About extends React.Component {
               <p>No. Unit Tests:</p>
             </div>
             <div className="col-sm-4">
-              <img class="img-responsive" src={nick_hs} alt=""></img>
+              <img className="img-responsive" src={nick_hs} alt=""></img>
               <h4>Nick Lavigne</h4>
               <p>I am a senior studying computer science at UT Austin. I hope to one day go into web development or mobile development. I am also an avid basketball fan, go Bulls!</p>
               <p>Major Responsibilities: Front End CSS/HTML React</p>
@@ -123,7 +123,7 @@ class About extends React.Component {
               <p>No. Unit Tests:</p>
             </div>
             <div className="col-sm-4">
-              <img class="img-responsive" src={kevin_hs} alt=""></img>
+              <img className="img-responsive" src={kevin_hs} alt=""></img>
               <h4>Kevin Salcedo</h4>
               <p>I am a student at the University of Texas and I enjoy rock climbing in my free time when I'm not coding.</p>
               <p>Major Responsibilities: Front End/React</p>
@@ -148,7 +148,7 @@ class About extends React.Component {
               <p>No. Issues: {this.state.zach_issues}</p>
               <p>No. Unit Tests: 0</p>
             </div>
-            <div class="col-sm-4">
+            <div className="col-sm-4">
               <img src={jordan_hs} alt=""></img>
               <h4>Jordan Howe</h4>
               <p>I'm a senior at the University of Texas at Austin studying Computer Science and Music major.</p>

@@ -13,14 +13,14 @@ class ServiceInstance extends React.Component {
   }
 
   render() {
-    return (<div class="container">
-      <div class="row">
-        <div class="card">
-          <div class="col-lg-4">
-            <img class="img-responsive" src={hulu} alt=""/>
+    return (<div className="container">
+      <div className="row">
+        <div className="card">
+          <div className="col-lg-4">
+            <img className="img-responsive" src={hulu} alt=""/>
           </div>
-          <div class="col-lg-8">
-            <h3 class="display-4">
+          <div className="col-lg-8">
+            <h3 className="display-4">
               {this.state.serviceItem.name}</h3>
 
             <h4>Available Countries</h4>
