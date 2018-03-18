@@ -6,7 +6,51 @@ import kevin_hs from '../img/kevin-headshot.jpg';
 import jordan_hs from '../img/jordan_howe.jpg';
 import zach_hs from '../img/zach.png';
 
+import axios from 'axios';
+
 class About extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			jordan_commits : 0,
+			zach_commits : 0,
+			erin_commits : 0,
+			nick_commits : 0,
+			kevin_commits : 0,
+			total_commits : 0,
+			jordan_issues : 0,
+			zach_issues : 0,
+			erin_issues: 0,
+			nick_issues : 0,
+			kevin_isues: 0,
+
+		}
+	}
+
+	componentDidMount() {
+		this.updateData();
+	}
+
+	updateData = () => {
+		let url = 'https://api.github.com/repos/kattawar/canitstreamtome/stats/contributors';
+
+		axios.get(url)
+			.then(res => {
+				const commitData = res.data;
+				this.setState({
+					jordan_commits : commitData[1]['total'],
+					zach_commits : commitData[0]['total'] + commitData[2]['total'],
+					erin_commits : commitData[3]['total'],
+					nick_commits : commitData[4]['total'],
+					kevin_commits : commitData[5]['total'],
+					total_commits : commitData[0]['total'] + commitData[1]['total'] + commitData[2]['total'] + commitData[3]['total'] + commitData[4]['total'] + commitData[5]['total']
+				})
+			})
+			.catch(error => {
+				console.log(error);
+			})
+	}
+
 	render() {
 		return (
       <div>
@@ -50,7 +94,7 @@ class About extends React.Component {
                 <h4>Erin Jensby</h4>
                 <p>This is my last semester at UT majoring in Computer Science. Outside of school I love to be outdoors, hang out with puppers, and eat pizza.</p>
                 <p>Major Responsibilities: Front-End CSS & HTML</p>
-                <p>No. Commits: </p>
+                <p>No. Commits: {this.state.erin_commits} </p>
                 <p>No. Issues: </p>
                 <p>No. Unit Tests: </p>
               </div>
@@ -59,7 +103,7 @@ class About extends React.Component {
                 <h4>Nick Lavigne</h4>
                 <p>I am a senior studying computer science at UT Austin. I hope to one day go into web development or mobile development. I am also an avid basketball fan, go Bulls!</p>
                 <p>Major Responsibilities: Front End CSS/HTML React</p>
-                <p>No. Commits: </p>
+                <p>No. Commits: {this.state.nick_commits} </p>
                 <p>No. Issues: </p>
                 <p>No. Unit Tests: </p>
               </div>
@@ -67,8 +111,8 @@ class About extends React.Component {
               <img class="img-responsive" src={kevin_hs} alt=""></img>
                 <h4>Kevin Salcedo</h4>
                 <p>I am a student at the University of Texas and I enjoy rock climbing in my free time when I'm not coding.</p>
-                <p>Major Responsibilities: Frontend</p>
-                <p>No. Commits: </p>
+                <p>Major Responsibilities: Front End/React</p>
+                <p>No. Commits: {this.state.kevin_commits}</p>
                 <p>No. Issues: </p>
                 <p>No. Unit Tests: </p>
               </div>
@@ -85,7 +129,7 @@ class About extends React.Component {
               <h4>Zach Kattawar</h4>
               <p>I am currently a college student at the University of Texas studying computer science. In my free time I enjoy making electronic music and playing video games.</p>
               <p>Major Responsibilities: Flask and Deployment</p>
-              <p>No. Commits:</p>
+              <p>No. Commits: {this.state.zach_commits}</p>
               <p>No. Issues: </p>
               <p>No. Unit Tests: 0</p>
               </div>
@@ -94,7 +138,7 @@ class About extends React.Component {
               <h4>Jordan Howe</h4>
               <p>I'm a senior at the University of Texas at Austin studying Computer Science and Music major.</p>
               <p>Major Responsibilities: Database and API</p>
-              <p>No. Commits:</p>
+              <p>No. Commits: {this.state.jordan_commits}</p>
               <p>No. Issues: </p>
               <p>No. Unit Tests: 0</p>
               </div>
@@ -106,7 +150,7 @@ class About extends React.Component {
       <div className="container text-center">
             <div className="p-4">
               <h3 className="display-4">STATS</h3>
-              <p>Total No. Commits: </p>
+              <p>Total No. Commits: {this.state.total_commits}</p>
               <p>Total No. Issues:</p>
               <p>Total No. Unit Tests: 0</p>
             </div>
@@ -149,9 +193,9 @@ class About extends React.Component {
     </section>
 
 
-   
-     
-   
+
+
+
 
 
       </div>
