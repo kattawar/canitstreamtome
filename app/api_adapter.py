@@ -896,23 +896,95 @@ if __name__ == "__main__":
             #while i < 2:
             results = get_guidebox_shows("netflix", offset)
             for j, v in results:
-              insert_guidebox_movie_row(j, v, netflix_id)
+              insert_guidebox_movie_row(j, v, get_ssid("netflix"))
 
             results = get_guidebox_shows("hbo", offset)
             for j, v in results:
-              insert_guidebox_movie_row(j, v, hbo_id)
+              insert_guidebox_movie_row(j, v, get_ssid("hbo"))
 
             results = get_guidebox_shows("amazon_prime", offset)
             for j, v in results:
-              insert_guidebox_movie_row(j, v, amazon_prime_id)
+              insert_guidebox_movie_row(j, v, get_ssid("amazon_prime"))
 
             results = get_guidebox_shows("hulu_plus", offset)
             for j, v in results:
-              insert_guidebox_movie_row(j, v, hulu_plus_id)
+              insert_guidebox_movie_row(j, v, get_ssid("hulu_plus"))
 
             results = get_guidebox_shows("showtime_subscription", offset)
             for j, v in results:
-              insert_guidebox_movie_row(j, v, showtime_subscription_id)
+              insert_guidebox_movie_row(j, v, get_ssid("showtime_subscription"))
+
+            results = get_guidebox_shows("youtube", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("youtube"))
+
+            results = get_guidebox_shows("google_play", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("google_play"))
+
+            results = get_guidebox_shows("vudu", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("vudu"))
+
+            results = get_guidebox_shows("abc", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("abc"))
+
+            results = get_guidebox_shows("cnbc", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("cnbc"))
+
+            results = get_guidebox_shows("cartoon_network_free", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("cartoon_network_free"))
+
+            results = get_guidebox_shows("comedycentral_tveverywhere", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("comedycentral_tveverywhere"))
+
+            results = get_guidebox_shows("watch_espn", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("watch_espn"))
+
+            results = get_guidebox_shows("watch_hgtv", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("watch_hgtv"))
+
+            results = get_guidebox_shows("trutv_tveverywhere", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("trutv_tveverywhere"))
+
+            results = get_guidebox_shows("travel", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("travel"))
+
+            results = get_guidebox_shows("tnt", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("tnt"))
+
+            results = get_guidebox_shows("tbs", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("tbs"))
+
+            results = get_guidebox_shows("starz_tveverywhere", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("starz_tveverywhere"))
+
+            results = get_guidebox_shows("oxygen", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("oxygen"))
+
+            results = get_guidebox_shows("nick_tveverywhere", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("nick_tveverywhere"))
+
+            results = get_guidebox_shows("fx", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("fx"))
+
+            results = get_guidebox_shows("crackle", offset)
+            for j, v in results:
+              insert_guidebox_movie_row(j, v, get_ssid("crackle"))
 
             offset = str(int(offset) + 250)
             i+=1
