@@ -5,6 +5,26 @@
     height:auto;
     flex-direction: row;
 }
+hr {
+    margin-top: 20px;
+    /* margin-bottom: 20px; */
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.row .card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 100vh;
+}
+
 .img-responsive{
 	width:100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato';
+    font-weight: 800 !important;
+    color:black;
 }
