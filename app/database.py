@@ -120,6 +120,22 @@ def db_insert_countries_row(name, country_code):
     dbconnection.commit()
     return res
 
+def db_update_country_image(country_id, image_url):
+    global dbconnection
+    global schema
+
+    sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}' where country_id = {1}".format(image_url, country_id)
+
+    #print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    send_sql_query(sql_query)
+    #res = get_sql_results()
+    #print("image updated ID HERE: ",res[0][0])
+    dbconnection.commit()
+    #return res
+
 def db_insert_country_to_ss_rows(ss_id, country_ranks):
     global dbconnection
     global schema
@@ -180,6 +196,15 @@ def db_get_country_id(country_name):
     global dbconnection
     global schema
     sql_query = schema+"SELECT * FROM streamit_countries where name = '{0}'".format(country_name)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
+
+def db_get_ssid(streaming_service_name):
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_streaming_service where name ilike '{0}'".format(streaming_service_name)
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results

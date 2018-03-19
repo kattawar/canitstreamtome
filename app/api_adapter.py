@@ -25,7 +25,7 @@ twitter_api = twitter.Api(consumer_key='01cakDvOdyw9ytVgVgA2e1loV',
                       access_token_secret='Em1V2RG2vXsMFtQNPuTM4bHPsehFnSNpi0yz0AsXx8eGF')
 
 
-def get_omdb_show(title):
+def get_omdb_show(imdb_id):
     print("GETTING OMDB")
     #zachs
     key1="b01da4ef"
@@ -34,7 +34,7 @@ def get_omdb_show(title):
 
     count = 0
     try:
-        omdb_url = "http://www.omdbapi.com/?t="+title+"&apikey=37c990e3"
+        omdb_url = "http://www.omdbapi.com/?i="+imdb_id+"&apikey=37c990e3"
         print("URL: ", omdb_url)
 
         results = []
@@ -102,6 +102,7 @@ def get_guidebox_shows(streaming_service, offset):
     for k in cont:
       if k == "results":
         for v in cont[k]:
+          print(v)
           count+=1
           results.append([v["title"], v["id"]])
 
@@ -819,42 +820,56 @@ def get_google_trend(movie_name):
 
 
 
-    # for k in interest_by_region_df.__dict__.keys:
-    #     print(k)
-    # print("GETTING GOOGLE TREND")
-    # google_username = "zach@kattawar.com"
-    # google_password = "spikerb0y"
-    # path = "."
-    #
-    # terms = [
-    #     "Image Processing",
-    #     "Signal Processing",
-    #     "Computer Vision",
-    #     "Machine Learning",
-    #     "Information Retrieval",
-    #     "Data Mining"
-    # ]
-    # # connect to Google Trends API
-    # connector = pyGTrends(google_username, google_password)
-    #
-    #
-    # for label in terms:
-    #     print(label)
-    #     sys.stdout.flush()
-    #     #kw_string = '"{0}"'.format(keyword, base_keyword)
-    #     connector.request_report(label, geo="US")
-    #     # wait a random amount of time between requests to avoid bot detection
-    #     time.sleep(randint(5, 10))
-    #     # download file
-    #     connector.save_csv(path, label)
-    #
-    # for term in terms:
-    #     data = connector.get_suggestions(term)
-    #     pprint(data)
+
+def get_country_pics(country_name):
+    print("GETTING GUIDEBOX")
+    #countries_url = "http://restcountries.eu/rest/v2/name/" + country_name
+    countries_url = "http://restcountries.eu/rest/v2/all"
+    req = urllib.request.Request(countries_url)
+    r = urllib.request.urlopen(req).read()
+    cont = json.loads(r.decode('utf-8'))
+    print(cont[0]['name'])
+    bad_count = 0
+
+    res = get_google_countries()
+    count = 0
+
+    for k in cont:
+        if any(k['name'] in s for s in res):
+            print("FOUND: ", k['name'])
+            country_id = database.db_get_country_id(k['name'])
+            country_id = database.get_sql_results()
+            if len(country_id) > 0:
+                count+=1
+                c_id = country_id[0][0]
+                print("ID: ", country_id)
+                database.db_update_country_image(c_id, k['flag'])
+        else:
+            b = 1
+            #print("DIDNT FIND: ", k['name'])
+
+        # special case to get US Flag, disreguarding other small countries
+        if k['name'] == "United States of America":
+            print("FOUND: ", k['name'])
+            country_id = database.db_get_country_id("United States")
+            country_id = database.get_sql_results()
+            c_id = country_id[0][0]
+            print("ID: ", country_id)
+            database.db_update_country_image(c_id, k['flag'])
+
+    print("COUNT: ", count)
+
+    # if cont['status']
+def get_ssid(name):
+    res = database.db_get_ssid(name)
+    res = database.get_sql_results()
+    print(res[0][0])
 
 
 if __name__ == "__main__":
-    get_google_trend("altered carbon")
+    #get_guidebox_shows("netflix", "0")
+    get_ssid("netflix")
+    #get_google_trend("altered carbon")
     #get_twitter_response("altered carbon")
     #loop over command line args
     #used for flipping api scrapers on and off ect...
@@ -962,6 +977,8 @@ if __name__ == "__main__":
                     print("IM ASLEEP FOR 10 secs")
                     time.sleep(15)
                     print("IM AWAKE!")
+        elif k == "countrypics":
+            get_country_pics("albania")
 
 
             #fill_streaming_services_popularity()
