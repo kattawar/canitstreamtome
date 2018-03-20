@@ -87,7 +87,7 @@ class About extends React.Component {
           <div className="row align-items-center">
             <div className="p-4">
               <h3 className="display-4">HOW WE'RE DIFFERENT</h3>
-              <p>By looking at twitter for data on the popularity of streaming shows and film we don’t just show what got the best reviews, or what everyone loves. We show what everyone can’t stop talking about. Whether it is what they love to binge on, what has the biggest controversy, what they love to hate, or what is plainly the best.</p>
+              <p>By looking at Twitter and Google Trends for data on the popularity of streaming shows and film we don’t just show what got the best reviews, or what everyone loves. We show what everyone can’t stop talking about. Whether it is what they love to binge on, what has the biggest controversy, what they love to hate, or what is plainly the best.</p>
             </div>
           </div>
         </div>
@@ -176,14 +176,17 @@ class About extends React.Component {
         <div className="container text-center">
           <div className="p-4">
             <h3 className="display-4">DATA</h3>
-            <p>Our data is drawn from several differnet REST API sites. We get most of our movie date from
-              <a href="https://developers.themoviedb.org/3/getting-started/introduction">
-                MovieDB API</a>. Our country data comes from the
-              <a href="https://www.cia.gov/library/publications/the-world-factbook/docs/faqs.html">CIA factbook API</a>. We also scrape twitter trending movies with the
-              <a href="https://developer.twitter.com/en/docs">Twitter API</a>
-              to get most popular movies in a country. The streaming service compatability comes from the
-              <a href="https://api.guidebox.com/docs/key">Guidebox API</a>.
-            </p>
+            <p><a href="https://developers.themoviedb.org/3/getting-started/introduction">
+                The Movie DB API</a>: provides our data for the details of each movie</p>
+            <p><a href="https://developer.twitter.com/en/docs">
+    			Twitter API</a>: provides a twitter feed for relevent tweets to each movie</p>
+			<p><a href="https://github.com/GeneralMills/pytrends">
+    			Pseudo API for Google Trends</a>: provides data for which countries are searching</p>
+    			<p>for a particular streaming service or movie the most</p>
+			<p><a href="hhttps://api.guidebox.com/docs/key">
+    			Guidebox API</a>: provides data for which movies each streaming service provides</p>
+    		<p><a href="https://restcountries.eu/">
+    			REST Countries</a>: provides flag images and details for each country</p>
           </div>
         </div>
       </section>
@@ -193,12 +196,17 @@ class About extends React.Component {
           <div className="p-4">
             <h3 className="display-4">TOOLS</h3>
             <p>Slack: team communication and Github updates</p>
-            <p>Flask: backend framework</p>
-            <p>Github: version control and collaboration</p>
-            <p>Bootstrap: templates for site design</p>
             <p>GitBook: collaborative writing</p>
+            <p>Github: version control and collaboration</p>
             <p>NameCheap: free domains</p>
             <p>AWS: web hosting</p>
+            <p>S3: hosting our front-end</p>
+            <p>Flask: backend framework</p>
+            <p>Bootstrap: templates for site design</p>
+            <p>React: creating dynamic components</p>
+            <p>Selenium: testing our GUI</p>
+            <p>Mocha: front-end unit testing</p>
+            <p>Postman: API design and testing</p>
           </div>
         </div>
       </section>
@@ -213,6 +221,9 @@ class About extends React.Component {
           <p></p>
           <p>
             <a href="https://github.com/kattawar/canitstreamtome">GitHub Repo</a>
+          </p>
+          <p>
+            <a href="https://www.gitbook.com/book/kevinsalcedo/api/welcome">API Documentation</a>
           </p>
         </div>
       </section>
