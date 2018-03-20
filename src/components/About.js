@@ -178,8 +178,6 @@ class About extends React.Component {
             <h3 className="display-4">DATA</h3>
             <p><a href="https://developers.themoviedb.org/3/getting-started/introduction">
                 The Movie DB API</a>: provides our data for the details of each movie</p>
-            <p><a href="https://www.cia.gov/library/publications/the-world-factbook/docs/faqs.html">
-            	CIA factbook API</a>: provides our data for the details of each country</p>
             <p><a href="https://developer.twitter.com/en/docs">
     			Twitter API</a>: provides a twitter feed for relevent tweets to each movie</p>
 			<p><a href="https://github.com/GeneralMills/pytrends">
@@ -187,7 +185,8 @@ class About extends React.Component {
     			<p>for a particular streaming service or movie the most</p>
 			<p><a href="hhttps://api.guidebox.com/docs/key">
     			Guidebox API</a>: provides data for which movies each streaming service provides</p>
-    		<p>NAME OF FLAG API SOMEONE LET ME KNOW: provides flag images for each country</p>
+    		<p><a href="https://restcountries.eu/">
+    			REST Countries</a>: provides flag images and details for each country</p>
           </div>
         </div>
       </section>
@@ -207,7 +206,7 @@ class About extends React.Component {
             <p>React: creating dynamic components</p>
             <p>Selenium: testing our GUI</p>
             <p>Mocha: front-end unit testing</p>
-            <p>Postman: I DONT REALLY KNOW WHAT POSTMAN DOES TBH</p>
+            <p>Postman: API design and testing</p>
           </div>
         </div>
       </section>
