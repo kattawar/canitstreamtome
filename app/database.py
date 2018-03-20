@@ -106,10 +106,106 @@ def db_insert_om_to_ss(om_id, ss_id):
     dbconnection.commit()
     return res
 
+def db_insert_countries_row(name, country_code):
+    global dbconnection
+    global schema
+
+    sql_query = schema+"insert into streamit_countries (name, country_code) values ('{0}', '{1}')".format(name, country_code)
+    #print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    send_sql_query(sql_query)
+    res = get_sql_results()
+    print("country created ID HERE: ",res[0][0])
+    dbconnection.commit()
+    return res
+
+def db_update_country_image(country_id, image_url):
+    global dbconnection
+    global schema
+
+    sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}' where country_id = {1}".format(image_url, country_id)
+
+    #print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    sql_query = schema+"select lastval();"
+    send_sql_query(sql_query)
+    #res = get_sql_results()
+    #print("image updated ID HERE: ",res[0][0])
+    dbconnection.commit()
+    #return res
+
+def db_insert_country_to_ss_rows(ss_id, country_ranks):
+    global dbconnection
+    global schema
+
+    i = 1
+    for k in country_ranks:
+        db_get_country_id(k[0])
+        c_id = get_sql_results()
+        sql_query = schema+"insert into streamit_country_to_ss(country_id, streaming_service_id, rank) values ('{0}', '{1}', {2})".format(c_id[0][0], ss_id, i)
+        #print(sql_query)
+        send_sql_query(sql_query)
+        dbconnection.commit()
+        sql_query = schema+"select lastval();"
+        send_sql_query(sql_query)
+        res = get_sql_results()
+        print("country_to_ss created ID HERE: ",res[0][0])
+        dbconnection.commit()
+        i+=1
+
+def db_insert_country_to_om_rows(om_id, country_ranks):
+    global dbconnection
+    global schema
+
+    i = 1
+    for k, _ in country_ranks:
+        db_get_country_id(k)
+        c_id = get_sql_results()
+        sql_query = schema+"insert into streamit_country_to_om(country_id, omdb_movie_id, rank) values ('{0}', '{1}', {2})".format(c_id[0][0], om_id, i)
+        #print(sql_query)
+        send_sql_query(sql_query)
+        dbconnection.commit()
+        sql_query = schema+"select lastval();"
+        send_sql_query(sql_query)
+        res = get_sql_results()
+        print("country_to_ss created ID HERE: ",res[0][0])
+        dbconnection.commit()
+        i+=1
+
+
+
 def db_get_omdb_movies():
     global dbconnection
     global schema
     sql_query = schema+"SELECT * FROM streamit_omdb_movies"
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
+def db_get_streaming_services():
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_streaming_service"
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
+def db_get_country_id(country_name):
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_countries where name = '{0}'".format(country_name)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
+
+def db_get_ssid(streaming_service_name):
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_streaming_service where name ilike '{0}'".format(streaming_service_name)
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
