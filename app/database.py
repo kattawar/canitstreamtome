@@ -13,7 +13,7 @@ person_filter_values = None
 tweet_filter_values = None
 stream_filter_values = None
 comparison_values = ["=",">=","<=","like"]
-schema = "set schema 'public';"
+schema = "set schema 'jordan_dev';"
 
 ### Database connection startup and shutdone functions
 def close_database_connection():
@@ -72,16 +72,17 @@ def send_sql_query(query):
                 #lastid = cur.fetchone()[0]
                 #return lastid
         except psycopg2.DatabaseError as error:
-                print("ERROR FETCHING%")
+                print("ERROR FETCHING%: ", str(error))
                 print(error)
 def get_sql_results():
         global cur
         return cur.fetchall()
 
-def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast):
+def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url):
+    print(trailer_url)
     global dbconnection
     global schema
-    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"))
+    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast, trailer_url) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"), trailer_url)
     #print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
@@ -121,17 +122,18 @@ def db_insert_countries_row(name, country_code):
     dbconnection.commit()
     return res
 
-def db_update_country_image(country_id, image_url):
+def db_update_country_image(country_id, image_url, pop="", langs=""):
     global dbconnection
     global schema
 
-    sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}' where country_id = {1}".format(image_url, country_id)
+    #sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}', languages = '{1}', population = '{2}' where country_id = {3}".format(image_url, langs, pop, country_id)
+    sql_query = schema+"update jordan_dev.streamit_countries set (country_image_url, languages, population) = ('{0}', '{1}', {2}) where country_id = {3}".format(image_url, langs, pop, country_id)
 
-    #print(sql_query)
+    print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
-    sql_query = schema+"select lastval();"
-    send_sql_query(sql_query)
+    # sql_query = schema+"select lastval();"
+    # send_sql_query(sql_query)
     #res = get_sql_results()
     #print("image updated ID HERE: ",res[0][0])
     dbconnection.commit()
@@ -201,20 +203,40 @@ def db_get_country_id(country_name):
     dbconnection.commit()
     return get_sql_results
 
+def db_get_gbm_id(themoviedb_id):
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_guidebox_movies where guidebox_movie_id = '{0}'".format(themoviedb_id)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
+def db_get_gbm_themoviedb_id(movie_id):
+    print("SSS: ", movie_id)
+    global dbconnection
+    global schema
+    sql_query = schema+"SELECT * FROM streamit_guidebox_movies where movie_id = {0}".format(movie_id)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    return get_sql_results
+
 
 def db_get_ssid(streaming_service_name):
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_streaming_service where name ilike '{0}'".format(streaming_service_name)
+    stripped = streaming_service_name.split("_")
+    sql_query = schema+"SELECT * FROM streamit_streaming_service where name ilike '%{0}%'".format(stripped[0])
+    print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
 
 ### Functions to insert DB entries
-def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
+def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id, themoviedb_id):
     global dbconnection
     global schema
-    sql_query = schema+"insert into streamit_guidebox_movies (title,guidebox_id,streaming_service_id) values ('{0}','{1}','{2}')".format(title.replace("'","''"), guidebox_id, streaming_service_id)
+    print("$$$: ", themoviedb_id)
+    sql_query = schema+"insert into streamit_guidebox_movies (title,guidebox_id,streaming_service_id, movie_id) values ('{0}','{1}','{2}', {3})".format(title.replace("'","''"), guidebox_id, streaming_service_id, themoviedb_id)
     #print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
@@ -222,7 +244,7 @@ def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id):
     res = send_sql_query(sql_query)
     print("ID: ",res)
     dbconnection.commit()
-    return res
+    return get_sql_results()
 
 def db_get_guidebox_movies():
     global dbconnection
@@ -235,6 +257,7 @@ def db_get_guidebox_movies():
 def db_insert_relationship_gbm_sss(guidebox_movie_id, streaming_service_id):
     global dbconnection
     global schema
+    print("PUTTING IN REL: ", guidebox_movie_id," ",streaming_service_id)
     sql_query = schema+"insert into streamit_gbm_to_sss (guidebox_movie_id,streaming_service_id) values ('{0}','{1}')".format(guidebox_movie_id, streaming_service_id)
     #print(sql_query)
     send_sql_query(sql_query)
@@ -254,8 +277,8 @@ def get_db_id():
 
 
 
-def db_insert_movie(title, description,rating,release_date,language,poster_url):
-        sql_query = schema+" insert into {0} (title,description,rating,release_date,language,poster_url) values ({1},{2},{3},{4},{5},{6})".format('streamit_movies',title,description,rating,release_date,language,poster_url)
+def db_insert_movie(title, description,rating,release_date,language):
+        sql_query = schema+" insert into {0} (title,description,rating,release_date,language,poster_url) values ({1},{2},{3},{4},{5},{6})".format('streamit_movies',title,description,rating,release_date,language)
         send_sql_query(sql_query)
 
 def db_insert_person(last_name,first_name,dob,gender):
