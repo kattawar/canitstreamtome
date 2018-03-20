@@ -215,7 +215,7 @@ class About extends React.Component {
             <a href="https://github.com/kattawar/canitstreamtome">GitHub Repo</a>
           </p>
           <p>
-            <a href="https://www.gitbook.com/book/kevinsalcedo/api/welcome">Api Documentation</a>
+            <a href="https://www.gitbook.com/book/kevinsalcedo/api/welcome">API Documentation</a>
           </p>
         </div>
       </section>
