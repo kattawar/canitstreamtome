@@ -41,8 +41,8 @@ export class ModelGrid extends React.Component {
     url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/${this.props.type}?pagesize=24&pagenum=${pageNumber - 1}`;
     console.log(url)
     axios.get(url).then(res => {
-      const movieList = res.data;
-      this.setState({data: movieList});
+      const instanceList = res.data;
+      this.setState({data: instanceList});
 
     }).catch((error) => {
       console.log(error);
@@ -52,16 +52,16 @@ export class ModelGrid extends React.Component {
 
   render() {
 
-    //movieList = this.props.info;
-    //const movieGrouped = movieList;
-    //console.log(movieList.movies);
+    //instanceList = this.props.info;
+    //const instanceGrouped = instanceList;
+    //console.log(instanceList.movies);
 
-    //posters = movieList.movies;
+    //posters = instanceList.movies;
 
     if (this.state.data.data) {
-      const movieGrouped = this.state.data.data;
+      const instanceGrouped = this.state.data.data;
 
-      const posterRows = splitArray(movieGrouped, 6);
+      const instanceRows = splitArray(instanceGrouped, 6);
 
       console.log(this.state.data.data);
 
@@ -69,7 +69,7 @@ export class ModelGrid extends React.Component {
         <section>
           <div className="container">
             {
-              posterRows.map(
+              instanceRows.map(
                 rowList => !rowList
                 ? null
                 : <div className="row">
