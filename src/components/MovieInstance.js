@@ -27,14 +27,13 @@ class MovieInstance extends React.Component {
       <div className="container">
       <div className="row">
         <div className="card">
-          <div className="col-sm-4">
+          <h3 className="display-4">
+            {this.state.movieItem.name}</h3>
+            <hr></hr>          
+          <div className="col-sm-3">
             <img className="img-responsive" src={this.state.movieItem.image} alt=""/>
           </div>
           <div className="col-sm-8">
-            <h3 className="display-4">
-              {this.state.movieItem.name}</h3>
-              <hr></hr>
-
             <h4>Rating</h4>
             <p>{this.state.movieItem.rating}</p>
               <hr></hr>

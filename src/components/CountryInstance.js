@@ -16,13 +16,13 @@ class CountryInstance extends React.Component {
       <div className="row">
 
         <div className="card">
+            <h3 className="display-4">
+              {this.state.countryItem.name}</h3>
+              <hr></hr>
           <div className="col-sm-4">
             <img className="img-responsive" src={this.state.countryItem.image} alt=""/>
           </div>
           <div className="col-sm-8">
-            <h3 className="display-4">
-              {this.state.countryItem.name}</h3>
-              <hr></hr>
 
             <h4>Population</h4>
             <p>{this.state.countryItem.population}</p>
