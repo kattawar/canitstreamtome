@@ -1,14 +1,7 @@
 import React from 'react';
 import '../movie-details.css';
 
-var rowStyle = {
-  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-  marginTop: 20,
-  marginBottom: 20,
 
-
-  // 'ms' is the only lowercase vendor prefix
-};
 class MovieInstance extends React.Component {
 
 
@@ -20,15 +13,20 @@ class MovieInstance extends React.Component {
   componentDidMount() {
     const movie = this.props.location.state.item.item;
     console.log(this.props.location.state);
+
     this.setState({movieItem: movie});
   }
 
   render() {
     console.log(this.state.movieItem);
+
+      var movieUrl = String(this.state.movieItem.trailer_url);
+    movieUrl = movieUrl.replace('watch?v=','embed/');
+      console.log(movieUrl);
     return (
       <div className="container">
-      <div className="row" style={rowStyle}>
-
+      <div className="row">
+        <div className="card">
           <div className="col-sm-4">
             <img className="img-responsive" src={this.state.movieItem.image} alt=""/>
           </div>
@@ -64,17 +62,17 @@ class MovieInstance extends React.Component {
               <a href="/service4">Epix</a>
             </p>
           </div>
-
+          </div>
       </div>
-      <div className="row" style={rowStyle}>
-
+      <div className="row">
+        <div className="card">
           <div className="col">
             <div className="embed-responsive embed-responsive-16by9">
-              <iframe title="vid" className="embed-responsive-item" src="https://www.youtube.com/embed/gCcx85zbxz4?rel=0" allowfullscreen="allowfullscreen"></iframe>
+              <iframe title="vid" className="embed-responsive-item" src={movieUrl} allowfullscreen="allowfullscreen"></iframe>
             </div>
           </div>
         </div>
-
+      </div>
 
     </div>);
   }

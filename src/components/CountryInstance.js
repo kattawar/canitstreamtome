@@ -12,24 +12,30 @@ class CountryInstance extends React.Component {
   }
 
   render() {
-    return (<div class="container">
-      <div class="row">
-        <div class="card">
-          <div class="col-lg-4">
-            <img class="img-responsive" src={this.state.countryItem.image} alt=""/>
+    return (<div className="container">
+      <div className="row">
+
+        <div className="card">
+          <div className="col-sm-4">
+            <img className="img-responsive" src={this.state.countryItem.image} alt=""/>
           </div>
-          <div class="col-lg-8">
-            <h3 class="display-4">
+          <div className="col-sm-8">
+            <h3 className="display-4">
               {this.state.countryItem.name}</h3>
+              <hr></hr>
 
             <h4>Population</h4>
             <p>{this.state.countryItem.population}</p>
+              <hr></hr>
             <h4>Spoken Languages</h4>
             <p>{this.state.countryItem.languages}</p>
+              <hr></hr>
             <h4>Top Streaming Services</h4>
             <p><ul><li>Placeholder</li></ul></p>
+              <hr></hr>
             <h4>Top Movies</h4>
             <p><ul><li>Placeholder</li></ul></p>
+              <hr></hr>
           </div>
         </div>
       </div>
