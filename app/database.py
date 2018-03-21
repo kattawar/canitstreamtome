@@ -374,40 +374,41 @@ def db_select_tweet(filtertype = None, value = None, comparison = "="):
 def format_db_reply(typeofreply,reply):
         out = {}
         print(reply,file=sys.stderr)
+        out["data"] = []
         if typeofreply == "movies":
-                out["movies"] =[]
+                out["data_type"] ="movies"
                 index = 0
                 for x in reply:
-                        out["movies"].append({})
-                        out["movies"][index]["omdb_movie_id"]= x[0]
-                        out["movies"][index]["title"]        = x[1]
-                        out["movies"][index]["description"]  = x[2]
-                        out["movies"][index]["rating"]       = x[3]
-                        out["movies"][index]["release_date"] = x[4]
-                        out["movies"][index]["language"]     = x[5]
-                        out["movies"][index]["poster_url"]   = x[6]
-                        out["movies"][index]["movie_cast"]   = x[7]
+                        out["data"].append({})
+                        out["data"][index]["omdb_movie_id"]= x[0]
+                        out["data"][index]["title"]        = x[1]
+                        out["data"][index]["description"]  = x[2]
+                        out["data"][index]["rating"]       = x[3]
+                        out["data"][index]["release_date"] = x[4]
+                        out["data"][index]["language"]     = x[5]
+                        out["data"][index]["image"]   = x[6]
+                        out["data"][index]["movie_cast"]   = x[7]
                         index += 1
         elif typeofreply == "countries":
-                out["countries"] = []
+                out["data_type"] ="countries"
                 index = 0
                 for x in reply:
-                        out["countries"].append({})
-                        out["countries"][index]["country_id"]  = x[0]
-                        out["countries"][index]["name"]        = x[1]
-                        out["countries"][index]["population"]  = x[2]
-                        out["countries"][index]["languages"]   = x[3]
-                        out["countries"][index]["flag_url"]    = x[4]
+                        out["data"].append({})
+                        out["data"][index]["country_id"]  = x[0]
+                        out["data"][index]["name"]        = x[1]
+                        out["data"][index]["population"]  = x[2]
+                        out["data"][index]["languages"]   = x[3]
+                        out["data"][index]["image"]    = x[4]
                         index +=1
         elif typeofreply == "streamingservices":
-                out["streamingservices"] = []
+                out["data_type"] ="streamingservices"
                 index = 0
                 for x in reply:
-                        out["streamingservices"].append({})
-                        out["streamingservices"][index]["stream_id"]           = x[0]
-                        out["streamingservices"][index]["name"]                = x[1]
-                        out["streamingservices"][index]["pricing"]             = x[2]
-                        out["streamingservices"][index]["available_countries"] = x[3]
+                        out["data"].append({})
+                        out["data"][index]["stream_id"]           = x[0]
+                        out["data"][index]["name"]                = x[1]
+                        out["data"][index]["pricing"]             = x[2]
+                        out["data"][index]["available_countries"] = x[3]
                         index +=1
 
         return out
