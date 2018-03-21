@@ -134,5 +134,5 @@ def country4():
     return render_template('country4.html')
 
 if __name__ == "__main__":
-    #app.run(host='localhost', port=5000,ssl_context='adhoc')
+    #app.run(host='localhost', port=5000)#,ssl_context='adhoc')
     app.run(host='0.0.0.0', port=80)#,ssl_context=('/etc/letsencrypt/live/canitstreamto.me/fullchain.pem','/etc/letsencrypt/live/canitstreamto.me/privkey.pem'))
