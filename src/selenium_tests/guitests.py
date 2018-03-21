@@ -7,27 +7,28 @@ class TestGui(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.driver.get("http://canitstreamto.me")
+        self.driver.get("http://www.canitstreamto.me")
 
+# testing navbar and routing
     def test_movies_link(self):
     	movies_link = self.driver.find_element_by_link_text("Movies")
     	movies_link.click()
-    	self.assertEqual("http://canitstreamto.me/Movies", self.driver.current_url)
+    	self.assertEqual("http://www.canitstreamto.me/Movies", self.driver.current_url)
 
     def test_services_link(self):
     	movies_link = self.driver.find_element_by_link_text("Streaming Services")
     	movies_link.click()
-    	self.assertEqual("http://canitstreamto.me/services", self.driver.current_url)
+    	self.assertEqual("http://www.canitstreamto.me/services", self.driver.current_url)
 
     def test_countries_link(self):
     	movies_link = self.driver.find_element_by_link_text("Countries")
     	movies_link.click()
-    	self.assertEqual("http://canitstreamto.me/countries", self.driver.current_url)
+    	self.assertEqual("http://www.canitstreamto.me/countries", self.driver.current_url)
 
     def test_about_link(self):
     	movies_link = self.driver.find_element_by_link_text("About Us")
     	movies_link.click()
-    	self.assertEqual("http://canitstreamto.me/about", self.driver.current_url)
+    	self.assertEqual("http://www.canitstreamto.me/about", self.driver.current_url)
 
     def tearDown(self):
     	self.driver.close()
