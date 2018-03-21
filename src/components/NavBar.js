@@ -15,13 +15,13 @@ class NavBarr extends React.Component {
   <Navbar.Collapse>
     <Nav pullRight>
       <NavItem eventKey={1}>
-        <Link to="/Movies">Movies</Link>
+        <Link to="/movie">Movies</Link>
       </NavItem>
       <NavItem eventKey={2}>
-        <Link to="/services">Streaming Services</Link>
+        <Link to="/service">Streaming Services</Link>
       </NavItem>
       <NavItem eventKey={3}>
-        <Link to="/countries">Countries</Link>
+        <Link to="/country">Countries</Link>
       </NavItem>
       <NavItem eventKey={4}>
         <Link to="/about">About Us</Link>

@@ -36,11 +36,6 @@ export class ModelGrid extends React.Component {
 
   }
 
-    handleClick = () => {
-    	console.log('this is:', this);
-
-    }
-
     handlePageChange = (pageNumber) => {
    console.log(`active page is ${pageNumber}`);
    this.setState({activePage: pageNumber});
@@ -58,7 +53,6 @@ console.log(url)
   	       .then(res => {
   	         const movieList = res.data;
   	         this.setState({ data:movieList });
-             console.log(this.state.data);
 
 
 
@@ -81,7 +75,6 @@ console.log(url)
     //console.log(movieList.movies);
 
    //posters = movieList.movies;
-      console.log(this.state.data.data);
 
       if(this.state.data.data){
       const movieGrouped = this.state.data.data;
@@ -90,10 +83,8 @@ console.log(url)
      const posterRows = splitArray(movieGrouped, 6);
 
 
-     console.log(posterRows);
 
-
-
+     console.log(this.state.data.data);
 
 		return (
       <div>
@@ -106,7 +97,7 @@ console.log(url)
 
 
 							<div className="col-sm-2" onClick={this.handleClick}>
-								<Link to={{pathname:`/${this.props.type}/${item.title}`, state:{item: {item}}}}>
+								<Link to={{pathname:`/${this.props.type}/${item.name}`, state:{item: {item}}}}>
 									<img src={item.image}  alt=""/>
 								</Link>
 							</div>
