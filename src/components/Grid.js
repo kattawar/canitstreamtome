@@ -31,7 +31,7 @@ export class ModelGrid extends React.Component {
       data: [],
       activePage: 1
     };
-    this.updateData(0);
+    this.updateData(1);
 
 
   }
@@ -48,9 +48,13 @@ export class ModelGrid extends React.Component {
  }
 
     updateData= (pageNumber) =>{
-
-      let url = "https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&pagenum="+pageNumber
-  		axios.get(url)
+      console.log(pageNumber);
+      console.log("updatecalled");
+      let url = "";
+      if(this.props.type === "movies"){
+       url = "https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&pagenum="+(pageNumber-1);
+}
+      axios.get(url)
   	       .then(res => {
   	         const movieList = res.data;
   	         this.setState({ data:movieList });
