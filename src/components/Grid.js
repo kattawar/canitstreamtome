@@ -51,9 +51,9 @@ export class ModelGrid extends React.Component {
       console.log(pageNumber);
       console.log("updatecalled");
       let url = "";
-      if(this.props.type === "movies"){
-       url = "https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&pagenum="+(pageNumber-1);
-}
+
+       url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/${this.props.type}?pagesize=24&pagenum=${pageNumber-1}`;
+console.log(url)
       axios.get(url)
   	       .then(res => {
   	         const movieList = res.data;
@@ -81,16 +81,17 @@ export class ModelGrid extends React.Component {
     //console.log(movieList.movies);
 
    //posters = movieList.movies;
-      console.log(this.state.data.movies);
+      console.log(this.state.data.data);
 
-      if(this.state.data.movies){
-      const movieGrouped = this.state.data.movies;
+      if(this.state.data.data){
+      const movieGrouped = this.state.data.data;
 
 
      const posterRows = splitArray(movieGrouped, 6);
 
 
      console.log(posterRows);
+
 
 
 
@@ -106,7 +107,7 @@ export class ModelGrid extends React.Component {
 
 							<div className="col-sm-2" onClick={this.handleClick}>
 								<Link to={{pathname:`/${this.props.type}/${item.title}`, state:{item: {item}}}}>
-									<img src={item.poster_url}  alt=""/>
+									<img src={item.image}  alt=""/>
 								</Link>
 							</div>
 					)}

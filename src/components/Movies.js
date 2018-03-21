@@ -8,7 +8,7 @@ class Movies extends React.Component {
 
 	render() {
 
-		 return (<ModelGrid type='movies'/>);
+		 return (<ModelGrid type='movie'/>);
 	}
 }
 
