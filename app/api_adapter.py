@@ -25,8 +25,7 @@ twitter_api = twitter.Api(consumer_key='01cakDvOdyw9ytVgVgA2e1loV',
                       access_token_secret='Em1V2RG2vXsMFtQNPuTM4bHPsehFnSNpi0yz0AsXx8eGF')
 
 
-def get_omdb_show(imdb_id):
-    print("GETTING OMDB")
+def get_omdb_show(themoviedb_id):
     #zachs
     key1="b01da4ef"
     #kevins
@@ -34,8 +33,23 @@ def get_omdb_show(imdb_id):
 
     count = 0
     try:
-        omdb_url = "http://www.omdbapi.com/?i="+imdb_id+"&apikey=37c990e3"
-        print("URL: ", omdb_url)
+        #omdb_url = "http://www.omdbapi.com/?i="+imdb_id+"&apikey=37c990e3"
+        # omdb_url = "http://api.themoviedb.org/3/search/movie?api_key=2bd3d8c73d94bacae94a2bb0a04f6847&query="+ name +"&append_to_response=videos,credits"
+        # print("URL: ", omdb_url)
+
+        # results = []
+        # req = urllib.request.Request(omdb_url)
+        # r = urllib.request.urlopen(req).read()
+        # cont = json.loads(r.decode('utf-8'))
+
+        #print(cont)
+
+        # for k in cont['results']:
+        #     print(k)
+
+        #themoviedb_id = cont['results'][0]['id']
+        print("TRY SET: ", themoviedb_id)
+        omdb_url = "http://api.themoviedb.org/3/movie/"+ str(themoviedb_id) +"?api_key=2bd3d8c73d94bacae94a2bb0a04f6847&append_to_response=videos,credits"
 
         results = []
         req = urllib.request.Request(omdb_url)
@@ -43,24 +57,56 @@ def get_omdb_show(imdb_id):
         cont = json.loads(r.decode('utf-8'))
 
         print(cont)
+        count = 0
+        cast = ""
+        cast_list = []
+        if cont['credits'] != None:
+            if cont['credits']['cast'] != None:
+                for k in cont['credits']['cast']:
+                    #print(k['name'])
+                    cast_list.append(k['name'])
+                    count+=1
+                    if count == 5:
+                        break
+
+                cast = ", ".join(cast_list)
 
 
-        results.append({"title": cont['Title'], "description": cont['Plot'], "rating": cont['Rated'], "released": cont['Released'], "language": cont['Language'], "poster_url": cont['Poster'], "movie_cast": cont['Actors']})
-    except:
-        print("OMDB MOVIE NOT FOUND")
+
+
+
+        print("CAST: ",cast)
+        trailer_url = ""
+        if cont['videos']['results'] != []:
+            youtube_key = cont['videos']['results'][0]['key']
+            trailer_url = "https://www.youtube.com/watch?v="+ youtube_key
+        else:
+            print("NO TRAILER")
+            print("NO TRAILER")
+            print("NO TRAILER")
+
+
+
+        #cont = cont['results']
+
+        results.append({"title": cont['title'], "description": cont['overview'], "rating": cont['vote_count'], "released": cont['release_date'], "language": "", "poster_url": "http://image.tmdb.org/t/p/w185"+ cont['poster_path'], "movie_cast": cast, "trailer_url": trailer_url})
+    except Exception as e:
+        print("OMDB MOVIE NOT FOUND: ",str(e))
+        print(str(e))
         print("OMDB MOVIE NOT FOUND")
         print("OMDB MOVIE NOT FOUND")
         print("OMDB MOVIE NOT FOUND")
         print("OMDB MOVIE NOT FOUND")
 
     print("The count is ", count)
+    print("RESULTS GATHERED: ", results)
     return results
 
 
 
-def insert_omdb_movie_row(title, description, rating, release_date, language, poster_url, movie_cast):
+def insert_omdb_movie_row(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url):
     database.startup_database_connection()
-    res = database.db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast)
+    res = database.db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url)
     return res[0][0]
 
 def insert_om_to_ss_row(om_id, ss_id):
@@ -84,7 +130,7 @@ def insert_om_to_ss_row(om_id, ss_id):
 
 def get_guidebox_shows(streaming_service, offset):
     print("GETTING GUIDEBOX")
-    guidebox_url = "http://api-public.guidebox.com/v2/shows?api_key=dfd382d38e3ba75fc2aa27cde8ad6746a1f8f5c6&limit=250&sources="+streaming_service+"&offset="+offset
+    guidebox_url = "http://api-public.guidebox.com/v2/movies?api_key=dfd382d38e3ba75fc2aa27cde8ad6746a1f8f5c6&limit=100&sources="+streaming_service+"&offset="+offset
     guidebox_url2 = "http://api-public.guidebox.com/v2/quota?api_key=dfd382d38e3ba75fc2aa27cde8ad6746a1f8f5c6"
     req = urllib.request.Request(guidebox_url2)
     r = urllib.request.urlopen(req).read()
@@ -104,7 +150,7 @@ def get_guidebox_shows(streaming_service, offset):
         for v in cont[k]:
           print(v)
           count+=1
-          results.append([v["title"], v["id"]])
+          results.append([v["title"], v["id"], v["themoviedb"]])
 
 
     print("The count is ", count)
@@ -115,10 +161,21 @@ def get_guidebox_shows(streaming_service, offset):
     #
     #
 
-def insert_guidebox_movie_row(title, guidebox_id, streaming_service_id):
+def insert_guidebox_movie_row(title, guidebox_id, themoviedb_id, streaming_service_id):
   database.startup_database_connection()
-  res = database.db_insert_guidebox_movie(title, guidebox_id, streaming_service_id)
-  insert_relationship_gbm_sss_row(res, streaming_service_id)
+  res = database.db_get_gbm_themoviedb_id(themoviedb_id)
+  res = database.get_sql_results()
+  if len(res) == 0:
+    print("LENGTH 0: inserting now")
+    print("MMMM: ", themoviedb_id)
+    res = database.db_insert_guidebox_movie(title, guidebox_id, streaming_service_id, themoviedb_id)
+    print("RES is: ", res)
+
+  # database.db_get_gbm_id(themoviedb_id)
+  # res = database.get_sql_results()
+
+  print("FOUND $$$$$$$$$$$$: ", res)
+  insert_relationship_gbm_sss_row(res[0][0], streaming_service_id)
 
 
 # relationship between guidebox_movie and a streaming service_id
@@ -835,15 +892,24 @@ def get_country_pics(country_name):
     count = 0
 
     for k in cont:
+        print("$$: ",k)
         if any(k['name'] in s for s in res):
             print("FOUND: ", k['name'])
+            pop = k['population']
+            lang_list = []
+            for lang in k['languages']:
+                lang_list.append(lang['name'])
+            langs = ", ".join(lang_list)
             country_id = database.db_get_country_id(k['name'])
             country_id = database.get_sql_results()
             if len(country_id) > 0:
                 count+=1
                 c_id = country_id[0][0]
-                print("ID: ", country_id)
-                database.db_update_country_image(c_id, k['flag'])
+                print("ID: ", c_id)
+                print("POP: ", pop)
+                print("LANGS : ", langs)
+                print("FLAG URL: ", k['flag'])
+                database.db_update_country_image(c_id, k['flag'], pop, langs)
         else:
             b = 1
             #print("DIDNT FIND: ", k['name'])
@@ -863,12 +929,14 @@ def get_country_pics(country_name):
 def get_ssid(name):
     res = database.db_get_ssid(name)
     res = database.get_sql_results()
-    print(res[0][0])
+    return res[0][0]
 
 
 if __name__ == "__main__":
+    #get_omdb_show(1402)
+    #database.db_insert_omdb_movie("t", "t","t", "t", "t", "t", "t", "trailer")
     #get_guidebox_shows("netflix", "0")
-    get_ssid("netflix")
+    #get_ssid("netflix")
     #get_google_trend("altered carbon")
     #get_twitter_response("altered carbon")
     #loop over command line args
@@ -894,97 +962,98 @@ if __name__ == "__main__":
 
             #insert_guidebox_row("test_zk_22", '{\"basic\": \"$7.99\", \"standard\": \"$10.99\", \"premium\": \"$13.99\"}', '{}')
             #while i < 2:
-            results = get_guidebox_shows("netflix", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("netflix"))
+            # results = get_guidebox_shows("netflix", offset)
+            # for j, v, m in results:
+            #   insert_guidebox_movie_row(j, v, m, get_ssid("netflix"))
+
 
             results = get_guidebox_shows("hbo", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("hbo"))
+            for j, v, m in results:
+              insert_guidebox_movie_row(j, v, m, get_ssid("hbo"))
 
             results = get_guidebox_shows("amazon_prime", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("amazon_prime"))
+            for j, v, m in results:
+              insert_guidebox_movie_row(j, v, m, get_ssid("amazon_prime"))
 
             results = get_guidebox_shows("hulu_plus", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("hulu_plus"))
+            for j, v, m in results:
+              insert_guidebox_movie_row(j, v, m, get_ssid("hulu_plus"))
 
             results = get_guidebox_shows("showtime_subscription", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("showtime_subscription"))
-
-            results = get_guidebox_shows("youtube", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("youtube"))
-
-            results = get_guidebox_shows("google_play", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("google_play"))
-
-            results = get_guidebox_shows("vudu", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("vudu"))
-
-            results = get_guidebox_shows("abc", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("abc"))
-
-            results = get_guidebox_shows("cnbc", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("cnbc"))
-
-            results = get_guidebox_shows("cartoon_network_free", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("cartoon_network_free"))
-
-            results = get_guidebox_shows("comedycentral_tveverywhere", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("comedycentral_tveverywhere"))
-
-            results = get_guidebox_shows("watch_espn", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("watch_espn"))
-
-            results = get_guidebox_shows("watch_hgtv", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("watch_hgtv"))
-
-            results = get_guidebox_shows("trutv_tveverywhere", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("trutv_tveverywhere"))
-
-            results = get_guidebox_shows("travel", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("travel"))
-
-            results = get_guidebox_shows("tnt", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("tnt"))
-
-            results = get_guidebox_shows("tbs", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("tbs"))
-
-            results = get_guidebox_shows("starz_tveverywhere", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("starz_tveverywhere"))
-
-            results = get_guidebox_shows("oxygen", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("oxygen"))
-
-            results = get_guidebox_shows("nick_tveverywhere", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("nick_tveverywhere"))
-
-            results = get_guidebox_shows("fx", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("fx"))
-
-            results = get_guidebox_shows("crackle", offset)
-            for j, v in results:
-              insert_guidebox_movie_row(j, v, get_ssid("crackle"))
+            for j, v, m in results:
+              insert_guidebox_movie_row(j, v, m, get_ssid("showtime_subscription"))
+            #
+            # results = get_guidebox_shows("youtube", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("youtube"))
+            #
+            # results = get_guidebox_shows("google_play", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("google_play"))
+            #
+            # results = get_guidebox_shows("vudu", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("vudu"))
+            #
+            # results = get_guidebox_shows("abc", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("abc"))
+            #
+            # results = get_guidebox_shows("cnbc", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("cnbc"))
+            #
+            # results = get_guidebox_shows("cartoon_network_free", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("cartoon_network_free"))
+            #
+            # results = get_guidebox_shows("comedycentral_tveverywhere", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("comedycentral_tveverywhere"))
+            #
+            # results = get_guidebox_shows("watch_espn", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("watch_espn"))
+            #
+            # results = get_guidebox_shows("watch_hgtv", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("watch_hgtv"))
+            #
+            # results = get_guidebox_shows("trutv_tveverywhere", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("trutv_tveverywhere"))
+            #
+            # results = get_guidebox_shows("travel", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("travel"))
+            #
+            # results = get_guidebox_shows("tnt", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("tnt"))
+            #
+            # results = get_guidebox_shows("tbs", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("tbs"))
+            #
+            # results = get_guidebox_shows("starz_tveverywhere", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("starz_tveverywhere"))
+            #
+            # results = get_guidebox_shows("oxygen", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("oxygen"))
+            #
+            # results = get_guidebox_shows("nick_tveverywhere", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("nick_tveverywhere"))
+            #
+            # results = get_guidebox_shows("fx", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("fx"))
+            #
+            # results = get_guidebox_shows("crackle", offset)
+            # for j, v in results:
+            #   insert_guidebox_movie_row(j, v, get_ssid("crackle"))
 
             offset = str(int(offset) + 250)
             i+=1
@@ -999,7 +1068,7 @@ if __name__ == "__main__":
             # print("RES: ", res[0])
             # insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"])
             database.db_get_guidebox_movies()
-            sr = 0
+            sr = 1
             count = 0
             for k in database.get_sql_results():
                 print("k0: "+str(k[0]))
@@ -1014,11 +1083,12 @@ if __name__ == "__main__":
                     streaming_service_id = res[0][0]
 
                     time.sleep(3)
-                    print(k[1].lower().replace(" ", "_"))
-                    res = get_omdb_show(k[1].lower().replace(" ", "_"))
+                    #print("K is: ",k)
+                    #res = get_omdb_show(k[1].replace(" ", "%20"))
+                    res = get_omdb_show(k[4])
                     #print("RES: ", res[0])
                     if res != []:
-                        om_id = insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"])
+                        om_id = insert_omdb_movie_row(res[0]["title"], res[0]["description"], res[0]["rating"], res[0]["released"], res[0]["language"], res[0]["poster_url"], res[0]["movie_cast"], res[0]["trailer_url"])
                         print(om_id)
                         insert_om_to_ss_row(om_id, streaming_service_id)
                 # toggle point to run data from guidebox_movies table based on ID
@@ -1034,17 +1104,17 @@ if __name__ == "__main__":
             fill_countries_table()
 
         elif k == "googletrend":
-            switch = -1
-            res = database.db_get_streaming_services()
-            #res = database.db_get_omdb_movies()
+            switch = 2161
+            #res = database.db_get_streaming_services()
+            res = database.db_get_omdb_movies()
             for k in database.get_sql_results():
                 toggle_id = k[0]
                 if toggle_id > switch:
                     print(k)
                     country_ranks = get_google_trend(k[1].replace("'", "%27"))
                     #country_ranks = sorted(country_counts, key=country_counts.get, reverse=True)[:5]
-                    database.db_insert_country_to_ss_rows(toggle_id, country_ranks)
-                    #database.db_insert_country_to_om_rows(toggle_id, country_ranks)
+                    #database.db_insert_country_to_ss_rows(toggle_id, country_ranks)
+                    database.db_insert_country_to_om_rows(toggle_id, country_ranks)
                     print("ranks: ",country_ranks)
                     print("IM ASLEEP FOR 10 secs")
                     time.sleep(15)
