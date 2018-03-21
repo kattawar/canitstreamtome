@@ -324,7 +324,8 @@ def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize =
 def db_select_country(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global country_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = schema+"select country_id,name,population,languages,country_image_url from streamit_countries "
+        sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url from  "
+        sql_query += "(SELECT * FROM zach.streamit_countries WHERE country_id IN (SELECT country_id FROM zach.streamit_country_to_om  group by country_id)) as t "
         if filtertype in country_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
