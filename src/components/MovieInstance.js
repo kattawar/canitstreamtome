@@ -13,11 +13,16 @@ class MovieInstance extends React.Component {
   componentDidMount() {
     const movie = this.props.location.state.item.item;
     console.log(this.props.location.state);
+
     this.setState({movieItem: movie});
   }
 
   render() {
     console.log(this.state.movieItem);
+
+      var movieUrl = String(this.state.movieItem.trailer_url);
+    movieUrl = movieUrl.replace('watch?v=','embed/');
+      console.log(movieUrl);
     return (
       <div className="container">
       <div className="row">
@@ -63,7 +68,7 @@ class MovieInstance extends React.Component {
         <div className="card">
           <div className="col">
             <div className="embed-responsive embed-responsive-16by9">
-              <iframe title="vid" className="embed-responsive-item" src="https://www.youtube.com/embed/gCcx85zbxz4?rel=0" allowfullscreen="allowfullscreen"></iframe>
+              <iframe title="vid" className="embed-responsive-item" src={movieUrl} allowfullscreen="allowfullscreen"></iframe>
             </div>
           </div>
         </div>
