@@ -19,20 +19,22 @@ class MovieInstance extends React.Component {
 
   componentDidMount() {
     const movie = this.props.location.state.item.item;
+    console.log(this.props.location.state);
     this.setState({movieItem: movie});
   }
 
   render() {
+    console.log(this.state.movieItem);
     return (
       <div className="container">
       <div className="row" style={rowStyle}>
 
           <div className="col-sm-4">
-            <img className="img-responsive" src={this.state.movieItem.poster_url} alt=""/>
+            <img className="img-responsive" src={this.state.movieItem.image} alt=""/>
           </div>
           <div className="col-sm-8">
             <h3 className="display-4">
-              {this.state.movieItem.title}</h3>
+              {this.state.movieItem.name}</h3>
               <hr></hr>
 
             <h4>Rating</h4>

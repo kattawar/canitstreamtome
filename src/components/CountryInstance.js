@@ -16,7 +16,7 @@ class CountryInstance extends React.Component {
       <div class="row">
         <div class="card">
           <div class="col-lg-4">
-            <img class="img-responsive" src={this.state.countryItem.flag_url} alt=""/>
+            <img class="img-responsive" src={this.state.countryItem.image} alt=""/>
           </div>
           <div class="col-lg-8">
             <h3 class="display-4">

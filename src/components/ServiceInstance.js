@@ -1,6 +1,5 @@
 import React from 'react';
 import '../movie-details.css';
-import hulu from '../img/hulu-logo.png'
 class ServiceInstance extends React.Component {
 
   state = {
@@ -17,7 +16,7 @@ class ServiceInstance extends React.Component {
       <div className="row">
         <div className="card">
           <div className="col-lg-4">
-            <img className="img-responsive" src={hulu} alt=""/>
+            <img className="img-responsive" src={this.state.serviceItem.image} alt=""/>
           </div>
           <div className="col-lg-8">
             <h3 className="display-4">

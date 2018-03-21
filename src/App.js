@@ -20,12 +20,12 @@ class App extends React.Component {
         <NavBarr />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/movies" component={Movies} />
-          <Route path='/movies/:movieID' component={MovieInstance}/>
-          <Route exact path="/countries" component={Countries} />
-          <Route path="/countries/:countryID" component={CountryInstance}/>
-          <Route exact path="/services" component={Services} />
-          <Route path="/services/:serviceID" component={ServiceInstance}/>
+          <Route exact path="/movie" component={Movies} />
+          <Route path='/movie/:movieID' component={MovieInstance}/>
+          <Route exact path="/country" component={Countries} />
+          <Route path="/country/:countryID" component={CountryInstance}/>
+          <Route exact path="/service" component={Services} />
+          <Route path="/service/:serviceID" component={ServiceInstance}/>
           <Route exact path="/about" component={About} />
         </Switch>
         <Bottom />
