@@ -16,7 +16,8 @@ hr {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   margin-top: 10px;
   margin-bottom: 10px;
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 .img-responsive{
