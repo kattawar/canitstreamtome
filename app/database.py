@@ -380,13 +380,13 @@ def format_db_reply(typeofreply,reply):
                 index = 0
                 for x in reply:
                         out["data"].append({})
-                        out["data"][index]["omdb_movie_id"]= x[0]
-                        out["data"][index]["title"]        = x[1]
+                        out["data"][index]["id"]           = x[0]
+                        out["data"][index]["name"]         = x[1]
                         out["data"][index]["description"]  = x[2]
                         out["data"][index]["rating"]       = x[3]
                         out["data"][index]["release_date"] = x[4]
                         out["data"][index]["language"]     = x[5]
-                        out["data"][index]["image"]   = x[6]
+                        out["data"][index]["image"]        = x[6]
                         out["data"][index]["movie_cast"]   = x[7]
                         index += 1
         elif typeofreply == "countries":
@@ -394,18 +394,18 @@ def format_db_reply(typeofreply,reply):
                 index = 0
                 for x in reply:
                         out["data"].append({})
-                        out["data"][index]["country_id"]  = x[0]
+                        out["data"][index]["id"]          = x[0]
                         out["data"][index]["name"]        = x[1]
                         out["data"][index]["population"]  = x[2]
                         out["data"][index]["languages"]   = x[3]
-                        out["data"][index]["image"]    = x[4]
+                        out["data"][index]["image"]       = x[4]
                         index +=1
         elif typeofreply == "streamingservices":
                 out["data_type"] ="streamingservices"
                 index = 0
                 for x in reply:
                         out["data"].append({})
-                        out["data"][index]["stream_id"]           = x[0]
+                        out["data"][index]["id"]                  = x[0]
                         out["data"][index]["name"]                = x[1]
                         out["data"][index]["pricing"]             = x[2]
                         out["data"][index]["available_countries"] = x[3]
