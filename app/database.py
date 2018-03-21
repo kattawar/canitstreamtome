@@ -13,7 +13,7 @@ person_filter_values = None
 tweet_filter_values = None
 stream_filter_values = None
 comparison_values = ["=",">=","<=","like"]
-schema = "set schema 'jordan_dev';"
+schema = "set schema 'release';"
 
 ### Database connection startup and shutdone functions
 def close_database_connection():
@@ -69,9 +69,11 @@ def send_sql_query(query):
         try:
                 cur = dbconnection.cursor()
                 cur.execute(query)
+                dbconnection.commit()
                 #lastid = cur.fetchone()[0]
                 #return lastid
         except psycopg2.DatabaseError as error:
+                dbconnection.rollback()
                 print("ERROR FETCHING%: ", str(error))
                 print(error)
 def get_sql_results():
@@ -308,7 +310,7 @@ def db_update_country(country_id,column,value):
 def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global movie_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = schema+"select title,description,rating,release_date,language,poster_url,movie_cast from streamit_omdb_movies "
+        sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast from streamit_omdb_movies "
         if filtertype in movie_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
@@ -322,7 +324,7 @@ def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize =
 def db_select_country(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global country_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = "set schema 'jordan_dev';"+"select name,population,languages,flag_url from streamit_country "
+        sql_query = schema+"select country_id,name,population,languages,country_image_url from streamit_countries "
         if filtertype in country_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
@@ -336,7 +338,7 @@ def db_select_country(filtertype = None, value = None, comparison = "=",pagesize
 def db_select_streaming_service(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global stream_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = "set schema 'jordan_dev';"+"select name, pricing, available_countries from streamit_streaming_service "
+        sql_query = schema+"select stream_id,name, pricing, available_countries from streamit_streaming_service "
         if filtertype in stream_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
@@ -377,32 +379,35 @@ def format_db_reply(typeofreply,reply):
                 index = 0
                 for x in reply:
                         out["movies"].append({})
-                        out["movies"][index]["title"]        = x[0]
-                        out["movies"][index]["description"]  = x[1]
-                        out["movies"][index]["rating"]       = x[2]
-                        out["movies"][index]["release_date"] = x[3]
-                        out["movies"][index]["language"]     = x[4]
-                        out["movies"][index]["poster_url"]   = x[5]
-                        out["movies"][index]["movie_cast"]   = x[6]
+                        out["movies"][index]["omdb_movie_id"]= x[0]
+                        out["movies"][index]["title"]        = x[1]
+                        out["movies"][index]["description"]  = x[2]
+                        out["movies"][index]["rating"]       = x[3]
+                        out["movies"][index]["release_date"] = x[4]
+                        out["movies"][index]["language"]     = x[5]
+                        out["movies"][index]["poster_url"]   = x[6]
+                        out["movies"][index]["movie_cast"]   = x[7]
                         index += 1
         elif typeofreply == "countries":
                 out["countries"] = []
                 index = 0
                 for x in reply:
                         out["countries"].append({})
-                        out["countries"][index]["name"]        = x[0]
-                        out["countries"][index]["population"]  = x[1]
-                        out["countries"][index]["languages"]   = x[2]
-                        out["countries"][index]["flag_url"]    = x[3]
+                        out["countries"][index]["country_id"]  = x[0]
+                        out["countries"][index]["name"]        = x[1]
+                        out["countries"][index]["population"]  = x[2]
+                        out["countries"][index]["languages"]   = x[3]
+                        out["countries"][index]["flag_url"]    = x[4]
                         index +=1
         elif typeofreply == "streamingservices":
                 out["streamingservices"] = []
                 index = 0
                 for x in reply:
                         out["streamingservices"].append({})
-                        out["streamingservices"][index]["name"]                = x[0]
-                        out["streamingservices"][index]["pricing"]             = x[1]
-                        out["streamingservices"][index]["available_countries"] = x[2]
+                        out["streamingservices"][index]["stream_id"]           = x[0]
+                        out["streamingservices"][index]["name"]                = x[1]
+                        out["streamingservices"][index]["pricing"]             = x[2]
+                        out["streamingservices"][index]["available_countries"] = x[3]
                         index +=1
 
         return out

@@ -33,20 +33,29 @@ def singlestreamingapi(name):
 
 def getGeneralArgs():
     return request.args.get("filter",default=None),int(request.args.get("pagesize",default=25)),int(request.args.get(
-        "pagenum",default=0)),request.args.get("sortdir",default="desc"),request.args.get("comparison","="),request.args.get("value",default=None)
+        "pagenum",default=0)),request.args.get("sortdir",default="asc"),request.args.get("comparison","="),request.args.get("value",default=None)
 def movieapi():
     filtertype,pagesize,pagenum,sortdir,comparison,value = getGeneralArgs()
     sort = request.args.get("sortby",default="title")
-    out = database.db_select_movie(filtertype=filtertype,value=value,comparison=comparison, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
-    return jsonify(out)
+    try:
+        out = database.db_select_movie(filtertype=filtertype,value=value,comparison=comparison, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
+        return jsonify(out)
+    except Exception as e:
+        return abort(400)
 def countryapi():
     filtertype,pagesize,pagenum,sortdir,comparison,value = getGeneralArgs()
     sort = request.args.get("sortby",default="name")
-    out = database.db_select_country(filtertype=filtertype,value=value,comparison=comparison, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
-    return jsonify(out)
+    try:
+        out = database.db_select_country(filtertype=filtertype,value=value,comparison=comparison, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
+        return jsonify(out)
+    except Exception as e:
+        return abort(400)
 def streamingapi():
     filtertype,pagesize,pagenum,sortdir,comparison,value = getGeneralArgs()
     sort = request.args.get("sortby",default="name")
-    out = database.db_select_streaming_service(filtertype=filtertype,value=value,comparison=comparison, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
-    return jsonify(out)
+    try:
+        out = database.db_select_streaming_service(filtertype=filtertype,value=value,comparison=comparison, pagesize=pagesize,pagenum=pagenum,sortby=sort,sortdir=sortdir)
+        return jsonify(out)
+    except Exception as e:
+        return abort(400)
     
