@@ -35,7 +35,7 @@ def connect_to_database(readonly=False):
 
 def update_filter_values():
         global movie_filter_values,country_filter_values,person_filter_values,stream_filter_values
-        query = schema+"select column_name from information_schema.columns where table_name = 'streamit_movie';"
+        query = schema+"select column_name from information_schema.columns where table_name = 'streamit_omdb_movies';"
         send_sql_query(query)
         list = get_sql_results()
         movie_filter_values = [element for tupl in list for element in tupl]
@@ -45,7 +45,7 @@ def update_filter_values():
         list = get_sql_results()
         person_filter_values = [element for tupl in list for element in tupl]
 
-        query = schema+"select column_name from information_schema.columns where table_name = 'streamit_country';"
+        query = schema+"select column_name from information_schema.columns where table_name = 'streamit_countries';"
         send_sql_query(query)
         list = get_sql_results()
         country_filter_values = [element for tupl in list for element in tupl]
@@ -351,6 +351,13 @@ def db_select_streaming_service(filtertype = None, value = None, comparison = "=
         return format_db_reply("streamingservices",get_sql_results())
 
 
+def db_select_movie_popularity(movie_id):
+        sql_query = schema+"select co.rank,sc.name from streamit_country_to_om co join streamit_countries sc on co.country_id = sc.country_id join "
+        sql_query+= "streamit_omdb_movies om on co.omdb_movie_id = om.omdb_movie_id "
+        sql_query+= "where om.omdb_movie_id = '{0}' order by co.rank asc".format(str(movie_id))
+        send_sql_query(sql_query)
+        return format_db_reply("moviepopularity",get_sql_results())
+
 
 
 def db_select_person(filtertype = None, value = None, comparison = "="):
@@ -412,6 +419,14 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["pricing"]             = x[2]
                         out["data"][index]["available_countries"] = x[3]
                         index +=1
+        elif typeofreply == "moviepopularity":
+                out["data_type"] = typeofreply
+                index = 0
+                for x in reply:
+                        out["data"].append({})
+                        out["data"][index]["rank"]   = x[0]
+                        out["data"][index]["country"]= x[1]
+                        index+=1
 
         return out
 

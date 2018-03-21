@@ -28,9 +28,12 @@ def unauthorized():
 def callmovieapi():
     print("In api call",file=sys.stderr)
     return api.movieapi()
-@app.route('/v1/movie/<string:title>',subdomain="api",methods=['GET'])
-def callsinglemovieapi(title):
-    return api.singlemovieapi(title)
+@app.route('/v1/movie/<int:movie_id>',subdomain="api",methods=['GET'])
+def callsinglemovieapi(movie_id):
+    return api.singlemovieapi(movie_id)
+@app.route('/v1/movie/<int:movie_id>/popularity',subdomain="api",methods=['GET'])
+def callmoviepopularityapi(movie_id):
+    return api.moviepopularityapi(movie_id)
 
 ### Country endpoint stuff
 @app.route('/v1/country',subdomain="api",methods=['GET'])
@@ -39,6 +42,7 @@ def callcountryapi():
 @app.route('/v1/country/<string:name>',subdomain="api",methods=['GET'])
 def callsinglecountryapi(name):
     return api.singlecountryapi(name)
+
 
 ### Streaming service endpoint stuff
 @app.route('/v1/streaming_service',subdomain="api",methods=['GET'])

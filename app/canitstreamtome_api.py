@@ -13,8 +13,8 @@ def startdbconnection():
 
 
 
-def singlemovieapi(title):
-    out = database.db_select_movie(filtertype="title",value=title)
+def singlemovieapi(movie_id):
+    out = database.db_select_movie(filtertype="omdb_movie_id",value=movie_id)
     if len(out) == 0:
         abort(404)
     return jsonify(out)  
@@ -58,4 +58,11 @@ def streamingapi():
         return jsonify(out)
     except Exception as e:
         return abort(400)
+### Movie popularity
+def moviepopularityapi(movie_id):
+    out = database.db_select_movie_popularity(movie_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+    
     
