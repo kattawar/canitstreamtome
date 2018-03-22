@@ -78,11 +78,7 @@ export class ModelGrid extends React.Component {
                       <div className="col-sm-2" onClick={this.handleClick}>
                         <Link to={{
                             pathname: `/${this.props.type}/${item.name}`,
-                            state: {
-                              item: {
-                                item
-                              }
-                            }
+                            state: { item: item.id }
                           }}>
                           <div className="card">
                             <img src={item.image} alt=""/>

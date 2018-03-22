@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import '../movie-details.css';
 class CountryInstance extends React.Component {
 
@@ -7,8 +8,13 @@ class CountryInstance extends React.Component {
   }
 
   componentDidMount() {
-    const country = this.props.location.state.item.item;
-    this.setState({countryItem: country});
+    const country = this.props.location.state.item;
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country/${country}`;
+    if (country) {
+      axios.get(url).then(res => {
+        this.setState({countryItem : res.data.data[0]});
+      });
+    }
   }
 
   render() {
