@@ -64,5 +64,18 @@ def moviepopularityapi(movie_id):
     if len(out) == 0:
         abort(404)
     return jsonify(out)
+### Movie stream
+def moviestreamapi(movie_id):
+    out = database.db_select_movie_stream(movie_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+
+### Stream Pop countries
+def streampopcountryapi(stream_id):
+    out = database.db_select_stream_country(stream_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
     
     

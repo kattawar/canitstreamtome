@@ -34,6 +34,9 @@ def callsinglemovieapi(movie_id):
 @app.route('/v1/movie/<int:movie_id>/popularity',subdomain="api",methods=['GET'])
 def callmoviepopularityapi(movie_id):
     return api.moviepopularityapi(movie_id)
+@app.route('/v1/movie/<int:movie_id>/streaming',subdomain="api",methods=['GET'])
+def callmoviestreamapi(movie_id):
+    return api.moviestreamapi(movie_id)
 
 ### Country endpoint stuff
 @app.route('/v1/country',subdomain="api",methods=['GET'])
@@ -42,6 +45,9 @@ def callcountryapi():
 @app.route('/v1/country/<int:country_id>',subdomain="api",methods=['GET'])
 def callsinglecountryapi(country_id):
     return api.singlecountryapi(country_id)
+#@app.route('/v1/country/<int:country_id>',subdomain="api",methods=['GET'])
+#def callcountrypopmovieapi(country_id):
+#    return api.singlecountryapi(country_id)
 
 
 ### Streaming service endpoint stuff
@@ -51,6 +57,9 @@ def callstreamingapi():
 @app.route('/v1/streaming_service/<int:stream_id>',subdomain="api",methods=['GET'])
 def callsinglestreamingapi(stream_id):
     return api.singlestreamingapi(stream_id)
+@app.route('/v1/streaming_service/<int:stream_id>/popcountry',subdomain="api",methods=['GET'])
+def callstreampopcountryapi(stream_id):
+    return api.streampopcountryapi(stream_id)
 
 @app.route('/.')
 def nothing():
