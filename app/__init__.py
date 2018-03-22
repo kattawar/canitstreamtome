@@ -46,8 +46,11 @@ def callcountryapi():
 def callsinglecountryapi(country_id):
     return api.singlecountryapi(country_id)
 @app.route('/v1/country/<int:country_id>/streaming',subdomain="api",methods=['GET'])
-def callcountrypopmovieapi(country_id):
+def callcountrystreamapi(country_id):
     return api.countrystreamapi(country_id)
+@app.route('/v1/country/<int:country_id>/movie',subdomain="api",methods=['GET'])
+def callcountrymovieapi(country_id):
+    return api.countrymovieapi(country_id)
 
 
 ### Streaming service endpoint stuff
