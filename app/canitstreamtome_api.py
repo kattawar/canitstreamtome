@@ -19,14 +19,14 @@ def singlemovieapi(movie_id):
         abort(404)
     return jsonify(out)  
 
-def singlecountryapi(name):
-    out = database.db_select_country(filtertype="name",value=name)
+def singlecountryapi(country_id):
+    out = database.db_select_country(filtertype="country_id",value=country_id)
     if len(out) == 0:
         abort(404)
     return jsonify(out)
 
-def singlestreamingapi(name):
-    out = database.db_select_streaming_service(filtertype="name",value=name)
+def singlestreamingapi(stream_id):
+    out = database.db_select_streaming_service(filtertype="stream_id",value=stream_id)
     if len(out) == 0:
         abort(404)
     return jsonify(out)
