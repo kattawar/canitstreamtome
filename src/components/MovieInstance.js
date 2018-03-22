@@ -7,11 +7,8 @@ class MovieInstance extends React.Component {
 
   state = {
     movieItem: {},
-    rank1: {},
-    rank2: {},
-    rank3: {},
-    rank4: {},
-    rank5: {}
+    rankings: [],
+    streaming: []
   }
 
   componentDidMount() {
@@ -22,24 +19,25 @@ class MovieInstance extends React.Component {
         const item = res.data.data[0];
         this.setState({movieItem: item});
       });
-      url = url + '/popularity';
-      axios.get(url).then(res => {
+      let countryUrl = url + '/popularity';
+      axios.get(countryUrl).then(res => {
         const rank = res.data.data;
-        this.setState({rank1: rank[0]});
-        this.setState({rank2: rank[1]});
-        this.setState({rank3: rank[2]});
-        this.setState({rank4: rank[3]});
-        this.setState({rank5: rank[4]});
+        this.setState({rankings: rank});
+      })
+
+      let streamingUrl = url + '/streaming';
+      axios.get(streamingUrl).then(res => {
+        const stream = res.data.data;
+        this.setState({streaming: stream});
       })
     }
   }
 
   render() {
-    console.log(this.state.movieItem);
 
     var movieUrl = String(this.state.movieItem.trailer_url);
     movieUrl = movieUrl.replace('watch?v=', 'embed/');
-    console.log(movieUrl);
+    
     return (<div className="container">
       <div className="row">
         <div className="card">
@@ -62,66 +60,33 @@ class MovieInstance extends React.Component {
             <h4>Popular Countries</h4>
             <p>
               <ol>
-                <li>
-                  <Link to={{
-                      pathname: `/country/${this.state.rank1.country}`,
-                      state: {
-                        item: this.state.rank1.country
-                      }
-                    }}>
-                    {this.state.rank1.country}
-                  </Link>
-                </li>
-                <li>
-                  <Link to={{
-                      pathname: `/country/${this.state.rank2.country}`,
-                      state: {
-                        item: this.state.rank2.country
-                      }
-                    }}>
-                    {this.state.rank2.country}
-                  </Link>
-                </li>
-                <li>
-                  <Link to={{
-                      pathname: `/country/${this.state.rank3.country}`,
-                      state: {
-                        item: this.state.rank3.country
-                      }
-                    }}>
-                    {this.state.rank3.country}
-                  </Link>
-                </li>
-                <li>
-                  <Link to={{
-                      pathname: `/country/${this.state.rank4.country}`,
-                      state: {
-                        item: this.state.rank4.country
-                      }
-                    }}>
-                    {this.state.rank4.country}
-                  </Link>
-                </li>
-                <li>
-                  <Link to={{
-                      pathname: `/country/${this.state.rank5.country}`,
-                      state: {
-                        item: this.state.rank5.country
-                      }
-                    }}>
-                    {this.state.rank5.country}
-                  </Link>
-                </li>
+                {
+                  this.state.rankings.map(item => <li>
+                    <Link to={{
+                        pathname: `/country/${item.country}`,
+                        state: {
+                          item: item.id
+                        }
+                      }}>{item.country}</Link>
+                  </li>)
+                }
               </ol>
             </p>
             <hr></hr>
             <h4>Compatible Streaming Services</h4>
             <p>
-              <a href="/service1">
-                Hulu,</a>
-              <a href="/service2">Netflix,</a>
-              <a href="/service3">Amazon Video,</a>
-              <a href="/service4">Epix</a>
+              <ul>
+              {
+                this.state.streaming.map(item => <li>
+                  <Link to={{
+                      pathname: `/streaming_service/${item.name}`,
+                      state: {
+                        item: item.id
+                      }
+                    }}>{item.name}</Link>
+                </li>)
+              }
+            </ul>
             </p>
           </div>
         </div>
