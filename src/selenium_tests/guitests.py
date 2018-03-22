@@ -63,7 +63,29 @@ class TestGui(unittest.TestCase):
         assert "Top Movies on" in self.driver.page_source
 
 # testing that instances link to other instances
-#    /html/body/div[@id='reactEntry']/div[@class='App']/div[@class='container']/div[@class='row'][1]/div[@class='card']/div[@class='col-sm-8']/p[4]/ol/li[1]
+    def test_movie_link_to_country(self):
+        movies_link = self.driver.find_element_by_link_text("Movies")
+        movies_link.click()
+        first_movie_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div/section/div[@class='container']/div[@class='row'][1]/div[@class='col-sm-2'][1]/a/div[@class='card']")
+        first_movie_link.click()
+        first_country_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div[@class='container']/div[@class='row'][1]/div[@class='card']/div[@class='col-sm-8']/p[4]/ol/li[1]/a")
+        first_country_link.click()
+        assert "Population" in self.driver.page_source
+        assert "Spoken Languages" in self.driver.page_source
+        assert "Top Streaming Services" in self.driver.page_source
+        assert "Top Movies" in self.driver.page_source
+
+    def test_movie_link_to_service(self):
+        movies_link = self.driver.find_element_by_link_text("Movies")
+        movies_link.click()
+        first_movie_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div/section/div[@class='container']/div[@class='row'][1]/div[@class='col-sm-2'][1]/a/div[@class='card']")
+        first_movie_link.click()
+        first_service_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div[@class='container']/div[@class='row'][1]/div[@class='card']/div[@class='col-sm-8']/p[5]/ul/li/a")
+        first_service_link.click()
+        assert "Pricing" in self.driver.page_source
+        assert "Top Countries That Use" in self.driver.page_source
+        assert "Top Movies on" in self.driver.page_source
+
 
     def tearDown(self):
     	self.driver.close()
