@@ -17,7 +17,18 @@ class CountryInstance extends React.Component {
     }
   }
 
+  numberWithCommas = (x) => {
+    console.log(x)
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   render() {
+    const pop = Number(this.state.countryItem.population) ;
+      let x = pop.toLocaleString()
+
+    //console.log(String(pop.numberWithCommas));
+
+
     return (<div className="container">
       <div className="row">
 
@@ -31,7 +42,7 @@ class CountryInstance extends React.Component {
           <div className="col-sm-8">
 
             <h4>Population</h4>
-            <p>{this.state.countryItem.population}</p>
+            <p>{x}</p>
               <hr></hr>
             <h4>Spoken Languages</h4>
             <p>{this.state.countryItem.languages}</p>
