@@ -52,12 +52,6 @@ export class ModelGrid extends React.Component {
 
   render() {
 
-    //instanceList = this.props.info;
-    //const instanceGrouped = instanceList;
-    //console.log(instanceList.movies);
-
-    //posters = instanceList.movies;
-
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
 

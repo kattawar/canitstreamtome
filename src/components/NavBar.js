@@ -18,7 +18,7 @@ class NavBarr extends React.Component {
         <Link to="/movie">Movies</Link>
       </NavItem>
       <NavItem eventKey={2}>
-        <Link to="/service">Streaming Services</Link>
+        <Link to="/streaming_service">Streaming Services</Link>
       </NavItem>
       <NavItem eventKey={3}>
         <Link to="/country">Countries</Link>

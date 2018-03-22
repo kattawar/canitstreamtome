@@ -24,8 +24,8 @@ class App extends React.Component {
           <Route path='/movie/:movieID' component={MovieInstance}/>
           <Route exact path="/country" component={Countries} />
           <Route path="/country/:countryID" component={CountryInstance}/>
-          <Route exact path="/service" component={Services} />
-          <Route path="/service/:serviceID" component={ServiceInstance}/>
+          <Route exact path="/streaming_service" component={Services} />
+          <Route path="/streaming_service/:serviceID" component={ServiceInstance}/>
           <Route exact path="/about" component={About} />
         </Switch>
         <Bottom />

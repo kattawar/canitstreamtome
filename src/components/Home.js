@@ -32,7 +32,7 @@ class Home extends React.Component {
             <div className="container">
               <h1 className="masthead-heading mb-0">Services</h1>
               <h2 className="masthead-subheading mb-0">How To Stream?</h2>
-              <a href="/service" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+              <a href="/streaming_service" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
             </div>
 
 
