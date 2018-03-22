@@ -339,7 +339,7 @@ def db_select_country(filtertype = None, value = None, comparison = "=",pagesize
 def db_select_streaming_service(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global stream_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = schema+"select stream_id,name, pricing, available_countries from streamit_streaming_service "
+        sql_query = schema+"select stream_id,name, pricing, available_countries,image_url,website_url from streamit_streaming_service "
         if filtertype in stream_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
@@ -352,11 +352,25 @@ def db_select_streaming_service(filtertype = None, value = None, comparison = "=
 
 
 def db_select_movie_popularity(movie_id):
-        sql_query = schema+"select co.rank,sc.name from streamit_country_to_om co join streamit_countries sc on co.country_id = sc.country_id join "
+        sql_query = schema+"select co.rank,sc.name,sc.country_id from streamit_country_to_om co join streamit_countries sc on co.country_id = sc.country_id join "
         sql_query+= "streamit_omdb_movies om on co.omdb_movie_id = om.omdb_movie_id "
         sql_query+= "where om.omdb_movie_id = '{0}' order by co.rank asc".format(str(movie_id))
         send_sql_query(sql_query)
         return format_db_reply("moviepopularity",get_sql_results())
+
+def db_select_movie_stream(movie_id):
+        sql_query = schema+"select ss.name,ss.stream_id from streamit_om_to_ss os join streamit_streaming_service ss on ss.stream_id = os.streaming_service_id join "
+        sql_query+= "streamit_omdb_movies om on os.omdb_movie_id = om.omdb_movie_id "
+        sql_query+= "where om.omdb_movie_id = '{0}' order by ss.name asc".format(str(movie_id))
+        send_sql_query(sql_query)
+        return format_db_reply("moviestream",get_sql_results())
+
+def db_select_stream_country(stream_id):
+        sql_query = schema+"select cs.rank,sc.name,sc.country_id from streamit_country_to_ss cs join streamit_countries sc on cs.country_id = sc.country_id join "
+        sql_query+= "streamit_streaming_service ss on ss.stream_id = cs.streaming_service_id "
+        sql_query+= "where ss.stream_id = '{0}' order by cs.rank asc".format(str(stream_id))
+        send_sql_query(sql_query)
+        return format_db_reply("streamcountry",get_sql_results())
 
 
 
@@ -418,6 +432,8 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["name"]                = x[1]
                         out["data"][index]["pricing"]             = x[2]
                         out["data"][index]["available_countries"] = x[3]
+                        out["data"][index]["image"]               = x[4]
+                        out["data"][index]["website"]             = x[5]
                         index +=1
         elif typeofreply == "moviepopularity":
                 out["data_type"] = typeofreply
@@ -426,6 +442,24 @@ def format_db_reply(typeofreply,reply):
                         out["data"].append({})
                         out["data"][index]["rank"]   = x[0]
                         out["data"][index]["country"]= x[1]
+                        out["data"][index]["id"]     = x[2]
+                        index+=1
+        elif typeofreply == "moviestream":
+                out["data_type"] = typeofreply
+                index = 0
+                for x in reply:
+                        out["data"].append({})
+                        out["data"][index]["name"] = x[0]
+                        out["data"][index]["id"]   = x[1]
+                        index+=1
+        elif typeofreply == "streamcountry":
+                out["data_type"] = typeofreply
+                index = 0
+                for x in reply:
+                        out["data"].append({})
+                        out["data"][index]["rank"]   = x[0]
+                        out["data"][index]["country"]= x[1]
+                        out["data"][index]["id"]     = x[2]
                         index+=1
 
         return out
