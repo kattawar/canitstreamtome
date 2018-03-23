@@ -21,6 +21,9 @@ class ServiceInstance extends React.Component {
   }
 
   render() {
+    console.log(this.state.serviceItem.pricing)
+    //var result = JSON.parse(this.state.serviceItem.pricing)
+    //console.log(result)
     return (<div className="container">
       <div className="row">
         <div className="card">
