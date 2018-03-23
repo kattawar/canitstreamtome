@@ -1,28 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import  '../movies.css';
+import {Link} from 'react-router-dom';
+import '../movies.css';
 import Pagination from "react-js-pagination";
 import axios from 'axios';
 
 function splitArray(input, spacing) {
-    var output = [];
+  var output = [];
 
+  for (var i = 0; i < input.length; i += spacing) {
+    output[output.length] = input.slice(i, i + spacing);
+  }
 
-
-    for (var i = 0; i < input.length; i += spacing) {
-        output[output.length] = input.slice(i, i + spacing);
-    }
-
-
-    return output;
+  return output;
 }
 
-
-
-
 export class ModelGrid extends React.Component {
-
-
 
   constructor(props) {
     super(props);
@@ -31,106 +23,92 @@ export class ModelGrid extends React.Component {
       data: [],
       activePage: 1
     };
-    this.updateData(0);
-
+    this.updateData(1);
 
   }
 
-    handleClick = () => {
-    	console.log('this is:', this);
+  handlePageChange = (pageNumber) => {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
+    this.updateData(pageNumber);
+  }
 
+  updateData = (pageNumber) => {
+    console.log(pageNumber);
+    console.log("updatecalled");
+    let url = "";
+
+    url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/${this.props.type}?pagesize=24&pagenum=${pageNumber - 1}`;
+    console.log(url)
+    axios.get(url).then(res => {
+      const instanceList = res.data;
+      this.setState({data: instanceList});
+
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  }
+
+  render() {
+    //6
+    //1
+    var totalItems = 0;
+    if(String(this.props.type)==="movie"){
+          totalItems=1120;
+    }
+    if(String(this.props.type)==="country"){
+          totalItems=130;
+    }
+    if(String(this.props.type)==="streaming_service"){
+          totalItems=24;
     }
 
-    handlePageChange = (pageNumber) => {
-   console.log(`active page is ${pageNumber}`);
-   this.setState({activePage: pageNumber});
-   this.updateData(pageNumber);
- }
+    if (this.state.data.data) {
+      const instanceGrouped = this.state.data.data;
 
-    updateData= (pageNumber) =>{
+      const instanceRows = splitArray(instanceGrouped, 6);
 
-      let url = "https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&pagenum="+pageNumber
-  		axios.get(url)
-  	       .then(res => {
-  	         const movieList = res.data;
-  	         this.setState({ data:movieList });
-             console.log(this.state.data);
+      console.log(this.state.data.data);
 
+      return (<div>
+          <div className={this.props.type}>
+        <section>
 
+          <div className="container">
+            {
+              instanceRows.map(
+                rowList => !rowList
+                ? null
+                : <div className="row">
+                  {
+                    rowList.map(item =>
+                      <div className="col-sm-2" onClick={this.handleClick}>
+                        <Link to={{
+                            pathname: `/${this.props.type}/${item.name}`,
+                            state: { item: item.id }
+                          }}>
+                          <div className="card">
+                            <img src={item.image} alt=""/>
+                            <h5 align="center">{item.name}</h5>
+                          </div>
+                        </Link>
+                    </div>)
+                  }
+                </div>)
+            }
 
-  	       })
-  				  .catch((error) => {
-  						console.log(error);
-  					});
-
-
-
-  	}
-
-
-	render() {
-
-
-
-	 //movieList = this.props.info;
-		//const movieGrouped = movieList;
-    //console.log(movieList.movies);
-
-   //posters = movieList.movies;
-      console.log(this.state.data.movies);
-
-      if(this.state.data.movies){
-      const movieGrouped = this.state.data.movies;
-
-
-     const posterRows = splitArray(movieGrouped, 6);
-
-
-     console.log(posterRows);
-
-
-
-		return (
-      <div>
-			<section>
-			<div className="container">
-      {posterRows.map(rowList=>
-        !rowList ? null:
-         <div className="row">
-				{rowList.map(item =>
-
-
-							<div className="col-sm-2" onClick={this.handleClick}>
-								<Link to={{pathname:`/${this.props.type}/${item.title}`, state:{item: {item}}}}>
-									<img src={item.poster_url}  alt=""/>
-								</Link>
-							</div>
-					)}
           </div>
-        )}
 
-
-
-			</div>
-
-
-
-
-			</section>
-      <div className="text-center">
-      <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={24}
-          totalItemsCount={800}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange}
-        />
+        </section>
         </div>
+
+        <div className="text-center">
+          <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
-		);
+      </div>);
+    }
+    return (<div></div>);
+
   }
-  return (<div></div>);
-
-
-	}
 }

@@ -21,7 +21,7 @@ class Home extends React.Component {
 
               <h1 className="masthead-heading mb-0">Movies</h1>
               <h2 className="masthead-subheading mb-0">What's On?</h2>
-              <a href="/movies" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+              <a href="/movie" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
 
 
 
@@ -32,7 +32,7 @@ class Home extends React.Component {
             <div className="container">
               <h1 className="masthead-heading mb-0">Services</h1>
               <h2 className="masthead-subheading mb-0">How To Stream?</h2>
-              <a href="/services" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+              <a href="/streaming_service" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
             </div>
 
 
@@ -44,7 +44,7 @@ class Home extends React.Component {
             <div className="container">
               <h1 className="masthead-heading mb-0">Countries</h1>
               <h2 className="masthead-subheading mb-0">Where At?</h2>
-              <a href="/countries" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
+              <a href="/country" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
             </div>
 
 
