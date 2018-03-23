@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() });
 import Home from '../src/components/Home';
 import NavBarr from '../src/components/NavBar';
 import Bottom from '../src/components/Footer';
-import About from '../src/components/About';
+//import About from '../src/components/About';
 //import ModelGrid from '../src/components/Grid';
 //import splitArray from '../src/components/Grid';
 //import MovieInstance from '../src/components/MovieInstance';
