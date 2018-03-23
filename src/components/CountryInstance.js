@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import '../country-instance.css';
+
 class CountryInstance extends React.Component {
 
   state = {
