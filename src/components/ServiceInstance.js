@@ -34,8 +34,12 @@ class ServiceInstance extends React.Component {
   }
 
   render() {
+
+    let prices = {};
     if (this.state.serviceItem.pricing) {
-      console.log(this.state.serviceItem.pricing['basic']);
+      for (let key in this.state.serviceItem.pricing) {
+        prices[key] = this.state.serviceItem.pricing[key];
+      }
     }
 
     return (<div className="container">
@@ -54,6 +58,9 @@ class ServiceInstance extends React.Component {
             <h4>Pricing</h4>
             <p>
               <ul>
+                {Object.keys(prices).map(tier => (
+                  <li>{tier} : {prices[tier]}</li>
+                ))}
               </ul>
             </p>
             <h4>Top Countries That Use {this.state.serviceItem.name}</h4>
@@ -77,7 +84,7 @@ class ServiceInstance extends React.Component {
                 {
                   this.state.movies.slice(0,10).map(item => <li>
                     <Link to={{
-                        pathname: `/movie/${item.id}`,
+                        pathname: `/movie/${item.name}`,
                         state: {
                           item: item.id
                         }
