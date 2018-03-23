@@ -112,3 +112,5 @@ export class ModelGrid extends React.Component {
 
   }
 }
+
+export default ModelGrid;

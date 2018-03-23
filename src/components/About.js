@@ -111,7 +111,7 @@ class About extends React.Component {
               <p>Major Responsibilities: Front-End CSS & HTML</p>
               <p>No. Commits: {this.state.erin_commits}</p>
               <p>No. Issues: {this.state.erin_issues}</p>
-              <p>No. Unit Tests:</p>
+              <p>No. Unit Tests: 21</p>
             </div>
             <div className="col-sm-4">
               <img className="img-responsive" src={nick_hs} alt=""></img>
@@ -120,7 +120,7 @@ class About extends React.Component {
               <p>Major Responsibilities: Front End CSS/HTML React</p>
               <p>No. Commits: {this.state.nick_commits}</p>
               <p>No. Issues: {this.state.nick_issues}</p>
-              <p>No. Unit Tests:</p>
+              <p>No. Unit Tests: 0</p>
             </div>
             <div className="col-sm-4">
               <img className="img-responsive" src={kevin_hs} alt=""></img>
@@ -129,7 +129,7 @@ class About extends React.Component {
               <p>Major Responsibilities: Front End/React</p>
               <p>No. Commits: {this.state.kevin_commits}</p>
               <p>No. Issues: {this.state.kevin_issues}</p>
-              <p>No. Unit Tests:</p>
+              <p>No. Unit Tests: 0</p>
             </div>
 
           </div>
@@ -155,7 +155,7 @@ class About extends React.Component {
               <p>Major Responsibilities: Database and API</p>
               <p>No. Commits: {this.state.jordan_commits}</p>
               <p>No. Issues: {this.state.jordan_issues}</p>
-              <p>No. Unit Tests: 0</p>
+              <p>No. Unit Tests: 44</p>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ class About extends React.Component {
             <h3 className="display-4">STATS</h3>
             <p>Total No. Commits: {this.state.jordan_commits + this.state.zach_commits + this.state.erin_commits + this.state.nick_commits + this.state.kevin_commits}</p>
             <p>Total No. Issues: {this.state.jordan_issues + this.state.zach_issues + this.state.erin_issues + this.state.nick_issues + this.state.kevin_issues}</p>
-            <p>Total No. Unit Tests: 0</p>
+            <p>Total No. Unit Tests: 65</p>
           </div>
         </div>
       </section>
