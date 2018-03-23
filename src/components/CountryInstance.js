@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import '../movie-details.css';
+
 class CountryInstance extends React.Component {
 
   state = {
@@ -82,7 +82,7 @@ class CountryInstance extends React.Component {
             <p>
               <ol>
                 {
-                  this.state.movieranks.map(item => <li>
+                  this.state.movieranks.slice(0,10).map(item => <li>
                     <Link to={{
                         pathname: `/movie/${item.id}`,
                         state: {
