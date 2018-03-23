@@ -77,5 +77,20 @@ def streampopcountryapi(stream_id):
     if len(out) == 0:
         abort(404)
     return jsonify(out)
+### Country stream
+def countrystreamapi(country_id):
+    out = database.db_select_country_stream(country_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+
+### Country movie
+def countrymovieapi(country_id):
+    out = database.db_select_country_movie(country_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+    
+    
     
     
