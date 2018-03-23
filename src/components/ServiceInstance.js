@@ -5,7 +5,8 @@ import '../movie-details.css';
 class ServiceInstance extends React.Component {
 
   state = {
-    serviceItem: {}
+    serviceItem: {},
+    rankings: []
   }
 
   componentDidMount() {
@@ -14,8 +15,14 @@ class ServiceInstance extends React.Component {
     if (service) {
       axios.get(url).then(res => {
         const item = res.data.data[0];
-        console.log(item);
         this.setState({serviceItem: item});
+      });
+
+      let popUrl = url + '/popcountry';
+      axios.get(popUrl).then(res => {
+        const rank = res.data.data;
+        console.log(rank);
+        this.setState({rankings : rank});
       });
     }
   }
@@ -37,16 +44,22 @@ class ServiceInstance extends React.Component {
             <h4>Pricing</h4>
             <p>
               <ul>
-                {/* {Object.entries(this.state.serviceItem.pricing).map(([key, value])=> {
-                  return (<li>{key} : {value}</li>);
-                })} */}
               </ul>
             </p>
             <h4>Top Countries That Use {this.state.serviceItem.name}</h4>
             <p>
-              <ul>
-                <li>Placeholder</li>
-              </ul>
+              <ol>
+                {
+                  this.state.rankings.map(item => <li>
+                    <Link to={{
+                        pathname: `/country/${item.country}`,
+                        state: {
+                          item: item.id
+                        }
+                      }}>{item.country}</Link>
+                  </li>)
+                }
+              </ol>
             </p>
             <h4>Top Movies on {this.state.serviceItem.name}</h4>
             <p>
