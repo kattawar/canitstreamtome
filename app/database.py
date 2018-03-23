@@ -371,6 +371,18 @@ def db_select_stream_country(stream_id):
         sql_query+= "where ss.stream_id = '{0}' order by cs.rank asc".format(str(stream_id))
         send_sql_query(sql_query)
         return format_db_reply("streamcountry",get_sql_results())
+def db_select_country_stream(country_id):
+        sql_query = schema+"select ss.name,ss.stream_id from streamit_country_to_ss cs join streamit_countries sc on cs.country_id = sc.country_id join "
+        sql_query+= "streamit_streaming_service ss on ss.stream_id = cs.streaming_service_id "
+        sql_query+= "where sc.country_id = '{0}' ".format(str(country_id))
+        send_sql_query(sql_query)
+        return format_db_reply("countrystream",get_sql_results())
+def db_select_country_movie(country_id):
+        sql_query = schema+"select om.title,om.omdb_movie_id from streamit_country_to_om co join streamit_countries sc on co.country_id = sc.country_id join "
+        sql_query+= "streamit_omdb_movies om on co.omdb_movie_id = om.omdb_movie_id "
+        sql_query+= "where co.country_id = '{0}' order by co.rank asc".format(str(country_id))
+        send_sql_query(sql_query)
+        return format_db_reply("countrymovie",get_sql_results())
 
 
 
@@ -460,6 +472,22 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["rank"]   = x[0]
                         out["data"][index]["country"]= x[1]
                         out["data"][index]["id"]     = x[2]
+                        index+=1
+        elif typeofreply == "countrystream":
+                out["data_type"] = typeofreply
+                index = 0
+                for x in reply:
+                        out["data"].append({})
+                        out["data"][index]["name"]   = x[0]
+                        out["data"][index]["id"]     = x[1]
+                        index+=1
+        elif typeofreply == "countrymovie":
+                out["data_type"] = typeofreply
+                index = 0
+                for x in reply:
+                        out["data"].append({})
+                        out["data"][index]["name"]   = x[0]
+                        out["data"][index]["id"]     = x[1]
                         index+=1
 
         return out
