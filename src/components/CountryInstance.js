@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 import '../movie-details.css';
 class CountryInstance extends React.Component {
 
   state = {
-    countryItem: {}
+    countryItem: {},
+    movieranks: [],
+    streamranks: []
   }
 
   componentDidMount() {
@@ -14,6 +17,16 @@ class CountryInstance extends React.Component {
       axios.get(url).then(res => {
         this.setState({countryItem : res.data.data[0]});
       });
+      let movieUrl = url + '/movie';
+      axios.get(movieUrl).then(res => {
+        const rank = res.data.data;
+        this.setState({movieranks: rank});
+      })
+      let serviceUrl = url + '/streaming';
+      axios.get(serviceUrl).then(res => {
+        const rank = res.data.data;
+        this.setState({streamranks: rank});
+      })
     }
   }
 
@@ -23,6 +36,8 @@ class CountryInstance extends React.Component {
   }
 
   render() {
+
+    console.log(this.state.movies);
     const pop = Number(this.state.countryItem.population) ;
       let x = pop.toLocaleString()
 
@@ -48,10 +63,36 @@ class CountryInstance extends React.Component {
             <p>{this.state.countryItem.languages}</p>
               <hr></hr>
             <h4>Top Streaming Services</h4>
-            <p><ul><li>Placeholder</li></ul></p>
+            <p>
+              <ol>
+                {
+                  this.state.streamranks.map(item => <li>
+                    <Link to={{
+                        pathname: `/streaming_service/${item.id}`,
+                        state: {
+                          item: item.id
+                        }
+                      }}>{item.name}</Link>
+                  </li>)
+                }
+              </ol>
+            </p>
               <hr></hr>
             <h4>Top Movies</h4>
-            <p><ul><li>Placeholder</li></ul></p>
+            <p>
+              <ol>
+                {
+                  this.state.movieranks.map(item => <li>
+                    <Link to={{
+                        pathname: `/movie/${item.id}`,
+                        state: {
+                          item: item.id
+                        }
+                      }}>{item.name}</Link>
+                  </li>)
+                }
+              </ol>
+            </p>
               <hr></hr>
           </div>
         </div>
