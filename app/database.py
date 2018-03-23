@@ -182,7 +182,7 @@ def db_insert_country_to_om_rows(om_id, country_ranks):
 def db_get_omdb_movies():
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_omdb_movies"
+    sql_query = schema+"SELECT * FROM streamit_omdb_movies order by omdb_movie_id"
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
@@ -190,7 +190,7 @@ def db_get_omdb_movies():
 def db_get_streaming_services():
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_streaming_service"
+    sql_query = schema+"SELECT * FROM streamit_streaming_service order by stream_id"
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
@@ -249,7 +249,7 @@ def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id, themovied
 def db_get_guidebox_movies():
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_guidebox_movies"
+    sql_query = schema+"SELECT * FROM streamit_guidebox_movies order by guidebox_movie_id,streaming_service_id"
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
