@@ -1,0 +1,1356 @@
+{
+	"info": {
+		"name": "canitstreamto.me",
+		"_postman_id": "16bb0b8f-fd99-6c69-ef3b-fb5b9aa7b21b",
+		"description": "#api.canitstreamto.me\r\nIntroduction\r\nThis api is designed to all easy of access to all the data contained within the canitstreamto.me database.\r\n\r\n#Overview\r\nIts a pretty cool api.\r\n\r\n#Authentication\r\nAt this moment in time there is no authentication available for the api. Certificates for https have been obtained to allow secure authentication when it is implemented.\r\n\r\n#Error Codes\r\nA bad/malformed request will have a 400 error returned.\r\n\r\n#Rate limit\r\nAt this moment in time there is no rate limit. One will be implemented when there is a working system for authentication.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/v1/movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc98df27-adb1-4bde-a400-ea7d2e1501fd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Movie: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Movie: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"movies\");",
+							"});",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/movie\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Movie: Default Page Size is 25\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"].length).to.eql(25)",
+							"    });",
+							"});",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/movie?pagesize=5\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Country: Page Sizes\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"].length).to.eql(5)",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test Country: Check First Name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"name\"]).to.eql(\"10 Cloverfield Lane\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/movie?sortdir=desc\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Country: Check Sort Order\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"][0][\"name\"]).to.eql(\"Zootopia\")",
+							"    });",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/movie",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"movie"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing potentially many movies.\r\n\r\n# Parameters\r\n\r\n**filter** - String with one of these values {title,description,rating,release_date,language,poster_url,movie_cast}. Must have a corresponding value if used.\r\n\r\n**value**  - Type by filter value {title:string, description:string, rating:double, release_data:string, language:json, poster_url:string, movie_cast:json}\r\n\r\n**comparison** - The type of comparison to be preformed based on value. Must be one of one of {=,>=,<=,like}. Like performes a partial search where it finds every entry that starts with value. Default is =.\r\n\r\n**pagesize** - int determining the max number of entries returned.\r\n\r\n**pagenum** - int determining the offset into the results.\r\n\r\n**sort** - How the json results will be sorted. Must be a string with one of these values {title, description, rating, release_date, language, poster_url, movie_cast}.\r\n\r\n**sortdir** - Whether the results will be sorted in asc or desc order. Must be a string with one of these values {asc,desc}.\r\n\r\n"
+			},
+			"response": [
+				{
+					"id": "463136bf-90ba-4825-ac72-79affa810277",
+					"name": "Paging Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/movie?pagesize=30&pagenum=5",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"movie"
+							],
+							"query": [
+								{
+									"key": "pagesize",
+									"value": "30",
+									"equals": true
+								},
+								{
+									"key": "pagenum",
+									"value": "5",
+									"equals": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "16303",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Mar 2018 20:48:18 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 407,
+					"body": "{\n  \"movies\": [\n    {\n      \"description\": \"Alicia has been a good wife to her husband, a former state's attorney. After a very humiliating sex and corruption scandal, he is behind bars. She must now provide for her family and returns to work as a litigator in a law firm.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Julianna Margulies, Matt Czuchry, Christine Baranski, Archie Panjabi\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTI2OTk4MDk3OF5BMl5BanBnXkFtZTcwMTY3NTc3Mg@@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"22 Sep 2009\", \n      \"title\": \"The Good Wife\"\n    }, \n    {\n      \"description\": \"Alicia has been a good wife to her husband, a former state's attorney. After a very humiliating sex and corruption scandal, he is behind bars. She must now provide for her family and returns to work as a litigator in a law firm.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Julianna Margulies, Matt Czuchry, Christine Baranski, Archie Panjabi\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTI2OTk4MDk3OF5BMl5BanBnXkFtZTcwMTY3NTc3Mg@@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"22 Sep 2009\", \n      \"title\": \"The Good Wife\"\n    }, \n    {\n      \"description\": \"Alicia has been a good wife to her husband, a former state's attorney. After a very humiliating sex and corruption scandal, he is behind bars. She must now provide for her family and returns to work as a litigator in a law firm.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Julianna Margulies, Matt Czuchry, Christine Baranski, Archie Panjabi\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTI2OTk4MDk3OF5BMl5BanBnXkFtZTcwMTY3NTc3Mg@@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"22 Sep 2009\", \n      \"title\": \"The Good Wife\"\n    }, \n    {\n      \"description\": \"A woman struggles to define what it means to be good.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Kristen Bell, William Jackson Harper, Jameela Jamil, D'Arcy Carden\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BNWUxNDA2NmItZDgzMC00NzNkLWJkYTYtYmM0NjYzMDY4NWVjXkEyXkFqcGdeQXVyNjMxNzcwOTI@._V1_SX300.jpg\", \n      \"rating\": \"TV-PG\", \n      \"release_date\": \"19 Sep 2016\", \n      \"title\": \"The Good Place\"\n    }, \n    {\n      \"description\": \"A woman struggles to define what it means to be good.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Kristen Bell, William Jackson Harper, Jameela Jamil, D'Arcy Carden\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BNWUxNDA2NmItZDgzMC00NzNkLWJkYTYtYmM0NjYzMDY4NWVjXkEyXkFqcGdeQXVyNjMxNzcwOTI@._V1_SX300.jpg\", \n      \"rating\": \"TV-PG\", \n      \"release_date\": \"19 Sep 2016\", \n      \"title\": \"The Good Place\"\n    }, \n    {\n      \"description\": \"Shaun Murphy, a young surgeon with autism and Savant syndrome, is recruited into the surgical unit of a prestigious hospital.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Freddie Highmore, Nicholas Gonzalez, Antonia Thomas, Chuku Modu\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTU0Nzk2MDE2MV5BMl5BanBnXkFtZTgwMzg0MzI3MzI@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"25 Sep 2017\", \n      \"title\": \"The Good Doctor\"\n    }, \n    {\n      \"description\": \"Four previously married women live together in Miami, sharing their various experiences together and enjoying themselves despite hard times.\", \n      \"language\": \"English, Italian, Norwegian\", \n      \"movie_cast\": \"Bea Arthur, Betty White, Rue McClanahan, Estelle Getty\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTIwMDE0ODU0Nl5BMl5BanBnXkFtZTcwMjg5MDcyMQ@@._V1_SX300.jpg\", \n      \"rating\": \"TV-PG\", \n      \"release_date\": \"14 Sep 1985\", \n      \"title\": \"The Golden Girls\"\n    }, \n    {\n      \"description\": \"In a world where mutated humans are treated with distrust and fear, an institute for mutants battles to achieve peaceful co-existence with humanity.\", \n      \"language\": \"English, Finnish\", \n      \"movie_cast\": \"Stephen Moyer, Amy Acker, Sean Teale, Natalie Alyn Lind\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BNzY5NTI0ODg5MV5BMl5BanBnXkFtZTgwMTM0NjM5MjI@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"02 Oct 2017\", \n      \"title\": \"The Gifted\"\n    }, \n    {\n      \"description\": \"Teenager Callie Jacob is placed in a foster home with a lesbian couple and their blend of biological, adoptive, and foster children.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Maia Mitchell, David Lambert, Cierra Ramirez, Hayden Byerly\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMGNjMTRjMjItYzUzNi00Mzk1LWFkM2MtNmZlODdjZGUwYTQzXkEyXkFqcGdeQXVyNjc4MzM4NTM@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"03 Jun 2013\", \n      \"title\": \"The Fosters\"\n    }, \n    {\n      \"description\": \"A brilliant and charismatic, yet psychotic serial killer communicates with other active serial killers and activates a cult of believers following his every command.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Kevin Bacon, Shawn Ashmore, James Purefoy, Sam Underwood\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTUxNTk0MjUwOV5BMl5BanBnXkFtZTgwOTE4MDc2NDE@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"21 Jan 2013\", \n      \"title\": \"The Following\"\n    }, \n    {\n      \"description\": \"A police detective in the asteroid belt, the first officer of an interplanetary ice freighter and an earth-bound United Nations executive slowly discover a vast conspiracy that threatens the Earth's rebellious colony on the asteroid belt.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Cas Anvar, Wes Chatham, Dominique Tipper, Steven Strait\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxNzI0NDY2OF5BMl5BanBnXkFtZTgwNDg0MDQyMTI@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"23 Nov 2015\", \n      \"title\": \"The Expanse\"\n    }, \n    {\n      \"description\": \"When a teenage girl is possessed by a mysterious entity, her mother seeks the help of two priests to save her daughter.\", \n      \"language\": \"English, Latin, Greek, French, German, Arabic, Kurdish\", \n      \"movie_cast\": \"Ellen Burstyn, Max von Sydow, Lee J. Cobb, Kitty Winn\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BYzczOGRlMzQtNDAzMS00MjdlLTk5Y2QtNTM3MDE3NjRkYzQwXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg\", \n      \"rating\": \"R\", \n      \"release_date\": \"26 Dec 1973\", \n      \"title\": \"The Exorcist\"\n    }, \n    {\n      \"description\": \"A comedy variety show that teaches basic phonetic and grammar concepts using live-action sketches, cartoons, songs, and Spider-Man episodes.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Jim Boyd, Morgan Freeman, Judy Graubart, Skip Hinnant\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BODQxODUyMTIyMF5BMl5BanBnXkFtZTcwODkxMTYzMQ@@._V1_SX300.jpg\", \n      \"rating\": \"TV-G\", \n      \"release_date\": \"25 Oct 1971\", \n      \"title\": \"The Electric Company\"\n    }, \n    {\n      \"description\": \"A comedy variety show that teaches basic phonetic and grammar concepts using live-action sketches, cartoons, songs, and Spider-Man episodes.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Jim Boyd, Morgan Freeman, Judy Graubart, Skip Hinnant\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BODQxODUyMTIyMF5BMl5BanBnXkFtZTcwODkxMTYzMQ@@._V1_SX300.jpg\", \n      \"rating\": \"TV-G\", \n      \"release_date\": \"25 Oct 1971\", \n      \"title\": \"The Electric Company\"\n    }, \n    {\n      \"description\": \"Set in 1935 when the Englishwoman Louisa Durrell, whose life had fallen apart, decided to move from Bournemouth to the Greek island of Corfu. Her husband had died some years earlier and she...\", \n      \"language\": \"English, Greek\", \n      \"movie_cast\": \"Keeley Hawes, Anna Savva, Josh O'Connor, Milo Parker\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMzg4NDlkNDgtZTc1ZC00MTJmLWIyYTctOTUyZGVmZDdkZTMxXkEyXkFqcGdeQXVyMjExMjk0ODk@._V1_SX300.jpg\", \n      \"rating\": \"TV-PG\", \n      \"release_date\": \"16 Oct 2016\", \n      \"title\": \"The Durrells in Corfu\"\n    }, \n    {\n      \"description\": \"The Stones consist of loving homemaker Donna, her pediatrician husband Alex, and their children Mary and Jeff. Many situations arise like when they found a baby on their doorstep or take in...\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Donna Reed, Paul Petersen, Carl Betz, Shelley Fabares\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTI1ODM4MDMyM15BMl5BanBnXkFtZTcwNjQxODA4MQ@@._V1_SX300.jpg\", \n      \"rating\": \"N/A\", \n      \"release_date\": \"24 Sep 1958\", \n      \"title\": \"The Donna Reed Show\"\n    }, \n    {\n      \"description\": \"A look at life in New York City during the 1970s and '80s when porn and prostitution were rampant in Manhattan.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"James Franco, Maggie Gyllenhaal, Gbenga Akinnagbe, Gary Carr\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BNjM2MDg4NzE0MV5BMl5BanBnXkFtZTgwNDE1NzMzMzI@._V1_SX300.jpg\", \n      \"rating\": \"TV-MA\", \n      \"release_date\": \"25 Aug 2017\", \n      \"title\": \"The Deuce\"\n    }, \n    {\n      \"description\": \"Contemporary husband and father takes his family on a road trip.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Jason Jones, Natalie Zea, Ashley Gerasimovich, Liam Carroll\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMjEwNjc4MzY4NF5BMl5BanBnXkFtZTgwOTY2NjA0NDM@._V1_SX300.jpg\", \n      \"rating\": \"TV-MA\", \n      \"release_date\": \"11 Apr 2016\", \n      \"title\": \"The Detour\"\n    }, \n    {\n      \"description\": \"Two escaped convicts chained together, white and black, must learn to get along in order to elude capture.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Tony Curtis, Sidney Poitier, Theodore Bikel, Charles McGraw\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMjA3OTI4NTQyNV5BMl5BanBnXkFtZTcwMDk3MTMzNA@@._V1_SX300.jpg\", \n      \"rating\": \"APPROVED\", \n      \"release_date\": \"27 Sep 1958\", \n      \"title\": \"The Defiant Ones\"\n    }, \n    {\n      \"description\": \"A man awakens from a coma to discover he has a psychic ability.\", \n      \"language\": \"English, Russian\", \n      \"movie_cast\": \"Christopher Walken, Brooke Adams, Tom Skerritt, Herbert Lom\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMDk2ZGVkY2UtZGE0MS00NTY1LThiZjYtYjQxMTAwMjM5M2VlXkEyXkFqcGdeQXVyNTI4MjkwNjA@._V1_SX300.jpg\", \n      \"rating\": \"R\", \n      \"release_date\": \"21 Oct 1983\", \n      \"title\": \"The Dead Zone\"\n    }, \n    {\n      \"description\": \"Rick and Marty Lagina, two brothers from Michigan with a life-long interest in the mystery of Oak Island, renew efforts to discover the legendary treasure with sophisticated machinery.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Robert Clotworthy, Marty Lagina, Rick Lagina, Charles Barkhouse\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BNDUyOTY3MTcyMl5BMl5BanBnXkFtZTgwODIwMTEwNDI@._V1_SX300.jpg\", \n      \"rating\": \"TV-PG\", \n      \"release_date\": \"05 Jan 2014\", \n      \"title\": \"The Curse of Oak Island\"\n    }, \n    {\n      \"description\": \"The goings-on in the life of a successful African-American family.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Bill Cosby, Phylicia Rashad, Keshia Knight Pulliam, Malcolm-Jamal Warner\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMzA3NDIwMjU3Nl5BMl5BanBnXkFtZTcwMTcxODgyMQ@@._V1_SX300.jpg\", \n      \"rating\": \"TV-G\", \n      \"release_date\": \"20 Sep 1984\", \n      \"title\": \"The Cosby Show\"\n    }, \n    {\n      \"description\": \"An ex A-list celebrity attempts to rekindle the flame of her once prominent acting career with nothing but a camera crew and some determination.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Lisa Kudrow, Lance Barber, Robert Michael Morris, Laura Silverman\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTUxNDU4MjY3OF5BMl5BanBnXkFtZTgwMDI2OTg5MjE@._V1_SX300.jpg\", \n      \"rating\": \"TV-MA\", \n      \"release_date\": \"05 Jun 2005\", \n      \"title\": \"The Comeback\"\n    }, \n    {\n      \"description\": \"An ex A-list celebrity attempts to rekindle the flame of her once prominent acting career with nothing but a camera crew and some determination.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Lisa Kudrow, Lance Barber, Robert Michael Morris, Laura Silverman\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTUxNDU4MjY3OF5BMl5BanBnXkFtZTgwMDI2OTg5MjE@._V1_SX300.jpg\", \n      \"rating\": \"TV-MA\", \n      \"release_date\": \"05 Jun 2005\", \n      \"title\": \"The Comeback\"\n    }, \n    {\n      \"description\": \"A man who escapes from the vicious grips of the serial killer known as \\\"The Collector\\\" is then forced to help rescue an innocent girl from the killer's booby-trapped lair.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Josh Stewart, Emma Fitzpatrick, Christopher McDonald, Lee Tergesen\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BODQ0MDgzNDA0NV5BMl5BanBnXkFtZTcwNDM4MDQ1OA@@._V1_SX300.jpg\", \n      \"rating\": \"R\", \n      \"release_date\": \"30 Nov 2012\", \n      \"title\": \"The Collection\"\n    }, \n    {\n      \"description\": \"Riley is a single mother living in a small Texas town and leading a shocking double life.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Jennifer Love Hewitt, Loretta Devine, Colin Egglesfield, Cybill Shepherd\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTU4NzI2NzY1OF5BMl5BanBnXkFtZTcwOTYyMDcwOQ@@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"N/A\", \n      \"title\": \"The Client List\"\n    }, \n    {\n      \"description\": \"Riley is a single mother living in a small Texas town and leading a shocking double life.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Jennifer Love Hewitt, Loretta Devine, Colin Egglesfield, Cybill Shepherd\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTU4NzI2NzY1OF5BMl5BanBnXkFtZTcwOTYyMDcwOQ@@._V1_SX300.jpg\", \n      \"rating\": \"TV-14\", \n      \"release_date\": \"N/A\", \n      \"title\": \"The Client List\"\n    }, \n    {\n      \"description\": \"Come one, come all to THE CIRCUS: INSIDE THE GREATEST POLITICAL SHOW ON EARTH. This documentary series pulls back the curtain on the 2016 presidential race, revealing the intense, inspiring...\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Donald Trump, Ted Cruz, Marco Rubio, Hillary Clinton\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMTExOTMxNDM0ODZeQTJeQWpwZ15BbWU4MDY1NjE2Mjkx._V1_SX300.jpg\", \n      \"rating\": \"N/A\", \n      \"release_date\": \"17 Jan 2016\", \n      \"title\": \"The Circus: Inside the Greatest Political Show on Earth\"\n    }, \n    {\n      \"description\": \"A fateful turn of events sends shockwaves through a community on the Southside of Chicago and connects the lives of Emmett, Brandon, Ronnie and Kevin in unexpected ways.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Armando Riesco, Steven Williams, Barton Fitzpatrick, Alona Leoine\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMGM0M2EyMWItYmFkZC00MmU5LTlkNTgtYmNiNTMxZTVkZmVjXkEyXkFqcGdeQXVyNjc3OTUzNzM@._V1_SX300.jpg\", \n      \"rating\": \"TV-MA\", \n      \"release_date\": \"07 Jan 2018\", \n      \"title\": \"The Chi\"\n    }, \n    {\n      \"description\": \"A fateful turn of events sends shockwaves through a community on the Southside of Chicago and connects the lives of Emmett, Brandon, Ronnie and Kevin in unexpected ways.\", \n      \"language\": \"English\", \n      \"movie_cast\": \"Armando Riesco, Steven Williams, Barton Fitzpatrick, Alona Leoine\", \n      \"poster_url\": \"https://images-na.ssl-images-amazon.com/images/M/MV5BMGM0M2EyMWItYmFkZC00MmU5LTlkNTgtYmNiNTMxZTVkZmVjXkEyXkFqcGdeQXVyNjc3OTUzNzM@._V1_SX300.jpg\", \n      \"rating\": \"TV-MA\", \n      \"release_date\": \"07 Jan 2018\", \n      \"title\": \"The Chi\"\n    }\n  ]\n}\n"
+				},
+				{
+					"id": "ad0654b8-bc43-4350-a181-618ec73f257e",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/movie",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"movie"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "18668",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 02:38:32 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"data\": [\n    {\n      \"description\": \"After getting in a car accident, a woman is held in a shelter with two men, who claim the outside world is affected by a widespread chemical attack.\", \n      \"id\": 2681, \n      \"image\": \"http://image.tmdb.org/t/p/w185/aeiVxTSTeGJ2ICf1iSDXkF3ivZp.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Mary Elizabeth Winstead, John Goodman, John Gallagher Jr., Bradley Cooper, Douglas M. Griffin\", \n      \"name\": \"10 Cloverfield Lane\", \n      \"rating\": \"6.9\", \n      \"release_date\": \"2016-03-10\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=saHzng8fxLs\"\n    }, \n    {\n      \"description\": \"An American Ambassador is killed during an attack at a U.S. compound in Libya as a security team struggles to make sense out of the chaos.\", \n      \"id\": 2611, \n      \"image\": \"http://image.tmdb.org/t/p/w185/4gpW4MkRI0BB17GHOJzXq0WamDP.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"James Badge Dale, John Krasinski, Max Martini, Pablo Schreiber, Toby Stephens\", \n      \"name\": \"13 Hours: The Secret Soldiers of Benghazi\", \n      \"rating\": \"7.0\", \n      \"release_date\": \"2016-01-13\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=4CJBuUwd0Os\"\n    }, \n    {\n      \"description\": \"A simple yet proud rancher conspires to murder his wife for financial gain, convincing his teenage son to participate.\", \n      \"id\": 2479, \n      \"image\": \"http://image.tmdb.org/t/p/w185/q4FQOiSRhTLWulHl5Vpg37FMArH.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Thomas Jane, Neal McDonough, Molly Parker, Dylan Schmid, Kaitlyn Bernard\", \n      \"name\": \"1922\", \n      \"rating\": \"6.0\", \n      \"release_date\": \"2017-10-20\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=3E_fT0aTsjI\"\n    }, \n    {\n      \"description\": \"A man's life is derailed when an ominous pattern of events repeats itself in exactly the same manner every day, ending at precisely 2:22 p.m.\", \n      \"id\": 2684, \n      \"image\": \"http://image.tmdb.org/t/p/w185/aQkXOiMi7yBR3XwDbGBzDI2Tqnq.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Michiel Huisman, Teresa Palmer, Sam Reid, John Waters, Richard Davies\", \n      \"name\": \"2:22\", \n      \"rating\": \"5.6\", \n      \"release_date\": \"2017-06-29\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=Af2N3N5rURI\"\n    }, \n    {\n      \"description\": \"The filmed adaptation from David Benioff's novel of the same name. Set in New York, a convicted drug dealer named Monty has one day left of freedom before he is sent to prison. Anger, blame, frustration, betrayal, guilt and loneliness are themes on this last day of friends, family, parties, saying goodbye, and setting things straight. A Spike Lee joint.\", \n      \"id\": 2810, \n      \"image\": \"http://image.tmdb.org/t/p/w185/hf3KpQ13Z8HS0ZodzooMiR8PBqD.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Edward Norton, Philip Seymour Hoffman, Barry Pepper, Rosario Dawson, Anna Paquin\", \n      \"name\": \"25th Hour\", \n      \"rating\": \"7.2\", \n      \"release_date\": \"2002-12-16\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=2qZVGJd6-rI\"\n    }, \n    {\n      \"description\": \"Based on Frank Miller's graphic novel, \\\"300\\\" is very loosely based the 480 B.C. Battle of Thermopylae, where the King of Sparta led his army against the advancing Persians; the battle is said to have inspired all of Greece to band together against the Persians, and helped usher in the world's first democracy.\", \n      \"id\": 2394, \n      \"image\": \"http://image.tmdb.org/t/p/w185/bYR8O1H1ZlME7Dm9ysfTYZnRDpw.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Gerard Butler, Lena Headey, Dominic West, David Wenham, Vincent Regan\", \n      \"name\": \"300\", \n      \"rating\": \"7.0\", \n      \"release_date\": \"2006-12-09\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=UrIbxk7idYA\"\n    }, \n    {\n      \"description\": \"In Arizona in the late 1800s, infamous outlaw Ben Wade and his vicious gang of thieves and murderers have plagued the Southern Railroad. When Wade is captured, Civil War veteran Dan Evans, struggling to survive on his drought-plagued ranch, volunteers to deliver him alive to the \\\"3:10 to Yuma\\\", a train that will take the killer to trial.\", \n      \"id\": 2662, \n      \"image\": \"http://image.tmdb.org/t/p/w185/9Nwkh0eQmkymEOR0ovAALtjSIZW.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Russell Crowe, Christian Bale, Logan Lerman, Dallas Roberts, Peter Fonda\", \n      \"name\": \"3:10 to Yuma\", \n      \"rating\": \"7.0\", \n      \"release_date\": \"2007-09-06\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=jX1m45CwvJ8\"\n    }, \n    {\n      \"description\": \"Two sisters on Mexican vacation are trapped in a shark observation cage at the bottom of the ocean, with oxygen running low and great whites circling nearby, they have less than an hour of air left to figure out how to get to the surface.\", \n      \"id\": 2419, \n      \"image\": \"http://image.tmdb.org/t/p/w185/2IgdRUTdHyoI3nFORcnnYEKOGIH.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Claire Holt, Mandy Moore, Chris Johnson, Yani Gellman, Santiago Segura\", \n      \"name\": \"47 Meters Down\", \n      \"rating\": \"5.3\", \n      \"release_date\": \"2017-05-25\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=VNVZBg20APg\"\n    }, \n    {\n      \"description\": \"Tom, greeting-card writer and hopeless romantic, is caught completely off-guard when his girlfriend, Summer, suddenly dumps him. He reflects on their 500 days together to try to figure out where their love affair went sour, and in doing so, Tom rediscovers his true passions in life.\", \n      \"id\": 2543, \n      \"image\": \"http://image.tmdb.org/t/p/w185/5SjtNPD1bb182vzQccvEUpXHFjN.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Joseph Gordon-Levitt, Zooey Deschanel, Chlo\\u00eb Grace Moretz, Geoffrey Arend, Matthew Gray Gubler\", \n      \"name\": \"(500) Days of Summer\", \n      \"rating\": \"7.2\", \n      \"release_date\": \"2009-07-17\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=GvU4tYxwylc\"\n    }, \n    {\n      \"description\": \"Henry is a player skilled at seducing women. But when this veterinarian meets Lucy, a girl with a quirky problem when it comes to total recall, he realizes it's possible to fall in love all over again\\u2026and again, and again. That's because the delightful Lucy has no short-term memory, so Henry must woo her day after day until he finally sweeps her off her feet.\", \n      \"id\": 2657, \n      \"image\": \"http://image.tmdb.org/t/p/w185/vKKdsaq3OomDvFdpPpWVg0L6gB9.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Adam Sandler, Drew Barrymore, Rob Schneider, Sean Astin, Lusia Strus\", \n      \"name\": \"50 First Dates\", \n      \"rating\": \"6.6\", \n      \"release_date\": \"2004-02-13\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=ErjP5xMTc8I\"\n    }, \n    {\n      \"description\": \"Shane, a Jersey boy with big dreams, crosses the river in hopes of finding a more exciting life at Studio 54. When Steve Rubell, the mastermind behind the infamous disco, plucks Shane from the sea of faces clamoring to get inside his club, Shane not only gets his foot in the door, but lands a coveted job behind the bar \\u2013 and a front-row seat at the most legendary party on the planet.\", \n      \"id\": 2798, \n      \"image\": \"http://image.tmdb.org/t/p/w185/sDYmpuHtbm4uhmcbLHlrMpY2Cfl.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Ryan Phillippe, Salma Hayek, Breckin Meyer, Mike Myers, Neve Campbell\", \n      \"name\": \"54\", \n      \"rating\": \"5.5\", \n      \"release_date\": \"1998-08-28\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=6w3j8dh4smY\"\n    }, \n    {\n      \"description\": \"At Princeton University, John Nash struggles to make a worthwhile contribution to serve as his legacy to the world of mathematics. He finally makes a revolutionary breakthrough that will eventually earn him the Nobel Prize. After graduate school he turns to teaching, becoming romantically involved with his student Alicia. Meanwhile the government asks his help with breaking Soviet codes, which soon gets him involved in a terrifying conspiracy plot. Nash grows more and more paranoid until a discovery that turns his entire world upside down. Now it is only with Alicia's help that he will be able to recover his mental strength and regain his status as the great mathematician we know him as today..\", \n      \"id\": 2738, \n      \"image\": \"http://image.tmdb.org/t/p/w185/4SFqHDZ1NvWdysucWbgnYlobdxC.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Russell Crowe, Ed Harris, Jennifer Connelly, Christopher Plummer, Paul Bettany\", \n      \"name\": \"A Beautiful Mind\", \n      \"rating\": \"7.7\", \n      \"release_date\": \"2001-12-11\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=WFJgUm7iOKw\"\n    }, \n    {\n      \"description\": \"A fatal plane crash changes the lives of Roman and Jake forever. Roman loses his wife and daughter in the accident, while Jake, his mind as he happens to be the air traffic controller, who fails to avert the nightmare. Rage and revenge engulfs Roman and Jake finds himself swamped with guilt and regret. Can the two make peace with the past?\", \n      \"id\": 2700, \n      \"image\": \"http://image.tmdb.org/t/p/w185/25oWTCGqIik4gUTMidx3L8DI4Bt.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Arnold Schwarzenegger, Scoot McNairy, Maggie Grace, Judah Nelson, Larry Sullivan\", \n      \"name\": \"Aftermath\", \n      \"rating\": \"5.6\", \n      \"release_date\": \"2017-04-06\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=oUXUm6he2-s\"\n    }, \n    {\n      \"description\": \"The National Lampoon name became globally recognized after the monumental success of Animal House\\u2014but before the glory days, it was a scrappy yet divinely subversive magazine and radio show that introduced the world to comedic geniuses like Bill Murray, Chevy Chase, John Belushi, and Gilda Radner. The driving force behind National Lampoon was Doug Kenney (Will Forte), and his truly wild and crazy story unfolds in A Futile and Stupid Gesture from Harvard to Hollywood to Caddyshack and beyond.\", \n      \"id\": 2449, \n      \"image\": \"http://image.tmdb.org/t/p/w185/uBWxqOR0eLR5Ih0orHgjN79sEeK.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Will Forte, Domhnall Gleeson, Martin Mull, Thomas Lennon, Joel McHale\", \n      \"name\": \"A Futile and Stupid Gesture\", \n      \"rating\": \"6.9\", \n      \"release_date\": \"2018-01-24\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=33dztfqRu_k\"\n    }, \n    {\n      \"description\": \"Recently deceased, a white-sheeted ghost returns to his suburban home to console his bereft wife, only to find that in his spectral state he has become unstuck in time, forced to watch passively as the life he knew and the woman he loves slowly slip away.\", \n      \"id\": 2616, \n      \"image\": \"http://image.tmdb.org/t/p/w185/ydENrBUenr4khaP6tj4JZn1CpMs.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Casey Affleck, Rooney Mara, Will Oldham, Liz Franke, Sonia Acevedo\", \n      \"name\": \"A Ghost Story\", \n      \"rating\": \"6.9\", \n      \"release_date\": \"2017-07-07\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=c_3NMtxeyfk\"\n    }, \n    {\n      \"description\": \"Small-town sisters Dottie and Kit join an all-female baseball league formed after World War II brings pro baseball to a standstill. When their team hits the road with its drunken coach, the siblings find troubles and triumphs on and off the field.\", \n      \"id\": 2693, \n      \"image\": \"http://image.tmdb.org/t/p/w185/mHr58FxWSPZtxSqVxDpO12nKmMi.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Tom Hanks, Geena Davis, Madonna, Lori Petty, Jon Lovitz\", \n      \"name\": \"A League of Their Own\", \n      \"rating\": \"6.8\", \n      \"release_date\": \"1992-07-01\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=WcN392H2jx0\"\n    }, \n    {\n      \"description\": \"During its return to the earth, commercial spaceship Nostromo intercepts a distress signal from a distant planet. When a three-member team of the crew discovers a chamber containing thousands of eggs on the planet, a creature inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare set to descend upon them when the alien parasite planted inside its unfortunate host is birthed.\", \n      \"id\": 2503, \n      \"image\": \"http://image.tmdb.org/t/p/w185/2h00HrZs89SL3tXB4nbkiM7BKHs.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Tom Skerritt, Sigourney Weaver, Veronica Cartwright, Harry Dean Stanton, John Hurt\", \n      \"name\": \"Alien\", \n      \"rating\": \"7.9\", \n      \"release_date\": \"1979-05-25\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=097uj1HjkbM\"\n    }, \n    {\n      \"description\": \"Bound for a remote planet on the far side of the galaxy, the crew of the colony ship 'Covenant' discovers what is thought to be an uncharted paradise, but is actually a dark, dangerous world \\u2013 which has its sole inhabitant the 'synthetic', David, survivor of the doomed Prometheus expedition.\", \n      \"id\": 2483, \n      \"image\": \"http://image.tmdb.org/t/p/w185/zecMELPbU5YMQpC81Z8ImaaXuf9.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Michael Fassbender, Katherine Waterston, Billy Crudup, Danny McBride, Demi\\u00e1n Bichir\", \n      \"name\": \"Alien: Covenant\", \n      \"rating\": \"5.8\", \n      \"release_date\": \"2017-05-09\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=svnAD0TApb8\"\n    }, \n    {\n      \"description\": \"When Ripley's lifepod is found by a salvage crew over 50 years later, she finds that terra-formers are on the very planet they found the alien species. When the company sends a family of colonists out to investigate her story, all contact is lost with the planet and colonists. They enlist Ripley and the colonial marines to return and search for answers.\", \n      \"id\": 2514, \n      \"image\": \"http://image.tmdb.org/t/p/w185/nORMXEkYEbzkU5WkMWMgRDJwjSZ.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Sigourney Weaver, Michael Biehn, Paul Reiser, Lance Henriksen, Carrie Henn\", \n      \"name\": \"Aliens\", \n      \"rating\": \"7.8\", \n      \"release_date\": \"1986-07-18\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=LSHAgmGR-Ig\"\n    }, \n    {\n      \"description\": \"All Eyez on Me chronicles the life and legacy of Tupac Shakur, including his rise to superstardom as a hip-hop artist, actor, poet and activist, as well as his imprisonment and prolific, controversial time at Death Row Records. Against insurmountable odds, Tupac rose to become a cultural icon whose career and persona both continue to grow long after his passing.\", \n      \"id\": 2542, \n      \"image\": \"http://image.tmdb.org/t/p/w185/zmgsaKFWbmZ1Grz4SO0PLNxilv3.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Demetrius Shipp Jr., Danai Gurira, Kat Graham, Jamal Woolard, Dominic L. Santana\", \n      \"name\": \"All Eyez on Me\", \n      \"rating\": \"6.4\", \n      \"release_date\": \"2017-06-12\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=pfhJE1ORqas\"\n    }, \n    {\n      \"description\": \"In 1942, an intelligence officer in North Africa encounters a female French Resistance fighter on a deadly mission behind enemy lines. When they reunite in London, their relationship is tested by the pressures of war.\", \n      \"id\": 2632, \n      \"image\": \"http://image.tmdb.org/t/p/w185/nzXzLFTnd0Zb3ExfhOxlQgizgSu.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Brad Pitt, Marion Cotillard, Jared Harris, Simon McBurney, Lizzy Caplan\", \n      \"name\": \"Allied\", \n      \"rating\": \"6.6\", \n      \"release_date\": \"2016-11-17\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=0f1_fbdB6RQ\"\n    }, \n    {\n      \"description\": \"Berlin in June of 1940. While Nazi propaganda celebrates the regime\\u2019s victory over France, a kitchen-cum-living room in Prenzlauer Berg is filled with grief. Anna and Otto Quangel\\u2019s son has been killed at the front. This working class couple had long believed in the \\u2018F\\u00fchrer\\u2019 and followed him willingly, but now they realise that his promises are nothing but lies and deceit. They begin writing postcards as a form of resistance and in a bid to raise awareness: Stop the war machine! Kill Hitler! Putting their lives at risk, they distribute these cards in the entrances of tenement buildings and in stairwells. But the SS and the Gestapo are soon onto them, and even their neighbours pose a threat.\", \n      \"id\": 2827, \n      \"image\": \"http://image.tmdb.org/t/p/w185/kN25TXLAnmbvO8a8EpTokRqFozZ.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Emma Thompson, Brendan Gleeson, Daniel Br\\u00fchl, Mikael Persbrandt, Katharina Sch\\u00fcttler\", \n      \"name\": \"Alone in Berlin\", \n      \"rating\": \"6.5\", \n      \"release_date\": \"2016-02-15\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=lQaGazGtaZw\"\n    }, \n    {\n      \"description\": \"At a tiny Parisian caf\\u00e9, the adorable yet painfully shy Am\\u00e9lie (Audrey Tautou) accidentally discovers a gift for helping others. Soon Amelie is spending her days as a matchmaker, guardian angel, and all-around do-gooder. But when she bumps into a handsome stranger, will she find the courage to become the star of her very own love story?\", \n      \"id\": 2641, \n      \"image\": \"http://image.tmdb.org/t/p/w185/f0uorE7K7ggHfr8r7pUTOHWkOlE.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Audrey Tautou, Mathieu Kassovitz, Rufus, Jamel Debbouze, Claire Maurier\", \n      \"name\": \"Am\\u00e9lie\", \n      \"rating\": \"7.9\", \n      \"release_date\": \"2001-04-25\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=HUECWi5pX7o\"\n    }, \n    {\n      \"description\": \"At a high-school party, four friends find that losing their collective virginity isn't as easy as they had thought. But they still believe that they need to do so before college. To motivate themselves, they enter a pact to all \\\"score.\\\" by their senior prom.\", \n      \"id\": 2433, \n      \"image\": \"http://image.tmdb.org/t/p/w185/k40WFAXMRekWEqsjURO3jiWob67.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"Jason Biggs, Chris Klein, Thomas Ian Nicholas, Alyson Hannigan, Shannon Elizabeth\", \n      \"name\": \"American Pie\", \n      \"rating\": \"6.4\", \n      \"release_date\": \"1999-07-09\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=Sithad108Og\"\n    }, \n    {\n      \"description\": \"At a 1962 College, Dean Vernon Wormer is determined to expel the entire Delta Tau Chi Fraternity, but those troublemakers have other plans for him.\", \n      \"id\": 2530, \n      \"image\": \"http://image.tmdb.org/t/p/w185/AuJkgAh7zAGsm7Oo3CGyDtYvzg0.jpg\", \n      \"language\": \"\", \n      \"movie_cast\": \"John Belushi, Tim Matheson, John Vernon, Verna Bloom, Tom Hulce\", \n      \"name\": \"Animal House\", \n      \"rating\": \"7.1\", \n      \"release_date\": \"1978-07-27\", \n      \"trailer_url\": \"https://www.youtube.com/watch?v=KWjtI6n5xWM\"\n    }\n  ], \n  \"data_type\": \"movies\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/country",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "43726ab9-8837-40db-a3c3-6be22291a55e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Country: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Country: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"countries\");",
+							"});",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/country\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Country: Default Page Size is 25\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"].length).to.eql(25)",
+							"    });",
+							"});",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/country?pagesize=5\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Country: Page Sizes\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"].length).to.eql(5)",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test Country: Check First Name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"name\"]).to.eql(\"Afghanistan\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/country?sortdir=desc\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Country: Check Sort Order\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"][0][\"name\"]).to.eql(\"Zimbabwe\")",
+							"    });",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/country",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"country"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing potentially many countries.\r\n\r\n# Parameters\r\n\r\n**filter** - String with one of these values {name, population, flag_url, languages}. Must have a corresponding value if used.\r\n\r\n**value**  - Type by filter value {name:string, population:int, flag_url:string, languages:json}\r\n\r\n**comparison** - The type of comparison to be preformed based on value. Must be one of one of {=,>=,<=,like}. Like performes a partial search where it finds every entry that starts with value. Default is =.\r\n\r\n**pagesize** - int determining the max number of entries returned.\r\n\r\n**pagenum** - int determining the offset into the results.\r\n\r\n**sort** - How the json results will be sorted. Must be a string with one of these values {name, population, flag_url, languages}.\r\n\r\n**sortdir** - Whether the results will be sorted in asc or desc order. Must be a string with one of these values {asc,desc}.\r\n\r\n"
+			},
+			"response": [
+				{
+					"id": "60204344-ddcb-42f7-8ad7-cdb4149f6595",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/country",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"country"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "4456",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 02:34:40 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"data\": [\n    {\n      \"id\": 823, \n      \"image\": \"https://restcountries.eu/data/afg.svg\", \n      \"languages\": \"Pashto, Uzbek, Turkmen\", \n      \"name\": \"Afghanistan\", \n      \"population\": \"27657145\"\n    }, \n    {\n      \"id\": 824, \n      \"image\": \"https://restcountries.eu/data/alb.svg\", \n      \"languages\": \"Albanian\", \n      \"name\": \"Albania\", \n      \"population\": \"2886026\"\n    }, \n    {\n      \"id\": 825, \n      \"image\": \"https://restcountries.eu/data/dza.svg\", \n      \"languages\": \"Arabic\", \n      \"name\": \"Algeria\", \n      \"population\": \"40400000\"\n    }, \n    {\n      \"id\": 826, \n      \"image\": \"https://restcountries.eu/data/asm.svg\", \n      \"languages\": \"English, Samoan\", \n      \"name\": \"American Samoa\", \n      \"population\": \"57100\"\n    }, \n    {\n      \"id\": 827, \n      \"image\": \"https://restcountries.eu/data/and.svg\", \n      \"languages\": \"Catalan\", \n      \"name\": \"Andorra\", \n      \"population\": \"78014\"\n    }, \n    {\n      \"id\": 832, \n      \"image\": \"https://restcountries.eu/data/arg.svg\", \n      \"languages\": \"Spanish, Guaran\\u00ed\", \n      \"name\": \"Argentina\", \n      \"population\": \"43590400\"\n    }, \n    {\n      \"id\": 833, \n      \"image\": \"https://restcountries.eu/data/arm.svg\", \n      \"languages\": \"Armenian, Russian\", \n      \"name\": \"Armenia\", \n      \"population\": \"2994400\"\n    }, \n    {\n      \"id\": 835, \n      \"image\": \"https://restcountries.eu/data/aus.svg\", \n      \"languages\": \"English\", \n      \"name\": \"Australia\", \n      \"population\": \"24117360\"\n    }, \n    {\n      \"id\": 836, \n      \"image\": \"https://restcountries.eu/data/aut.svg\", \n      \"languages\": \"German\", \n      \"name\": \"Austria\", \n      \"population\": \"8725931\"\n    }, \n    {\n      \"id\": 837, \n      \"image\": \"https://restcountries.eu/data/aze.svg\", \n      \"languages\": \"Azerbaijani\", \n      \"name\": \"Azerbaijan\", \n      \"population\": \"9730500\"\n    }, \n    {\n      \"id\": 839, \n      \"image\": \"https://restcountries.eu/data/bhr.svg\", \n      \"languages\": \"Arabic\", \n      \"name\": \"Bahrain\", \n      \"population\": \"1404900\"\n    }, \n    {\n      \"id\": 840, \n      \"image\": \"https://restcountries.eu/data/bgd.svg\", \n      \"languages\": \"Bengali\", \n      \"name\": \"Bangladesh\", \n      \"population\": \"161006790\"\n    }, \n    {\n      \"id\": 842, \n      \"image\": \"https://restcountries.eu/data/blr.svg\", \n      \"languages\": \"Belarusian, Russian\", \n      \"name\": \"Belarus\", \n      \"population\": \"9498700\"\n    }, \n    {\n      \"id\": 843, \n      \"image\": \"https://restcountries.eu/data/bel.svg\", \n      \"languages\": \"Dutch, French, German\", \n      \"name\": \"Belgium\", \n      \"population\": \"11319511\"\n    }, \n    {\n      \"id\": 848, \n      \"image\": null, \n      \"languages\": null, \n      \"name\": \"Bolivia\", \n      \"population\": \"None\"\n    }, \n    {\n      \"id\": 849, \n      \"image\": null, \n      \"languages\": null, \n      \"name\": \"Bosnia & Herzegovina\", \n      \"population\": \"None\"\n    }, \n    {\n      \"id\": 852, \n      \"image\": \"https://restcountries.eu/data/bra.svg\", \n      \"languages\": \"Portuguese\", \n      \"name\": \"Brazil\", \n      \"population\": \"206135893\"\n    }, \n    {\n      \"id\": 855, \n      \"image\": null, \n      \"languages\": null, \n      \"name\": \"Brunei\", \n      \"population\": \"None\"\n    }, \n    {\n      \"id\": 856, \n      \"image\": \"https://restcountries.eu/data/bgr.svg\", \n      \"languages\": \"Bulgarian\", \n      \"name\": \"Bulgaria\", \n      \"population\": \"7153784\"\n    }, \n    {\n      \"id\": 859, \n      \"image\": \"https://restcountries.eu/data/khm.svg\", \n      \"languages\": \"Khmer\", \n      \"name\": \"Cambodia\", \n      \"population\": \"15626444\"\n    }, \n    {\n      \"id\": 860, \n      \"image\": \"https://restcountries.eu/data/cmr.svg\", \n      \"languages\": \"English, French\", \n      \"name\": \"Cameroon\", \n      \"population\": \"22709892\"\n    }, \n    {\n      \"id\": 861, \n      \"image\": \"https://restcountries.eu/data/can.svg\", \n      \"languages\": \"English, French\", \n      \"name\": \"Canada\", \n      \"population\": \"36155487\"\n    }, \n    {\n      \"id\": 867, \n      \"image\": \"https://restcountries.eu/data/chl.svg\", \n      \"languages\": \"Spanish\", \n      \"name\": \"Chile\", \n      \"population\": \"18191900\"\n    }, \n    {\n      \"id\": 868, \n      \"image\": \"https://restcountries.eu/data/chn.svg\", \n      \"languages\": \"Chinese\", \n      \"name\": \"China\", \n      \"population\": \"1377422166\"\n    }, \n    {\n      \"id\": 871, \n      \"image\": \"https://restcountries.eu/data/col.svg\", \n      \"languages\": \"Spanish\", \n      \"name\": \"Colombia\", \n      \"population\": \"48759958\"\n    }\n  ], \n  \"data_type\": \"countries\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/streaming_service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6866293-d392-4505-bb00-8b605bc286ed",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Streaming Service: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Streaming Service: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"streamingservices\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/streaming_service?pagesize=5\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Streaming Service: Page Sizes\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"].length).to.eql(5)",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test Streaming Service: Check First Name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"name\"]).to.eql(\"Amazon Prime\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/streaming_service?sortdir=desc\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Streaming Service: Check Sort Order\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"][0][\"name\"]).to.eql(\"Youtube\")",
+							"    });",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/streaming_service",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"streaming_service"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing potentially many countries.\r\n\r\n# Parameters\r\n\r\n**filter** - String with one of these values {name, pricing, available_countries}. Must have a corresponding value if used.\r\n\r\n**value**  - Type by filter value {name:string, pricing:json, available_countries:json}\r\n\r\n**comparison** - The type of comparison to be preformed based on value. Must be one of one of {=,>=,<=,like}. Like performes a partial search where it finds every entry that starts with value. Default is =.\r\n\r\n**pagesize** - int determining the max number of entries returned.\r\n\r\n**pagenum** - int determining the offset into the results.\r\n\r\n**sort** - How the json results will be sorted. Must be a string with one of these values {name, pricing, available_countries}.\r\n\r\n**sortdir** - Whether the results will be sorted in asc or desc order. Must be a string with one of these values {asc,desc}.\r\n\r\n"
+			},
+			"response": [
+				{
+					"id": "e36198c1-76c2-471f-abee-9bb15364c710",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/streaming_service",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"streaming_service"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "1004",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Mar 2018 20:52:26 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 310,
+					"body": "{\n  \"streamingservices\": [\n    {\n      \"available_countries\": {}, \n      \"name\": \"Starz\", \n      \"pricing\": {\n        \"basic\": \"$8.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"name\": \"Showtime\", \n      \"pricing\": {\n        \"basic\": \"$10.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"name\": \"Netflix\", \n      \"pricing\": {\n        \"basic\": \"$7.99\", \n        \"premium\": \"$13.99\", \n        \"standard\": \"$10.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"name\": \"Hulu\", \n      \"pricing\": {\n        \"basic\": \"$7.99\", \n        \"standard\": \"$11.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"name\": \"Hbo Go\", \n      \"pricing\": {\n        \"basic\": \"$14.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"name\": \"Epix\", \n      \"pricing\": {\n        \"cable\": \"$9.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"name\": \"Amazon Prime\", \n      \"pricing\": {\n        \"basic\": \"$8.25\"\n      }\n    }\n  ]\n}\n"
+				},
+				{
+					"id": "a84e17f2-d815-46a3-9a5f-37fa877cde6c",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/streaming_service",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"streaming_service"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "1033",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 01:55:49 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"data\": [\n    {\n      \"available_countries\": {}, \n      \"id\": 268, \n      \"name\": \"Amazon Prime\", \n      \"pricing\": {\n        \"basic\": \"$8.25\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"id\": 267, \n      \"name\": \"Hbo Go\", \n      \"pricing\": {\n        \"basic\": \"$14.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"id\": 269, \n      \"name\": \"Hulu\", \n      \"pricing\": {\n        \"basic\": \"$7.99\", \n        \"standard\": \"$11.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"id\": 266, \n      \"name\": \"Netflix\", \n      \"pricing\": {\n        \"basic\": \"$7.99\", \n        \"premium\": \"$13.99\", \n        \"standard\": \"$10.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"id\": 271, \n      \"name\": \"Showtime\", \n      \"pricing\": {\n        \"basic\": \"$10.99\"\n      }\n    }, \n    {\n      \"available_countries\": {}, \n      \"id\": 273, \n      \"name\": \"Youtube\", \n      \"pricing\": {\n        \"basic\": \"pricing varies by movie\"\n      }\n    }\n  ], \n  \"data_type\": \"streamingservices\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/movie/[movie_id]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90ad59d3-749f-4b2d-a62f-08575c21b191",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Movie by ID: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Movie by ID: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"movies\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/movie/3604\", function (err, response) {",
+							"        out = response.json();",
+							"        pm.test(\"Test Movie by ID: Result is Detroit\", function () {",
+							"    var out;",
+							"    pm.expect(response.json()[\"data\"][0][\"name\"]).to.eql(\"Detroit\")",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/movie/3604",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"movie",
+						"3604"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing the info for the movie with the specified movie id.\r\n\r\n# Parameters\r\n\r\nTakes no parameters."
+			},
+			"response": [
+				{
+					"id": "ea838b08-1e6f-492e-a742-bbba6a66f2cb",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/movie/2454",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"movie",
+								"2454"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "596",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Mar 2018 20:53:37 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 258,
+					"body": "{\r\n  \"data\": [\r\n    {\r\n      \"description\": \"A female Psychologist who has stopped practicing medicine, decides to take the case of Veronica de la Serna, a young woman whose previous therapist has mysteriously disappeared.\", \r\n      \"id\": 2454, \r\n      \"image\": \"http://image.tmdb.org/t/p/w185/8WMfFaYKoCtki0mkdqFqIUYB1hC.jpg\", \r\n      \"language\": \"\", \r\n      \"movie_cast\": \"Arcelia Ram\\u00edrez, Olga Segura, Sof\\u00eda Garza, Eugenia Morales Mar\\u00edn\", \r\n      \"name\": \"Veronica\", \r\n      \"rating\": \"7.0\", \r\n      \"release_date\": \"2017-08-14\", \r\n      \"trailer_url\": \"https://www.youtube.com/watch?v=1_D1ktoKGnA\"\r\n    }\r\n  ], \r\n  \"data_type\": \"movies\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "/v1/movie/[movie_id]/popularity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "04493567-9c88-4e57-b9b3-4c2a999a5ab3",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Movie Popularity: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Movie Popularity: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"moviepopularity\");",
+							"});",
+							"",
+							"pm.test(\"Test Movie Popularity: Check Top 5\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"].length).to.eql(5);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/movie/3604/popularity",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"movie",
+						"3604",
+						"popularity"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing a list of country names where the given movie_id is most popular and their respective ranking.\r\n\r\n# Parameters\r\n\r\nTakes no parameters.\r\n"
+			},
+			"response": [
+				{
+					"id": "3ee28af3-4b9a-4544-a8f4-4d6c91d0cc82",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/movie/2454/popularity",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"movie",
+								"2454",
+								"popularity"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"_postman_previewtype": "parsed",
+					"header": [],
+					"cookie": [],
+					"responseTime": 0,
+					"body": "{\r\n  \"data\": [\r\n    {\r\n      \"country\": \"Italy\", \r\n      \"rank\": 1\r\n    }, \r\n    {\r\n      \"country\": \"Netherlands\", \r\n      \"rank\": 2\r\n    }, \r\n    {\r\n      \"country\": \"Uruguay\", \r\n      \"rank\": 3\r\n    }, \r\n    {\r\n      \"country\": \"Argentina\", \r\n      \"rank\": 4\r\n    }, \r\n    {\r\n      \"country\": \"Chile\", \r\n      \"rank\": 5\r\n    }\r\n  ], \r\n  \"data_type\": \"moviepopularity\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "/v1/movie/[movie_id]/streaming",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09597c10-3ae1-4b9f-9b75-5e7a4b330a36",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"moviestream\");",
+							"});",
+							"pm.test(\"Test: Correct output\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"id\"]).to.eql(269);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/movie/3604/streaming",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"movie",
+						"3604",
+						"streaming"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing a list of streaming services the movie is available on.\r\n\r\n# Parameters\r\n\r\nTakes no parameters."
+			},
+			"response": [
+				{
+					"id": "90430d23-a2a7-4312-be38-f3ada904ae7f",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/movie/3604/streaming",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"movie",
+								"3604",
+								"streaming"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "102",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 22:03:43 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 285,
+					"body": "{\n  \"data\": [\n    {\n      \"id\": 269, \n      \"name\": \"Hulu\"\n    }\n  ], \n  \"data_type\": \"moviestream\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/country/[country_id]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a51533f-4ab8-4585-bbb0-9468fa5d616d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Country by Name: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Country by Name: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"countries\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/country/823\", function (err, response) {",
+							"",
+							"    pm.test(\"Test Country by Name: Result is Afghanistan\", function () {",
+							"        pm.expect(response.json()[\"data\"][0][\"name\"]).to.eql(\"Afghanistan\")",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/country/823",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"country",
+						"823"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing the info for the country with the specified id.\r\n\r\n# Parameters\r\n\r\nTakes no parameters.\r\n\r\n\r\n"
+			},
+			"response": [
+				{
+					"id": "63342cd8-3ad7-44c6-a3d1-42661757ba56",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/country/823",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"country",
+								"823"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "232",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 02:35:49 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"data\": [\n    {\n      \"id\": 1060, \n      \"image\": \"https://restcountries.eu/data/usa.svg\", \n      \"languages\": \"English\", \n      \"name\": \"United States\", \n      \"population\": \"325000000\"\n    }\n  ], \n  \"data_type\": \"countries\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/country/[country_id]/streaming",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bb6d497-f161-412d-b68d-293f709885b6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"countrystream\");",
+							"});",
+							"pm.test(\"Test: Correct output\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"id\"]).to.eql(275);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/country/823/streaming",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"country",
+						"823",
+						"streaming"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing a list of streaming services especially popular in the country.\r\n# Parameters\r\n\r\nTakes no parameters."
+			},
+			"response": [
+				{
+					"id": "21fa2810-a91b-4f51-9154-d1a2f2bcc8d6",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/country/823/streaming",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"country",
+								"823",
+								"streaming"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "187",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 23:57:32 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 174,
+					"body": "{\n  \"data\": [\n    {\n      \"id\": 275, \n      \"name\": \"Hallmark Everywhere\"\n    }, \n    {\n      \"id\": 277, \n      \"name\": \"Lifetime Movie Club\"\n    }\n  ], \n  \"data_type\": \"countrystream\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/country/[country_id]/movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ba63877-e36d-4cfc-a956-2f519b265b5c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"countrymovie\");",
+							"});",
+							"pm.test(\"Test: Correct output\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"id\"]).to.eql(4043);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/country/823/movie",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"country",
+						"823",
+						"movie"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing a list of movies especially popular in the country.\r\n\r\n# Parameters\r\n\r\nTakes no parameters."
+			},
+			"response": [
+				{
+					"id": "f699c1f0-c98e-44c3-a61f-a85dc8f0c8c6",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/country/823/movie",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"country",
+								"823",
+								"movie"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "7376",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 23:58:01 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 158,
+					"body": "{\n  \"data\": [\n    {\n      \"id\": 4043, \n      \"name\": \"A Pure Formality\"\n    }, \n    {\n      \"id\": 4044, \n      \"name\": \"British Sounds\"\n    }, \n    {\n      \"id\": 4045, \n      \"name\": \"Struggles in Italy\"\n    }, \n    {\n      \"id\": 4048, \n      \"name\": \"mother!\"\n    }, \n    {\n      \"id\": 4049, \n      \"name\": \"Daddy's Home 2\"\n    }, \n    {\n      \"id\": 4061, \n      \"name\": \"Ferris Bueller's Day Off\"\n    }, \n    {\n      \"id\": 4087, \n      \"name\": \"Wayne's World\"\n    }, \n    {\n      \"id\": 3468, \n      \"name\": \"Winter's Tale\"\n    }, \n    {\n      \"id\": 4086, \n      \"name\": \"What's Eating Gilbert Grape\"\n    }, \n    {\n      \"id\": 3484, \n      \"name\": \"She's Out of My League\"\n    }, \n    {\n      \"id\": 3488, \n      \"name\": \"Monster's Ball\"\n    }, \n    {\n      \"id\": 3530, \n      \"name\": \"Daddy's Home\"\n    }, \n    {\n      \"id\": 3555, \n      \"name\": \"Brad's Status\"\n    }, \n    {\n      \"id\": 3361, \n      \"name\": \"Gerald's Game\"\n    }, \n    {\n      \"id\": 3565, \n      \"name\": \"Mother's Day\"\n    }, \n    {\n      \"id\": 3582, \n      \"name\": \"Sophie's Choice\"\n    }, \n    {\n      \"id\": 3594, \n      \"name\": \"She's All That\"\n    }, \n    {\n      \"id\": 3605, \n      \"name\": \"Winter's Bone\"\n    }, \n    {\n      \"id\": 3628, \n      \"name\": \"Everybody Wants Some!!\"\n    }, \n    {\n      \"id\": 3363, \n      \"name\": \"Ocean's Eleven\"\n    }, \n    {\n      \"id\": 3639, \n      \"name\": \"The Emperor's New Groove\"\n    }, \n    {\n      \"id\": 3642, \n      \"name\": \"Bill & Ted's Excellent Adventure\"\n    }, \n    {\n      \"id\": 3700, \n      \"name\": \"Carlito's Way\"\n    }, \n    {\n      \"id\": 3708, \n      \"name\": \"Charlie Wilson's War\"\n    }, \n    {\n      \"id\": 4416, \n      \"name\": \"Fool's Gold\"\n    }, \n    {\n      \"id\": 3748, \n      \"name\": \"Don't Knock Twice\"\n    }, \n    {\n      \"id\": 3754, \n      \"name\": \"Stalker's Prey\"\n    }, \n    {\n      \"id\": 4379, \n      \"name\": \"We're the Millers\"\n    }, \n    {\n      \"id\": 3757, \n      \"name\": \"The Memory Keeper's Daughter\"\n    }, \n    {\n      \"id\": 3410, \n      \"name\": \"Harry Potter and the Philosopher's Stone\"\n    }, \n    {\n      \"id\": 3763, \n      \"name\": \"Another Woman's Husband\"\n    }, \n    {\n      \"id\": 4338, \n      \"name\": \"Charlie's Angels\"\n    }, \n    {\n      \"id\": 4317, \n      \"name\": \"Moulin Rouge!\"\n    }, \n    {\n      \"id\": 3780, \n      \"name\": \"The Dive from Clausen's Pier\"\n    }, \n    {\n      \"id\": 3428, \n      \"name\": \"The Chronicles of Narnia: The Lion, the Witch and the Wardrobe\"\n    }, \n    {\n      \"id\": 4310, \n      \"name\": \"A Knight's Tale\"\n    }, \n    {\n      \"id\": 3799, \n      \"name\": \"My Neighbor's Secret\"\n    }, \n    {\n      \"id\": 3803, \n      \"name\": \"Matters of Life & Dating\"\n    }, \n    {\n      \"id\": 3438, \n      \"name\": \"Assassin's Creed\"\n    }, \n    {\n      \"id\": 3446, \n      \"name\": \"The Hitchhiker's Guide to the Galaxy\"\n    }, \n    {\n      \"id\": 4304, \n      \"name\": \"Don't Breathe\"\n    }, \n    {\n      \"id\": 3813, \n      \"name\": \"A Teacher's Obsession\"\n    }, \n    {\n      \"id\": 3814, \n      \"name\": \"Manson's Lost Girls\"\n    }, \n    {\n      \"id\": 4264, \n      \"name\": \"Urusei Yatsura 2: Beautiful Dreamer\"\n    }, \n    {\n      \"id\": 4263, \n      \"name\": \"Cameron's Closet\"\n    }, \n    {\n      \"id\": 3825, \n      \"name\": \"A Surrogate's Nightmare\"\n    }, \n    {\n      \"id\": 4241, \n      \"name\": \"Wayne's World 2\"\n    }, \n    {\n      \"id\": 4234, \n      \"name\": \"Nick and Norah's Infinite Playlist\"\n    }, \n    {\n      \"id\": 3847, \n      \"name\": \"Cheech & Chong's Next Movie\"\n    }, \n    {\n      \"id\": 4211, \n      \"name\": \"St. Elmo's Fire\"\n    }, \n    {\n      \"id\": 3855, \n      \"name\": \"Dealin' with Idiots\"\n    }, \n    {\n      \"id\": 4180, \n      \"name\": \"Pan's Labyrinth\"\n    }, \n    {\n      \"id\": 3864, \n      \"name\": \"My Boyfriends' Dogs\"\n    }, \n    {\n      \"id\": 4159, \n      \"name\": \"The Hitman's Bodyguard\"\n    }, \n    {\n      \"id\": 3868, \n      \"name\": \"Dater's Handbook\"\n    }, \n    {\n      \"id\": 3874, \n      \"name\": \"The 2018 American Rescue Dog Show\"\n    }, \n    {\n      \"id\": 3892, \n      \"name\": \"Miss Peregrine's Home for Peculiar Children\"\n    }, \n    {\n      \"id\": 3900, \n      \"name\": \"Mamma Mia!\"\n    }, \n    {\n      \"id\": 3902, \n      \"name\": \"The Huntsman: Winter's War\"\n    }, \n    {\n      \"id\": 3944, \n      \"name\": \"Jennifer's Body\"\n    }, \n    {\n      \"id\": 4007, \n      \"name\": \"Boo! A Madea Halloween\"\n    }, \n    {\n      \"id\": 4011, \n      \"name\": \"The Goods: Live Hard, Sell Hard\"\n    }, \n    {\n      \"id\": 4019, \n      \"name\": \"On Her Majesty's Secret Service\"\n    }, \n    {\n      \"id\": 4108, \n      \"name\": \"Mission: Impossible - Ghost Protocol\"\n    }, \n    {\n      \"id\": 4030, \n      \"name\": \"Queer China, 'Comrade' China\"\n    }, \n    {\n      \"id\": 4102, \n      \"name\": \"It's a Wonderful Life\"\n    }, \n    {\n      \"id\": 4094, \n      \"name\": \"Airplane!\"\n    }, \n    {\n      \"id\": 4036, \n      \"name\": \"Don't Blink: Robert Frank\"\n    }, \n    {\n      \"id\": 3457, \n      \"name\": \"The Zookeeper's Wife\"\n    }, \n    {\n      \"id\": 4042, \n      \"name\": \"A Film Like Any Other\"\n    }, \n    {\n      \"id\": 3332, \n      \"name\": \"Schindler's List\"\n    }, \n    {\n      \"id\": 3559, \n      \"name\": \"The Hunger Games: Mockingjay - Part 2\"\n    }, \n    {\n      \"id\": 3815, \n      \"name\": \"The Real MVP: The Wanda Durant Story\"\n    }, \n    {\n      \"id\": 3759, \n      \"name\": \"Sex and Mrs. X\"\n    }, \n    {\n      \"id\": 3782, \n      \"name\": \"The Secret Life of Zoey\"\n    }, \n    {\n      \"id\": 3804, \n      \"name\": \"The Party Never Stops: Diary of a Binge Drinker\"\n    }, \n    {\n      \"id\": 3811, \n      \"name\": \"The Unauthorized Beverly Hills, 90210 Story\"\n    }, \n    {\n      \"id\": 4041, \n      \"name\": \"Life as a Fatal Sexually Transmitted Disease\"\n    }, \n    {\n      \"id\": 4081, \n      \"name\": \"Breakfast at Tiffany's\"\n    }, \n    {\n      \"id\": 4352, \n      \"name\": \"Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb\"\n    }, \n    {\n      \"id\": 4394, \n      \"name\": \"Angels in the Endzone\"\n    }, \n    {\n      \"id\": 3854, \n      \"name\": \"Why Stop Now?\"\n    }, \n    {\n      \"id\": 3777, \n      \"name\": \"Alone with a Stranger\"\n    }, \n    {\n      \"id\": 4027, \n      \"name\": \"The Phantom of Liberty\"\n    }, \n    {\n      \"id\": 3865, \n      \"name\": \"Three Weeks, Three Kids\"\n    }, \n    {\n      \"id\": 4260, \n      \"name\": \"Street Fighter II: The Animated Movie\"\n    }, \n    {\n      \"id\": 3821, \n      \"name\": \"Who Killed JonBenet?\"\n    }, \n    {\n      \"id\": 3785, \n      \"name\": \"A Near Death Experience\"\n    }, \n    {\n      \"id\": 3755, \n      \"name\": \"The Perfect Tenant\"\n    }, \n    {\n      \"id\": 4069, \n      \"name\": \"Mission: Impossible - Rogue Nation\"\n    }, \n    {\n      \"id\": 3747, \n      \"name\": \"What About Bob?\"\n    }, \n    {\n      \"id\": 3860, \n      \"name\": \"A Ring by Spring\"\n    }, \n    {\n      \"id\": 3823, \n      \"name\": \"No One Could Protect Her\"\n    }, \n    {\n      \"id\": 4286, \n      \"name\": \"Jin-Roh: The Wolf Brigade\"\n    }, \n    {\n      \"id\": 4035, \n      \"name\": \"Meshes of the Afternoon\"\n    }, \n    {\n      \"id\": 3835, \n      \"name\": \"Nanny Nightmare\"\n    }, \n    {\n      \"id\": 3830, \n      \"name\": \"The Psycho She Met Online\"\n    }, \n    {\n      \"id\": 4271, \n      \"name\": \"What Planet Are You From?\"\n    }, \n    {\n      \"id\": 3812, \n      \"name\": \"The Unauthorized Melrose Place Story\"\n    }, \n    {\n      \"id\": 3775, \n      \"name\": \"No Ordinary Baby\"\n    }, \n    {\n      \"id\": 4031, \n      \"name\": \"The Fallen Idol\"\n    }\n  ], \n  \"data_type\": \"countrymovie\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/streaming_service/[stream_id]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d612409f-dc4b-484c-ba76-d464e7f1e200",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Streaming Service by Name: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Streaming Service by Name: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"streamingservices\");",
+							"});",
+							"",
+							"pm.sendRequest(\"http://api.canitstreamto.me/v1/streaming_service/281\", function (err, response) {",
+							"",
+							"    pm.test(\"Test Streaming Service by Name: Result is Netflix\", function () {",
+							"        pm.expect(response.json()[\"data\"][0][\"name\"]).to.eql(\"Crackle\")",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/streaming_service/281",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"streaming_service",
+						"281"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing the info for the streaming service with the specified id.\r\n\r\n# Parameters\r\n\r\nTakes no parameters.\r\n\r\n"
+			},
+			"response": [
+				{
+					"id": "09d83927-ab9e-4285-8c8a-3b619e3d872c",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/streaming_service/281",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"streaming_service",
+								"281"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "218",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Mar 2018 20:55:05 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 232,
+					"body": "{\n  \"streamingservices\": [\n    {\n      \"available_countries\": {}, \n      \"name\": \"Netflix\", \n      \"pricing\": {\n        \"basic\": \"$7.99\", \n        \"premium\": \"$13.99\", \n        \"standard\": \"$10.99\"\n      }\n    }\n  ]\n}\n"
+				}
+			]
+		},
+		{
+			"name": "/v1/streaming_service/[stream_id]/popcountry",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad79caf0-0df5-465a-a3d0-82ae1187af24",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test Streaming Service by Name: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test Streaming Service by Name: Data type field\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data_type\"]).to.eql(\"streamcountry\");",
+							"});",
+							"",
+							"pm.test(\"Test: Correct output from api\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"data\"][0][\"id\"]).to.eql(876);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.canitstreamto.me/v1/streaming_service/281/popcountry",
+					"protocol": "http",
+					"host": [
+						"api",
+						"canitstreamto",
+						"me"
+					],
+					"path": [
+						"v1",
+						"streaming_service",
+						"281",
+						"popcountry"
+					]
+				},
+				"description": "# General Description\r\nReturns a json containing a list of country names and ids where the given stream_id is most popular and their respective ranking.\r\n\r\n# Parameters\r\n\r\nTakes no parameters.\r\n"
+			},
+			"response": [
+				{
+					"id": "4cffcfb6-e269-462a-bb7c-f34d63825d46",
+					"name": "Default Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://api.canitstreamto.me/v1/streaming_service/281/popcountry",
+							"protocol": "http",
+							"host": [
+								"api",
+								"canitstreamto",
+								"me"
+							],
+							"path": [
+								"v1",
+								"streaming_service",
+								"281",
+								"popcountry"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "455",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 22 Mar 2018 22:02:47 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.10.4 Python/3.5.2",
+							"name": "Server",
+							"description": "A name for the server"
+						}
+					],
+					"cookie": [],
+					"responseTime": 214,
+					"body": "{\n  \"data\": [\n    {\n      \"country\": \"Costa Rica\", \n      \"id\": 876, \n      \"rank\": 1\n    }, \n    {\n      \"country\": \"Canada\", \n      \"id\": 861, \n      \"rank\": 2\n    }, \n    {\n      \"country\": \"United States\", \n      \"id\": 1060, \n      \"rank\": 3\n    }, \n    {\n      \"country\": \"Dominican Republic\", \n      \"id\": 886, \n      \"rank\": 4\n    }, \n    {\n      \"country\": \"Panama\", \n      \"id\": 992, \n      \"rank\": 5\n    }\n  ], \n  \"data_type\": \"streamcountry\"\n}\n"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "511a0a23-46ba-42a3-81f7-52a09022f0f6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bcf6c5b7-07f2-457c-80df-338555670ffa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
