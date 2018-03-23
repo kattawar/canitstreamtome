@@ -64,15 +64,15 @@ class CountryInstance extends React.Component {
             <h4>Top Streaming Services</h4>
             <p>
               <ol>
-                <li>
+
+                { this.state.streamranks.length === 0 ? <li>
                   <Link to={{
                       pathname: `/streaming_service/266`,
                       state: {
                         item: '266'
                       }
                     }}>Netflix</Link>
-                </li>
-                {
+                </li> : 
                   this.state.streamranks.map(item => <li>
                     <Link to={{
                         pathname: `/streaming_service/${item.id}`,
