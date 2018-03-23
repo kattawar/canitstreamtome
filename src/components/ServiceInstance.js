@@ -34,14 +34,12 @@ class ServiceInstance extends React.Component {
   }
 
   render() {
-    let priceBasic = "";
-    let priceStandard = "";
-    let pricePremium = "";
+
+    let prices = {};
     if (this.state.serviceItem.pricing) {
-      console.log(this.state.serviceItem.pricing['basic']);
-      priceBasic = "Basic: " +String(this.state.serviceItem.pricing['basic']);
-      priceStandard = "Standard: " +String(this.state.serviceItem.pricing['standard']);
-      pricePremium = "Premium: " +String(this.state.serviceItem.pricing['premium']);
+      for (let key in this.state.serviceItem.pricing) {
+        prices[key] = this.state.serviceItem.pricing[key];
+      }
     }
 
     return (<div className="container">
@@ -59,9 +57,11 @@ class ServiceInstance extends React.Component {
             <p><a href={this.state.serviceItem.website}>{this.state.serviceItem.website}</a></p>
             <h4>Pricing</h4>
             <p>
-              {priceBasic}<br></br>
-              {priceStandard}<br></br>
-              {pricePremium}
+              <ul>
+                {Object.keys(prices).map(tier => (
+                  <li>{tier} : {prices[tier]}</li>
+                ))}
+              </ul>
             </p>
             <h4>Top Countries That Use {this.state.serviceItem.name}</h4>
             <p>
