@@ -34,8 +34,14 @@ class ServiceInstance extends React.Component {
   }
 
   render() {
+    let priceBasic = "";
+    let priceStandard = "";
+    let pricePremium = "";
     if (this.state.serviceItem.pricing) {
       console.log(this.state.serviceItem.pricing['basic']);
+      priceBasic = "Basic: " +String(this.state.serviceItem.pricing['basic']);
+      priceStandard = "Standard: " +String(this.state.serviceItem.pricing['standard']);
+      pricePremium = "Premium: " +String(this.state.serviceItem.pricing['premium']);
     }
 
     return (<div className="container">
@@ -53,8 +59,9 @@ class ServiceInstance extends React.Component {
             <p><a href={this.state.serviceItem.website}>{this.state.serviceItem.website}</a></p>
             <h4>Pricing</h4>
             <p>
-              <ul>
-              </ul>
+              {priceBasic}<br></br>
+              {priceStandard}<br></br>
+              {pricePremium}
             </p>
             <h4>Top Countries That Use {this.state.serviceItem.name}</h4>
             <p>
