@@ -51,6 +51,18 @@ export class ModelGrid extends React.Component {
   }
 
   render() {
+    //6
+    //1
+    var totalItems = 0;
+    if(String(this.props.type)==="movie"){
+          totalItems=1120;
+    }
+    if(String(this.props.type)==="country"){
+          totalItems=130;
+    }
+    if(String(this.props.type)==="streaming_service"){
+          totalItems=24;
+    }
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
@@ -60,7 +72,9 @@ export class ModelGrid extends React.Component {
       console.log(this.state.data.data);
 
       return (<div>
+          <div className={this.props.type}>
         <section>
+
           <div className="container">
             {
               instanceRows.map(
@@ -87,8 +101,10 @@ export class ModelGrid extends React.Component {
           </div>
 
         </section>
+        </div>
+
         <div className="text-center">
-          <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={800} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
+          <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
       </div>);
     }
