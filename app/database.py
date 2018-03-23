@@ -383,6 +383,12 @@ def db_select_country_movie(country_id):
         sql_query+= "where co.country_id = '{0}' order by co.rank asc".format(str(country_id))
         send_sql_query(sql_query)
         return format_db_reply("countrymovie",get_sql_results())
+def db_select_stream_movie(stream_id):
+        sql_query = schema+"select om.omdb_movie_id,om.title from streamit_om_to_ss os join streamit_streaming_service ss on ss.stream_id = os.streaming_service_id join "
+        sql_query+= "streamit_omdb_movies om on os.omdb_movie_id = om.omdb_movie_id "
+        sql_query+= "where ss.stream_id = '{0}' order by ss.name asc".format(str(stream_id))
+        send_sql_query(sql_query)
+        return format_db_reply("streammovie",get_sql_results())
 
 
 
@@ -463,6 +469,14 @@ def format_db_reply(typeofreply,reply):
                         out["data"].append({})
                         out["data"][index]["name"] = x[0]
                         out["data"][index]["id"]   = x[1]
+                        index+=1
+        elif typeofreply == "streammovie":
+                out["data_type"] = typeofreply
+                index = 0
+                for x in reply:
+                        out["data"].append({})
+                        out["data"][index]["id"] = x[0]
+                        out["data"][index]["name"]   = x[1]
                         index+=1
         elif typeofreply == "streamcountry":
                 out["data_type"] = typeofreply
