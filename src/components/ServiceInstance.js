@@ -6,7 +6,8 @@ class ServiceInstance extends React.Component {
 
   state = {
     serviceItem: {},
-    rankings: []
+    rankings: [],
+    movies: []
   }
 
   componentDidMount() {
@@ -21,16 +22,22 @@ class ServiceInstance extends React.Component {
       let popUrl = url + '/popcountry';
       axios.get(popUrl).then(res => {
         const rank = res.data.data;
-        console.log(rank);
-        this.setState({rankings : rank});
+        this.setState({rankings: rank});
+      });
+
+      let movieUrl = url + '/movie';
+      axios.get(movieUrl).then(res => {
+        const movie = res.data.data;
+        this.setState({movies: movie});
       });
     }
   }
 
   render() {
-    console.log(this.state.serviceItem.pricing)
-    //var result = JSON.parse(this.state.serviceItem.pricing)
-    //console.log(result)
+    if (this.state.serviceItem.pricing) {
+      console.log(this.state.serviceItem.pricing['basic']);
+    }
+
     return (<div className="container">
       <div className="row">
         <div className="card">
@@ -42,8 +49,8 @@ class ServiceInstance extends React.Component {
             <img className="img-responsive" src={this.state.serviceItem.image} alt=""/>
           </div>
           <div className="col-sm-8">
-            <h4>Available Countries</h4>
-            <p></p>
+            <h4>URL</h4>
+            <p><a href={this.state.serviceItem.website}>{this.state.serviceItem.website}</a></p>
             <h4>Pricing</h4>
             <p>
               <ul>
@@ -66,9 +73,18 @@ class ServiceInstance extends React.Component {
             </p>
             <h4>Top Movies on {this.state.serviceItem.name}</h4>
             <p>
-              <ul>
-                <li>Placeholder</li>
-              </ul>
+              <ol>
+                {
+                  this.state.movies.slice(0,10).map(item => <li>
+                    <Link to={{
+                        pathname: `/movie/${item.id}`,
+                        state: {
+                          item: item.id
+                        }
+                      }}>{item.name}</Link>
+                  </li>)
+                }
+              </ol>
             </p>
           </div>
         </div>
