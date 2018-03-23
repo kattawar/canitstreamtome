@@ -84,7 +84,7 @@ class ServiceInstance extends React.Component {
                 {
                   this.state.movies.slice(0,10).map(item => <li>
                     <Link to={{
-                        pathname: `/movie/${item.id}`,
+                        pathname: `/movie/${item.name}`,
                         state: {
                           item: item.id
                         }

@@ -72,10 +72,10 @@ class CountryInstance extends React.Component {
                         item: '266'
                       }
                     }}>Netflix</Link>
-                </li> : 
+                </li> :
                   this.state.streamranks.map(item => <li>
                     <Link to={{
-                        pathname: `/streaming_service/${item.id}`,
+                        pathname: `/streaming_service/${item.name}`,
                         state: {
                           item: item.id
                         }
@@ -91,7 +91,7 @@ class CountryInstance extends React.Component {
                 {
                   this.state.movieranks.slice(0, 10).map(item => <li>
                     <Link to={{
-                        pathname: `/movie/${item.id}`,
+                        pathname: `/movie/${item.name}`,
                         state: {
                           item: item.id
                         }
