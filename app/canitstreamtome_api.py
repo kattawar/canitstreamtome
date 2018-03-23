@@ -90,6 +90,13 @@ def countrymovieapi(country_id):
     if len(out) == 0:
         abort(404)
     return jsonify(out)
+
+### Stream movie
+def streammovieapi(stream_id):
+    out = database.db_select_stream_movie(stream_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
     
     
     

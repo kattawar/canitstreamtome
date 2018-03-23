@@ -63,7 +63,9 @@ def callsinglestreamingapi(stream_id):
 @app.route('/v1/streaming_service/<int:stream_id>/popcountry',subdomain="api",methods=['GET'])
 def callstreampopcountryapi(stream_id):
     return api.streampopcountryapi(stream_id)
-
+@app.route('/v1/streaming_service/<int:stream_id>/movie',subdomain="api",methods=['GET'])
+def callstreammovieapi(stream_id):
+    return api.streammovieapi(stream_id)
 @app.route('/.')
 def nothing():
     return redirect("http://www.canitstreamto.me",code=302)
