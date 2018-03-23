@@ -72,7 +72,9 @@ export class ModelGrid extends React.Component {
       console.log(this.state.data.data);
 
       return (<div>
+          <div className={this.props.type}>
         <section>
+
           <div className="container">
             {
               instanceRows.map(
@@ -99,6 +101,8 @@ export class ModelGrid extends React.Component {
           </div>
 
         </section>
+        </div>
+
         <div className="text-center">
           <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
