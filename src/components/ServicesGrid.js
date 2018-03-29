@@ -139,6 +139,7 @@ export class ServicesGrid extends React.Component {
       const instanceList = res.data;
       this.setState({data: instanceList});
       this.setState({unfilteredData: instanceList});
+      this.handleFilter(this.state.selectedOptionFilter);
 
     }).catch((error) => {
       console.log(error);
