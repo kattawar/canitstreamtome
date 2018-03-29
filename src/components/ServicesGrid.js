@@ -25,9 +25,11 @@ export class ServicesGrid extends React.Component {
       data: [],
       activePage: 1,
       selectedOption: '',
+      selectedOptionFilter: '',
       activeSort:'name',
       activeDir:'asc',
-      realPage: 0
+      realPage: 0,
+      unfilteredData: []
     };
     this.updateData();
 
@@ -37,35 +39,88 @@ export class ServicesGrid extends React.Component {
       this.setState({ selectedOption });
       var dir = '';
       var sort = '';
-
-      switch(selectedOption.value) {
-    case '1':
-
-        sort='name'
-      dir='asc'
-
-        break;
-    case '2':
-
-    sort='name'
-  dir='desc'
-
-      break;
-
-    default:
-    console.log("HERE3");
-
-      }
-      this.setState({activeDir: dir}, function () {
-        this.setState({activeSort: sort}, function () {
+      if(selectedOption){
+        switch(selectedOption.value) {
+          case 'name asc':
+            sort='name'
+            dir='asc'
+            break;
+          case 'name desc':
+            sort='name'
+            dir='desc'
+            break;
+          default:
+            console.log("HERE3");
+        }
+        this.setState({activeDir: dir}, function () {
+          this.setState({activeSort: sort}, function () {
             this.updateData();
           });
         });
-
-
-
+      }
     //  this.updateData();
-    }
+  }
+
+  handleFilter = (selectedOptionFilter) => {
+      this.setState({ selectedOptionFilter });
+      var data = {"data": []}
+      var idx = 0
+      var service_inst = [] 
+      var x = 0   
+      if(selectedOptionFilter){
+        switch(selectedOptionFilter.value) {
+          case 'filt free':
+            for (x = 0; x < 21; x++) {
+              service_inst = this.state.unfilteredData.data[x]
+              if (service_inst.pricing.basic === 'FREE' || service_inst.pricing.basic === 'Free') {
+                console.log(service_inst.name);
+                data.data[idx] = service_inst;
+                idx++
+              }
+            }
+            break;
+          case 'filt sub':
+            for (x = 0; x < 21; x++) {
+              service_inst = this.state.unfilteredData.data[x]
+              if (service_inst.pricing.basic[0] === '$') {
+                console.log(service_inst.name);
+                data.data[idx] = service_inst;
+                idx++
+              }
+            }
+            break;
+          case 'filt rent':
+            for (x = 0; x < 21; x++) {
+              service_inst = this.state.unfilteredData.data[x]
+              if (service_inst.pricing.basic === 'Pricing Varies' || service_inst.pricing.basic === 'pricing varies by movie') {
+                console.log(service_inst.name);
+                data.data[idx] = service_inst;
+                idx++
+              }
+            }
+            break;
+          case 'filt provider':
+            for (x = 0; x < 21; x++) {
+              service_inst = this.state.unfilteredData.data[x]
+              if (service_inst.pricing.basic === 'Through Cable Provider' || service_inst.pricing.basic === 'through cable provider') {
+                console.log(service_inst.name);
+                data.data[idx] = service_inst;
+                idx++
+              }
+            }
+            break;
+          default:
+            console.log("HERE3");
+        }
+        this.setState({data: data}, function () {
+          //this.updateDataFilt();
+        });
+      } else {
+        this.setState({data: this.state.unfilteredData}, function () {});
+      }
+    //  this.updateData();
+  }
+
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
@@ -76,13 +131,14 @@ export class ServicesGrid extends React.Component {
   }
 
   updateData = () => {
-console.log(this.state.activeDir);
+    console.log(this.state.activeDir);
     let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
+      this.setState({unfilteredData: instanceList});
 
     }).catch((error) => {
       console.log(error);
@@ -94,6 +150,9 @@ console.log(this.state.activeDir);
 
     const { selectedOption } = this.state;
     const value = selectedOption && selectedOption.value;
+
+    const { selectedOptionFilter } = this.state;
+    const valueFilter = selectedOptionFilter && selectedOptionFilter.value;
     //6
     //1
     var totalItems = 24;
@@ -103,45 +162,46 @@ console.log(this.state.activeDir);
 
       const instanceRows = splitArray(instanceGrouped, 6);
 
-      console.log(this.state.data.data);
+      //console.log(this.state.data.data);
 
       return (<div>
 
-     <div className="col-sm-3">
-     </div>
+        <div className="col-sm-3">
+        </div>
 
-       <div className="row">
-       <div className="col-sm-3">
-       <h4> Sort By </h4>
-        <Select
-       name="form-field-name"
-       value={value}
-       onChange={this.handleChange}
-       options={[
-         { value: '1', label: 'Name A-Z' },
-         { value: '2', label: 'Name Z-A' },
-       ]}
-     />
-     </div>
+        <div className="row">
+          <div className="col-sm-3">
+            <h4>Sort By</h4>
+              <Select
+                name="form-field-name"
+                value={value}
+                onChange={this.handleChange}
+                options={[
+                  { value: 'name asc', label: 'Name A-Z' },
+                  { value: 'name desc', label: 'Name Z-A' }
+                ]}
+              />
+          </div>
+          <div className="col-sm-3">
+            <h4>Filter By</h4>
+              <Select
+                name="form-field-name"
+                value={valueFilter}
+                onChange={this.handleFilter}
+                options={[
+                  { value: 'filt free', label: 'Free services' },
+                  { value: 'filt sub', label: 'Subscription services' },
+                  { value: 'filt rent', label: 'Renting services' },
+                  { value: 'filt provider', label: 'Through cable provider' }
+                ]}
+              />
+          </div>
+          <div className="col-sm-2">
+          </div>
 
-     <div className="col-sm-3">
-     <h4> Filter By </h4>
-     <Select
-    name="form-field-name"
-    value={value}
-    onChange={this.handleChange}
-    options={[
-      { value: 'name asc', label: 'Name A-Z' },
-      { value: 'name desc', label: 'Name Z-A' },
-    ]}
-  />
-  </div>
-       <div className="col-sm-2">
-     </div>
+        </div>
 
-  </div>
-
-          <div className="streaming_service">
+        <div className="streaming_service">
         <section>
 
           <div className="container">
