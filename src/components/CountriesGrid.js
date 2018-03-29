@@ -67,53 +67,62 @@ export class CountriesGrid extends React.Component {
           console.log("HERE3");
 
       }
-
-      this.setState({
-        activeDir: dir
-      }, function() {
-        this.setState({
-          activeSort: sort
-        }, function() {
-          this.updateData();
-        });
-      });
+    } else {
+      sort = 'name';
+      dir = 'asc';
     }
+
+    this.setState({
+      activeDir: dir
+    }, function() {
+      this.setState({
+        activeSort: sort
+      }, function() {
+        this.updateData();
+      });
+    });
+
     //  this.updateData();
   }
 
+  handleFilter = (selectedFilter) => {
+    this.setState({selectedFilter});
+    var filter = '';
+    var comparison = '';
+    var value = '';
+    let filterUrl = '';
 
-    handleFilter = (selectedFilter) => {
-      this.setState({selectedFilter});
-      var filter = '';
-      var comparison = '';
-      var value='';
-      let filterUrl = '';
+    if (selectedFilter) {
 
-      if (selectedFilter) {
+      switch (selectedFilter.value) {
+        case 'en':
+          filter = 'languages'
+          comparison = '%3D'
+          value = 'English'
 
-        switch (selectedFilter.value) {
-          case 'en':
-            filter='languages'
-            comparison= '%3D'
-            value='English'
+          break;
+        case 'sp':
+          filter = 'languages'
+          comparison = '%3D'
+          value = 'Spanish'
 
-            break;
-          case 'sp':
-            filter='languages'
-            comparison= '%3D'
-            value='Spanish'
+          break;
+        default:
+          console.log("HERE3");
 
-            break;
-          default:
-            console.log("HERE3");
-
-        }
-        filterUrl = `&filter=${filter}&comparison=${comparison}&value=${value}`;
-
-        this.setState({activeFilter : filterUrl}, function() {this.updateData();});
       }
-      //  this.updateData();
+      filterUrl = `&filter=${filter}&comparison=${comparison}&value=${value}`;
+    } else {
+      filterUrl = '';
     }
+    this.setState({
+      activeFilter: filterUrl
+    }, function() {
+      this.updateData();
+    });
+
+    //  this.updateData();
+  }
 
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
