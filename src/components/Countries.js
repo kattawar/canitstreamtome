@@ -1,11 +1,11 @@
 import React from 'react';
-import { CountriesModelGrid } from './CountriesGrid';
+import { CountriesGrid } from './CountriesGrid';
 
 class Countries extends React.Component {
 
 	render() {
 
-		 return (<CountriesModelGrid type='country'/>);
+		 return (<CountriesGrid/>);
 	}
 }
 
