@@ -25,7 +25,7 @@ export class ModelGrid extends React.Component {
       data: [],
       activePage: 1,
       selectedOption: '',
-      activeSort:'name',
+      activeSort:'title',
       activeDir:'asc',
       realPage: 0
     };
@@ -41,13 +41,13 @@ export class ModelGrid extends React.Component {
       switch(selectedOption.value) {
     case '1':
 
-        sort='name'
+        sort='title'
       dir='asc'
 
         break;
     case '2':
 
-    sort='name'
+    sort='title'
   dir='desc'
 
       break;
@@ -77,7 +77,7 @@ export class ModelGrid extends React.Component {
 
   updateData = () => {
 console.log(this.state.activeDir);
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&sort=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
     axios.get(url).then(res => {
@@ -116,34 +116,38 @@ console.log(this.state.activeDir);
 
       return (<div>
 
+     <div className="col-sm-3">
+     </div>
+
        <div className="row">
-       <div className="col-sm-4">
-       <h2> Sort By </h2>
+       <div className="col-sm-3">
+       <h4> Sort By </h4>
         <Select
        name="form-field-name"
        value={value}
        onChange={this.handleChange}
        options={[
-         { value: '1', label: 'Name A-Z' },
-         { value: '2', label: 'Name Z-A' },
+         { value: '1', label: 'Title A-Z' },
+         { value: '2', label: 'Title Z-A' },
        ]}
      />
      </div>
 
-     <div className="col-sm-4">
-     </div>
-     <div className="col-sm-4">
-     <h2> Filter By </h2>
+     <div className="col-sm-3">
+     <h4> Filter By </h4>
      <Select
     name="form-field-name"
     value={value}
     onChange={this.handleChange}
     options={[
-      { value: 'name asc', label: 'Name A-Z' },
-      { value: 'name desc', label: 'Name Z-A' },
+      { value: 'title asc', label: 'Title A-Z' },
+      { value: 'title desc', label: 'Title Z-A' },
     ]}
   />
   </div>
+       <div className="col-sm-2">
+     </div>
+
   </div>
 
           <div className={this.props.type}>
