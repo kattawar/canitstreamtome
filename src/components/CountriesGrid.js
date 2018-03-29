@@ -24,60 +24,111 @@ export class CountriesGrid extends React.Component {
       offset: 0,
       data: [],
       activePage: 1,
-      selectedOption: '',
-      activeSort:'name',
-      activeDir:'asc',
+      selectedSort: '',
+      selectedFilter: '',
+      activeSort: 'name',
+      activeDir: 'asc',
+      activeFilter: '',
       realPage: 0
     };
     this.updateData();
 
   }
 
-  handleChange = (selectedOption) => {
-      this.setState({ selectedOption });
-      var dir = '';
-      var sort = '';
+  handleChange = (selectedSort) => {
+    this.setState({selectedSort});
+    var dir = '';
+    var sort = '';
 
-      switch(selectedOption.value) {
-    case '1':
+    if (selectedSort) {
 
-        sort='name'
-      dir='asc'
+      switch (selectedSort.value) {
+        case 'name_asc':
+          sort = 'name'
+          dir = 'asc'
 
-        break;
-    case '2':
+          break;
+        case 'name_desc':
+          sort = 'name'
+          dir = 'desc'
 
-    sort='name'
-  dir='desc'
+          break;
+        case 'population_asc':
+          sort = 'population'
+          dir = 'asc'
 
-      break;
+          break;
+        case 'population_desc':
+          sort = 'population'
+          dir = 'desc'
 
-    default:
-    console.log("HERE3");
+          break;
+        default:
+          console.log("HERE3");
 
       }
-      this.setState({activeDir: dir}, function () {
-        this.setState({activeSort: sort}, function () {
-            this.updateData();
-          });
+
+      this.setState({
+        activeDir: dir
+      }, function() {
+        this.setState({
+          activeSort: sort
+        }, function() {
+          this.updateData();
         });
-
-
-
-    //  this.updateData();
+      });
     }
+    //  this.updateData();
+  }
+
+
+    handleFilter = (selectedFilter) => {
+      this.setState({selectedFilter});
+      var filter = '';
+      var comparison = '';
+      var value='';
+      let filterUrl = '';
+
+      if (selectedFilter) {
+
+        switch (selectedFilter.value) {
+          case 'en':
+            filter='languages'
+            comparison= '%3D'
+            value='English'
+
+            break;
+          case 'sp':
+            filter='languages'
+            comparison= '%3D'
+            value='Spanish'
+
+            break;
+          default:
+            console.log("HERE3");
+
+        }
+        filterUrl = `&filter=${filter}&comparison=${comparison}&value=${value}`;
+
+        this.setState({activeFilter : filterUrl}, function() {this.updateData();});
+      }
+      //  this.updateData();
+    }
+
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
-    this.setState({realPage: pageNumber-1}, function () {
+    this.setState({
+      realPage: pageNumber - 1
+    }, function() {
       this.updateData();
     });
 
   }
 
   updateData = () => {
-console.log(this.state.activeDir);
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    console.log(this.state.activeDir);
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}${this.state.activeFilter}`;
     //console.log(url);
 
     axios.get(url).then(res => {
@@ -92,8 +143,10 @@ console.log(this.state.activeDir);
 
   render() {
 
-    const { selectedOption } = this.state;
-    const value = selectedOption && selectedOption.value;
+    const {selectedSort} = this.state;
+    const valueSort = selectedSort && selectedSort.value;
+    const {selectedFilter} = this.state;
+    const valueFilter = selectedFilter && selectedFilter.value;
     //6
     //1
     var totalItems = 130;
@@ -107,69 +160,78 @@ console.log(this.state.activeDir);
 
       return (<div>
 
-     <div className="col-sm-3">
-     </div>
+        <div className="col-sm-3"></div>
 
-       <div className="row">
-       <div className="col-sm-3">
-       <h4> Sort By </h4>
-        <Select
-       name="form-field-name"
-       value={value}
-       onChange={this.handleChange}
-       options={[
-         { value: '1', label: 'Name A-Z' },
-         { value: '2', label: 'Name Z-A' },
-       ]}
-     />
-     </div>
+        <div className="row">
+          <div className="col-sm-3">
+            <h4>
+              Sort By
+            </h4>
+            <Select name="form-field-name" value={valueSort} onChange={this.handleChange} options={[
+                {
+                  value: 'name_asc',
+                  label: 'Name A-Z'
+                }, {
+                  value: 'name_desc',
+                  label: 'Name Z-A'
+                }, {
+                  value: 'population_asc',
+                  label: 'Population Low-High'
+                }, {
+                  value: 'population_desc',
+                  label: 'Population High-Low'
+                }
+              ]}/>
+          </div>
 
-     <div className="col-sm-3">
-     <h4> Filter By </h4>
-     <Select
-    name="form-field-name"
-    value={value}
-    onChange={this.handleChange}
-    options={[
-      { value: 'title asc', label: 'Name A-Z' },
-      { value: 'title desc', label: 'Name Z-A' },
-    ]}
-  />
-  </div>
-       <div className="col-sm-2">
-     </div>
+          <div className="col-sm-3">
+            <h4>
+              Filter By
+            </h4>
+            <Select name="form-field-name" value={valueFilter} onChange={this.handleFilter} options={[
+                {
+                  value: 'en',
+                  label: 'English'
+                }, {
+                  value: 'sp',
+                  label: 'Spanish'
+                }
+              ]}/>
+          </div>
+          <div className="col-sm-2"></div>
 
-  </div>
+        </div>
 
-          <div className="country">
-        <section>
+        <div className="country">
+          <section>
 
-          <div className="container">
-            {
-              instanceRows.map(
-                rowList => !rowList
-                ? null
-                : <div className="row">
-                  {
-                    rowList.map(item =>
-                      <div className="col-sm-2" onClick={this.handleClick}>
+            <div className="container">
+              {
+                instanceRows.map(
+                  rowList => !rowList
+                  ? null
+                  : <div className="row">
+                    {
+                      rowList.map(item => <div className="col-sm-2" onClick={this.handleClick}>
                         <Link to={{
                             pathname: `/country/${item.name}`,
-                            state: { item: item.id }
+                            state: {
+                              item: item.id
+                            }
                           }}>
                           <div className="card">
                             <img src={item.image} alt=""/>
                             <h5 align="center">{item.name}</h5>
                           </div>
                         </Link>
-                    </div>)
-                  }
-                </div>)
-            }
+                      </div>)
+                    }
+                  </div>)
+              }
 
-          </div>
+            </div>
 
-        </section>
+          </section>
         </div>
 
         <div className="text-center">
