@@ -37,7 +37,7 @@ export class MovieGrid extends React.Component {
       this.setState({ selectedOption });
       var dir = '';
       var sort = '';
-
+      if(selectedOption){
       switch(selectedOption.value) {
     case '1':
 
@@ -61,7 +61,7 @@ export class MovieGrid extends React.Component {
             this.updateData();
           });
         });
-
+}
 
 
     //  this.updateData();
