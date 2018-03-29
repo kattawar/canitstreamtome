@@ -1,11 +1,11 @@
 import React from 'react';
-import { ServicesModelGrid } from './ServicesGrid';
+import { ServicesGrid } from './ServicesGrid';
 
 class Services extends React.Component {
 
 	render() {
 
-		 return (<ServicesModelGrid type='streaming_service'/>);
+		 return (<ServicesGrid/>);
 	}
 }
 

@@ -16,7 +16,7 @@ function splitArray(input, spacing) {
   return output;
 }
 
-export class ServicesGrid extends React.Component {
+export class MovieGrid extends React.Component {
 
   constructor(props) {
     super(props);
@@ -77,7 +77,7 @@ export class ServicesGrid extends React.Component {
 
   updateData = () => {
 console.log(this.state.activeDir);
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sort=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&sort=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
     axios.get(url).then(res => {
@@ -96,7 +96,7 @@ console.log(this.state.activeDir);
     const value = selectedOption && selectedOption.value;
     //6
     //1
-    var totalItems = 24;
+    var totalItems = 1120;
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
@@ -137,7 +137,7 @@ console.log(this.state.activeDir);
   </div>
   </div>
 
-          <div className="streaming_service">
+          <div className="movie">
         <section>
 
           <div className="container">
@@ -150,7 +150,7 @@ console.log(this.state.activeDir);
                     rowList.map(item =>
                       <div className="col-sm-2" onClick={this.handleClick}>
                         <Link to={{
-                            pathname: `/streaming_service/${item.name}`,
+                            pathname: `/movie/${item.name}`,
                             state: { item: item.id }
                           }}>
                           <div className="card">
@@ -178,4 +178,4 @@ console.log(this.state.activeDir);
   }
 }
 
-export default ServicesGrid;
+export default MovieGrid;
