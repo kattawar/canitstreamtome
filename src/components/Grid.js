@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import '../movies.css';
 import Pagination from "react-js-pagination";
 import axios from 'axios';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 function splitArray(input, spacing) {
   var output = [];
@@ -21,25 +23,63 @@ export class ModelGrid extends React.Component {
     this.state = {
       offset: 0,
       data: [],
-      activePage: 1
+      activePage: 1,
+      selectedOption: '',
+      activeSort:'name',
+      activeDir:'asc',
+      realPage: 0
     };
-    this.updateData(1);
+    this.updateData();
 
   }
 
+  handleChange = (selectedOption) => {
+      this.setState({ selectedOption });
+      var dir = '';
+      var sort = '';
+
+      switch(selectedOption.value) {
+    case '1':
+
+        sort='name'
+      dir='asc'
+
+        break;
+    case '2':
+
+    sort='name'
+  dir='desc'
+
+      break;
+
+    default:
+    console.log("HERE3");
+
+      }
+      this.setState({activeDir: dir}, function () {
+        this.setState({activeSort: sort}, function () {
+            this.updateData();
+          });
+        });
+
+
+
+    //  this.updateData();
+    }
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
-    this.updateData(pageNumber);
+    this.setState({realPage: pageNumber-1}, function () {
+      this.updateData();
+    });
+
   }
 
-  updateData = (pageNumber) => {
-    console.log(pageNumber);
-    console.log("updatecalled");
-    let url = "";
+  updateData = () => {
+console.log(this.state.activeDir);
+    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&sort=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    //console.log(url);
 
-    url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/${this.props.type}?pagesize=24&pagenum=${pageNumber - 1}`;
-    console.log(url)
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
@@ -51,6 +91,9 @@ export class ModelGrid extends React.Component {
   }
 
   render() {
+
+    const { selectedOption } = this.state;
+    const value = selectedOption && selectedOption.value;
     //6
     //1
     var totalItems = 0;
@@ -72,6 +115,37 @@ export class ModelGrid extends React.Component {
       console.log(this.state.data.data);
 
       return (<div>
+
+       <div className="row">
+       <div className="col-sm-4">
+       <h2> Sort By </h2>
+        <Select
+       name="form-field-name"
+       value={value}
+       onChange={this.handleChange}
+       options={[
+         { value: '1', label: 'Name A-Z' },
+         { value: '2', label: 'Name Z-A' },
+       ]}
+     />
+     </div>
+
+     <div className="col-sm-4">
+     </div>
+     <div className="col-sm-4">
+     <h2> Filter By </h2>
+     <Select
+    name="form-field-name"
+    value={value}
+    onChange={this.handleChange}
+    options={[
+      { value: 'name asc', label: 'Name A-Z' },
+      { value: 'name desc', label: 'Name Z-A' },
+    ]}
+  />
+  </div>
+  </div>
+
           <div className={this.props.type}>
         <section>
 
