@@ -24,7 +24,8 @@ export class CountriesGrid extends React.Component {
       offset: 0,
       data: [],
       activePage: 1,
-      selectedOption: '',
+      selectedSort: '',
+      selectedFilter: '',
       activeSort: 'name',
       activeDir: 'asc',
       activeFilter: '',
@@ -34,14 +35,14 @@ export class CountriesGrid extends React.Component {
 
   }
 
-  handleChange = (selectedOption) => {
-    this.setState({selectedOption});
+  handleChange = (selectedSort) => {
+    this.setState({selectedSort});
     var dir = '';
     var sort = '';
 
-    if (selectedOption) {
+    if (selectedSort) {
 
-      switch (selectedOption.value) {
+      switch (selectedSort.value) {
         case 'name_asc':
           sort = 'name'
           dir = 'asc'
@@ -81,16 +82,16 @@ export class CountriesGrid extends React.Component {
   }
 
 
-    handleFilter = (selectedOption) => {
-      this.setState({selectedOption});
+    handleFilter = (selectedFilter) => {
+      this.setState({selectedFilter});
       var filter = '';
       var comparison = '';
       var value='';
       let filterUrl = '';
 
-      if (selectedOption) {
+      if (selectedFilter) {
 
-        switch (selectedOption.value) {
+        switch (selectedFilter.value) {
           case 'en':
             filter='languages'
             comparison= '%3D'
@@ -142,8 +143,10 @@ export class CountriesGrid extends React.Component {
 
   render() {
 
-    const {selectedOption} = this.state;
-    const value = selectedOption && selectedOption.value;
+    const {selectedSort} = this.state;
+    const valueSort = selectedSort && selectedSort.value;
+    const {selectedFilter} = this.state;
+    const valueFilter = selectedFilter && selectedFilter.value;
     //6
     //1
     var totalItems = 130;
@@ -164,7 +167,7 @@ export class CountriesGrid extends React.Component {
             <h4>
               Sort By
             </h4>
-            <Select name="form-field-name" value={value} onChange={this.handleChange} options={[
+            <Select name="form-field-name" value={valueSort} onChange={this.handleChange} options={[
                 {
                   value: 'name_asc',
                   label: 'Name A-Z'
@@ -185,7 +188,7 @@ export class CountriesGrid extends React.Component {
             <h4>
               Filter By
             </h4>
-            <Select name="form-field-name" value={value} onChange={this.handleFilter} options={[
+            <Select name="form-field-name" value={valueFilter} onChange={this.handleFilter} options={[
                 {
                   value: 'en',
                   label: 'English'
