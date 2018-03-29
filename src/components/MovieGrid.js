@@ -27,6 +27,7 @@ export class MovieGrid extends React.Component {
         data: [],
         activePage: 1,
         selectedOption: '',
+        selectedOptionFilter: '',
         activeSort: 'title',
         activeDir: 'asc',
         activeFilter: '',
@@ -117,16 +118,16 @@ export class MovieGrid extends React.Component {
     }
 
 
-    handleFilterChange = (selectedOption) => {
+    handleFilterChange = (selectedOptionFilter) => {
       console.log("FILTER");
       this.setState({
-        selectedOption
+        selectedOptionFilter
       });
       var filter = '';
       var value = '';
       var comparison = '';
-      if (selectedOption) {
-        switch (selectedOption.value) {
+      if (selectedOptionFilter) {
+        switch (selectedOptionFilter.value) {
           case '11':
 
             filter = 'rating';
@@ -269,6 +270,11 @@ export class MovieGrid extends React.Component {
           selectedOption
         } = this.state;
         const value = selectedOption && selectedOption.value;
+
+        const {
+          selectedOptionFilter
+        } = this.state;
+        const valueFilter = selectedOptionFilter && selectedOptionFilter.value;
         //6
         //1
         var totalItems = 1120;
@@ -336,7 +342,7 @@ export class MovieGrid extends React.Component {
               h4 > Filter By < /h4> <
               Select name = "form-field-name2"
               value = {
-                value
+                valueFilter
               }
               onChange = {
                 this.handleFilterChange
