@@ -45,6 +45,7 @@ export class MovieGrid extends React.Component {
       dir='asc'
 
         break;
+
     case '2':
 
     sort='title'
@@ -52,15 +53,48 @@ export class MovieGrid extends React.Component {
 
       break;
 
+      case '3':
+
+      sort='rating'
+    dir='desc'
+
+        break;
+        case '4':
+
+        sort='rating'
+      dir='asc'
+
+          break;
+
+          case '5':
+
+          sort='release_date'
+        dir='desc'
+
+            break;
+
+            case '6':
+
+            sort='release_date'
+          dir='asc'
+
+              break;
+
     default:
     console.log("HERE3");
 
       }
       this.setState({activeDir: dir}, function () {
         this.setState({activeSort: sort}, function () {
-            this.updateData();
-          });
+            this.setState({activePage: 1});
+            this.setState({realPage: 0}, function () {
+              this.updateData();
+            });
+
+
+
         });
+      });
 }
 
 
@@ -120,6 +154,10 @@ console.log(this.state.activeDir);
        options={[
          { value: '1', label: 'Title A-Z' },
          { value: '2', label: 'Title Z-A' },
+         { value: '3', label: 'Rating High-Low' },
+         { value: '4', label: 'Rating Low-High' },
+         { value: '5', label: 'Release Date Newest-Oldest' },
+         { value: '6', label: 'Release Date Oldest-Newest' },
        ]}
      />
      </div>
