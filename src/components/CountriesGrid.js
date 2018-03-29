@@ -27,6 +27,7 @@ export class CountriesGrid extends React.Component {
       selectedOption: '',
       activeSort: 'name',
       activeDir: 'asc',
+      activeFilter: '',
       realPage: 0
     };
     this.updateData();
@@ -42,13 +43,11 @@ export class CountriesGrid extends React.Component {
 
       switch (selectedOption.value) {
         case 'name_asc':
-
           sort = 'name'
           dir = 'asc'
 
           break;
         case 'name_desc':
-
           sort = 'name'
           dir = 'desc'
 
@@ -80,6 +79,41 @@ export class CountriesGrid extends React.Component {
     }
     //  this.updateData();
   }
+
+
+    handleFilter = (selectedOption) => {
+      this.setState({selectedOption});
+      var filter = '';
+      var comparison = '';
+      var value='';
+      let filterUrl = '';
+
+      if (selectedOption) {
+
+        switch (selectedOption.value) {
+          case 'en':
+            filter='languages'
+            comparison= '%3D'
+            value='English'
+
+            break;
+          case 'sp':
+            filter='languages'
+            comparison= '%3D'
+            value='Spanish'
+
+            break;
+          default:
+            console.log("HERE3");
+
+        }
+        filterUrl = `&filter=${filter}&comparison=${comparison}&value=${value}`;
+
+        this.setState({activeFilter : filterUrl}, function() {this.updateData();});
+      }
+      //  this.updateData();
+    }
+
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
@@ -93,7 +127,7 @@ export class CountriesGrid extends React.Component {
 
   updateData = () => {
     console.log(this.state.activeDir);
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}${this.state.activeFilter}`;
     //console.log(url);
 
     axios.get(url).then(res => {
@@ -151,13 +185,13 @@ export class CountriesGrid extends React.Component {
             <h4>
               Filter By
             </h4>
-            <Select name="form-field-name" value={value} onChange={this.handleChange} options={[
+            <Select name="form-field-name" value={value} onChange={this.handleFilter} options={[
                 {
-                  value: 'title asc',
-                  label: 'Name A-Z'
+                  value: 'en',
+                  label: 'English'
                 }, {
-                  value: 'title desc',
-                  label: 'Name Z-A'
+                  value: 'sp',
+                  label: 'Spanish'
                 }
               ]}/>
           </div>
