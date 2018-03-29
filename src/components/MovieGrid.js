@@ -16,7 +16,7 @@ function splitArray(input, spacing) {
   return output;
 }
 
-export class ModelGrid extends React.Component {
+export class MovieGrid extends React.Component {
 
   constructor(props) {
     super(props);
@@ -96,16 +96,7 @@ console.log(this.state.activeDir);
     const value = selectedOption && selectedOption.value;
     //6
     //1
-    var totalItems = 0;
-    if(String(this.props.type)==="movie"){
-          totalItems=1120;
-    }
-    if(String(this.props.type)==="country"){
-          totalItems=130;
-    }
-    if(String(this.props.type)==="streaming_service"){
-          totalItems=24;
-    }
+    var totalItems = 1120;
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
@@ -150,7 +141,7 @@ console.log(this.state.activeDir);
 
   </div>
 
-          <div className={this.props.type}>
+          <div className="movie">
         <section>
 
           <div className="container">
@@ -163,7 +154,7 @@ console.log(this.state.activeDir);
                     rowList.map(item =>
                       <div className="col-sm-2" onClick={this.handleClick}>
                         <Link to={{
-                            pathname: `/${this.props.type}/${item.name}`,
+                            pathname: `/movie/${item.name}`,
                             state: { item: item.id }
                           }}>
                           <div className="card">
@@ -191,4 +182,4 @@ console.log(this.state.activeDir);
   }
 }
 
-export default ModelGrid;
+export default MovieGrid;

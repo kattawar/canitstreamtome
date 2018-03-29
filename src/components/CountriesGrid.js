@@ -16,7 +16,7 @@ function splitArray(input, spacing) {
   return output;
 }
 
-export class CountriesModelGrid extends React.Component {
+export class CountriesGrid extends React.Component {
 
   constructor(props) {
     super(props);
@@ -96,16 +96,7 @@ console.log(this.state.activeDir);
     const value = selectedOption && selectedOption.value;
     //6
     //1
-    var totalItems = 0;
-    if(String(this.props.type)==="movie"){
-          totalItems=1120;
-    }
-    if(String(this.props.type)==="country"){
-          totalItems=130;
-    }
-    if(String(this.props.type)==="streaming_service"){
-          totalItems=24;
-    }
+    var totalItems = 130;
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
@@ -150,8 +141,7 @@ console.log(this.state.activeDir);
 
   </div>
 
-
-          <div className={this.props.type}>
+          <div className="country">
         <section>
 
           <div className="container">
@@ -164,7 +154,7 @@ console.log(this.state.activeDir);
                     rowList.map(item =>
                       <div className="col-sm-2" onClick={this.handleClick}>
                         <Link to={{
-                            pathname: `/${this.props.type}/${item.name}`,
+                            pathname: `/country/${item.name}`,
                             state: { item: item.id }
                           }}>
                           <div className="card">
@@ -192,4 +182,4 @@ console.log(this.state.activeDir);
   }
 }
 
-export default CountriesModelGrid;
+export default CountriesGrid;

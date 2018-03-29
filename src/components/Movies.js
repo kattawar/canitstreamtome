@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModelGrid } from './Grid';
+import { MovieGrid } from './MovieGrid';
 
 
 class Movies extends React.Component {
@@ -8,7 +8,7 @@ class Movies extends React.Component {
 
 	render() {
 
-		 return (<ModelGrid type='movie'/>);
+		 return (<MovieGrid/>);
 	}
 }
 
