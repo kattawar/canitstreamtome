@@ -92,6 +92,11 @@ export class MovieGrid extends React.Component {
             console.log("HERE3");
 
         }
+      }
+      else{
+        sort = 'title'
+        dir = 'asc'
+      }
         this.setState({
           activeDir: dir
         }, function() {
@@ -111,7 +116,7 @@ export class MovieGrid extends React.Component {
 
           });
         });
-      }
+
 
 
       //  this.updateData();
@@ -206,6 +211,10 @@ export class MovieGrid extends React.Component {
             console.log("HERE3");
 
         }
+      }
+      else{
+
+      }
         this.setState({
           activeFilter: filter
         }, function() {
@@ -228,7 +237,7 @@ export class MovieGrid extends React.Component {
 
           });
         });
-      }
+
 
 
       //  this.updateData();
