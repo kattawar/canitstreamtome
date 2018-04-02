@@ -1,4 +1,7 @@
-
+.test{
+  height: 500px;
+  width:2000px;
+}
 
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
