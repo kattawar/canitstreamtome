@@ -133,6 +133,50 @@ export class MovieGrid extends React.Component {
       var comparison = '';
       if (selectedOptionFilter) {
         switch (selectedOptionFilter.value) {
+
+          case 'crime':
+          filter = 'genres';
+          value = 'Crime';
+          comparison = 'like';
+          break;
+          case 'action':
+          filter = 'genres';
+          value = 'Action';
+          comparison = 'like';
+          break;
+          case 'comedy':
+          filter = 'genres';
+          value = 'Comedy';
+          comparison = 'like';
+          break;
+
+          case 'history':
+          filter = 'genres';
+          value = 'History';
+          comparison = 'like';
+          break;
+
+          case 'drama':
+          filter = 'genres';
+          value = 'Drama';
+          comparison = 'like';
+          break;
+          case 'war':
+          filter = 'genres';
+          value = 'War';
+          comparison = 'like';
+          break;
+          case 'thriller':
+          filter = 'genres';
+          value = 'Thriller';
+          comparison = 'like';
+          break;
+          case 'science':
+          filter = 'genres';
+          value = 'Science Fiction';
+          comparison = 'like';
+          break;
+
           case '11':
 
             filter = 'rating';
@@ -358,6 +402,38 @@ export class MovieGrid extends React.Component {
               }
               options = {
                 [{
+                value: 'science',
+                label: 'Genre: Science Fiction'
+              },
+              {
+              value: 'crime',
+              label: 'Genre: Crime'
+            },
+                  {
+                  value: 'action',
+                  label: 'Genre: Action'
+                },
+                {
+                value: 'comedy',
+                label: 'Genre: Comedy'
+              },
+              {
+              value: 'history',
+              label: 'Genre: History'
+            },
+                {
+                value: 'drama',
+                label: 'Genre: Drama'
+              },
+                  {
+                  value: 'war',
+                  label: 'Genre: War'
+                },
+                    {
+                    value: 'thriller',
+                    label: 'Genre: Thriller'
+                  },
+                  {
                     value: '11',
                     label: 'Rating > 8'
                   },
@@ -393,6 +469,7 @@ export class MovieGrid extends React.Component {
                     value: '99',
                     label: 'Release Date < 1970'
                   },
+
                 ]
               }
               /> <
