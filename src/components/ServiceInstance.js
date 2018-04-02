@@ -55,6 +55,7 @@ class ServiceInstance extends React.Component {
           <div className="col-sm-8">
             <h4>URL</h4>
             <p><a href={this.state.serviceItem.website}>{this.state.serviceItem.website}</a></p>
+            <hr></hr>
             <h4>Pricing</h4>
             <p>
               <ul>
@@ -63,7 +64,15 @@ class ServiceInstance extends React.Component {
                 ))}
               </ul>
             </p>
-            <h4>Top Countries That Use {this.state.serviceItem.name}</h4>
+          </div>
+        </div>
+      </div>
+            <div className="row">
+        <div className="col-sm-6">
+        <div className="card">
+          <div className="col-sm-12">
+            <h3>Top Countries That Use {this.state.serviceItem.name}</h3>
+            <hr></hr>
             <p>
               <ol>
                 {
@@ -78,7 +87,14 @@ class ServiceInstance extends React.Component {
                 }
               </ol>
             </p>
-            <h4>Top Movies on {this.state.serviceItem.name}</h4>
+          </div>
+        </div>
+        </div>
+        <div className="col-sm-6">        
+        <div className="card">        
+          <div className="col-sm-12">
+            <h3>Top Movies on {this.state.serviceItem.name}</h3>
+            <hr></hr>
             <p>
               <ol>
                 {
@@ -95,6 +111,7 @@ class ServiceInstance extends React.Component {
             </p>
           </div>
         </div>
+      </div>      
       </div>
     </div>);
   }
