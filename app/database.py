@@ -80,15 +80,12 @@ def get_sql_results():
         global cur
         return cur.fetchall()
 
-def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url, genres):
+def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url):
     print(trailer_url)
     global dbconnection
     global schema
-
-    genres_string = ", ".join(genres)
-    print(genres_string)
-    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast, trailer_url, genres) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}', '{8}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"), trailer_url, genres_string)
-    print(sql_query)
+    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast, trailer_url) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"), trailer_url)
+    #print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
     sql_query = schema+"select lastval();"
@@ -144,23 +141,6 @@ def db_update_country_image(country_id, image_url, pop="", langs=""):
     dbconnection.commit()
     #return res
 
-def db_update_country_region_latlng(country_id, region, latitude, longitude):
-    global dbconnection
-    global schema
-
-    #sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}', languages = '{1}', population = '{2}' where country_id = {3}".format(image_url, langs, pop, country_id)
-    sql_query = schema+"update jordan_dev.streamit_countries set (region, latitude, longitude) = ('{0}', '{1}', {2}) where country_id = {3}".format(region, latitude, longitude, country_id)
-
-    print(sql_query)
-    send_sql_query(sql_query)
-    dbconnection.commit()
-    # sql_query = schema+"select lastval();"
-    # send_sql_query(sql_query)
-    #res = get_sql_results()
-    #print("image updated ID HERE: ",res[0][0])
-    dbconnection.commit()
-    #return res
-
 def db_insert_country_to_ss_rows(ss_id, country_ranks):
     global dbconnection
     global schema
@@ -204,7 +184,7 @@ def db_insert_country_to_om_rows(om_id, country_ranks):
 def db_get_omdb_movies():
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_omdb_movies order by omdb_movie_id"
+    sql_query = schema+"SELECT * FROM streamit_omdb_movies"
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
@@ -212,7 +192,7 @@ def db_get_omdb_movies():
 def db_get_streaming_services():
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_streaming_service order by stream_id"
+    sql_query = schema+"SELECT * FROM streamit_streaming_service"
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
@@ -271,7 +251,7 @@ def db_insert_guidebox_movie(title, guidebox_id, streaming_service_id, themovied
 def db_get_guidebox_movies():
     global dbconnection
     global schema
-    sql_query = schema+"SELECT * FROM streamit_guidebox_movies order by guidebox_movie_id,streaming_service_id"
+    sql_query = schema+"SELECT * FROM streamit_guidebox_movies"
     send_sql_query(sql_query)
     dbconnection.commit()
     return get_sql_results
@@ -333,7 +313,7 @@ def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize =
         sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast,trailer_url,genres from streamit_omdb_movies "
         if filtertype in movie_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
-                        value+="%"
+                        value="%"+value+"%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
         if sortby in movie_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -348,7 +328,7 @@ def db_select_country(filtertype = None, value = None, comparison = "=",pagesize
         sql_query += "(SELECT * FROM complete.streamit_countries WHERE country_id IN (SELECT country_id FROM complete.streamit_country_to_om  group by country_id)) as t "
         if filtertype in country_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
-                        value+="%"
+                        value="%"+value+"%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
         if sortby in country_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -362,7 +342,7 @@ def db_select_streaming_service(filtertype = None, value = None, comparison = "=
         sql_query = schema+"select stream_id,name, pricing, available_countries,image_url,website_url from streamit_streaming_service "
         if filtertype in stream_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
-                        value+="%"
+                        value="%"+value+"%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
         if sortby in stream_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
