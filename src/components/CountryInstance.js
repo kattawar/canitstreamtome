@@ -67,8 +67,15 @@ if(this.state.countryItem.latitude){
             <hr></hr>
             <h4>Spoken Languages</h4>
             <p>{this.state.countryItem.languages}</p>
+          </div>
+        </div>
+      </div>
+            <div className="row">
+        <div className="col-sm-6">
+        <div className="card">
+          <div className="col-sm-12">
+            <h3>Top Streaming Services</h3>
             <hr></hr>
-            <h4>Top Streaming Services</h4>
             <p>
               <ol>
 
@@ -91,8 +98,14 @@ if(this.state.countryItem.latitude){
                 }
               </ol>
             </p>
+          </div>
+        </div>
+        </div>
+        <div className="col-sm-6">        
+        <div className="card">        
+          <div className="col-sm-12">          
+            <h3>Top Movies</h3>
             <hr></hr>
-            <h4>Top Movies</h4>
             <p>
               <ol>
                 {
@@ -107,9 +120,9 @@ if(this.state.countryItem.latitude){
                 }
               </ol>
             </p>
-            <hr></hr>
           </div>
         </div>
+      </div>      
       </div>
       <div className="row">
       <div className= "card">
