@@ -107,6 +107,48 @@ export class CountriesGrid extends React.Component {
           value = 'Spanish'
 
           break;
+        case 'ar':
+          filter = 'languages'
+          comparison = '%3D'
+          value = 'Arabic'
+
+          break;
+        case 'fr':
+          filter = 'languages'
+          comparison = '%3D'
+          value = 'French'
+
+          break;
+        case 'africa':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Africa'
+
+          break;
+        case 'americas':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Americas'
+
+          break;
+        case 'asia':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Asia'
+
+          break;
+        case 'europe':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Europe'
+
+          break;
+        case 'oceania':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Oceania'
+
+          break;
         default:
           console.log("HERE3");
 
@@ -200,10 +242,31 @@ export class CountriesGrid extends React.Component {
             <Select name="form-field-name" value={valueFilter} onChange={this.handleFilter} options={[
                 {
                   value: 'en',
-                  label: 'English'
+                  label: 'Language - English'
                 }, {
                   value: 'sp',
-                  label: 'Spanish'
+                  label: 'Language - Spanish'
+                }, {
+                  value: 'ar',
+                  label: 'Language - Arabic'
+                }, {
+                  value: 'fr',
+                  label: 'Language - French'
+                }, {
+                  value: 'africa',
+                  label: 'Region - Africa'
+                }, {
+                  value: 'americas',
+                  label: 'Region - Americas'
+                }, {
+                  value: 'asia',
+                  label: 'Region - Asia'
+                }, {
+                  value: 'europe',
+                  label: 'Region - Europe'
+                }, {
+                  value: 'oceania',
+                  label: 'Region - Oceania'
                 }
               ]}/>
           </div>

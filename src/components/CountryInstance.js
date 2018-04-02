@@ -130,7 +130,7 @@ if(this.state.countryItem.latitude){
 
         <GoogleMapReact
     bootstrapURLKeys={{ key: 'AIzaSyCDiHkgbdcRTJQnYPN0I_USDbkKUmKuYJE' }}
-    zoom={7}
+    zoom={6}
     center={[lat1,long1]}>
 
   </GoogleMapReact>
