@@ -13,7 +13,7 @@ person_filter_values = None
 tweet_filter_values = None
 stream_filter_values = None
 comparison_values = ["=",">=","<=","like"]
-schema = "set schema 'final';"
+schema = "set schema 'jordan_dev';"
 
 ### Database connection startup and shutdone functions
 def close_database_connection():
@@ -80,12 +80,15 @@ def get_sql_results():
         global cur
         return cur.fetchall()
 
-def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url):
+def db_insert_omdb_movie(title, description, rating, release_date, language, poster_url, movie_cast, trailer_url, genres):
     print(trailer_url)
     global dbconnection
     global schema
-    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast, trailer_url) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"), trailer_url)
-    #print(sql_query)
+
+    genres_string = ", ".join(genres)
+    print(genres_string)
+    sql_query = schema+"insert into streamit_omdb_movies (title, description, rating, release_date, language, poster_url, movie_cast, trailer_url, genres) values ('{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}', '{8}')".format(title.replace("'","''"), description.replace("'","''"), rating, release_date, language, poster_url, movie_cast.replace("'","''"), trailer_url, genres_string)
+    print(sql_query)
     send_sql_query(sql_query)
     dbconnection.commit()
     sql_query = schema+"select lastval();"
@@ -130,6 +133,23 @@ def db_update_country_image(country_id, image_url, pop="", langs=""):
 
     #sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}', languages = '{1}', population = '{2}' where country_id = {3}".format(image_url, langs, pop, country_id)
     sql_query = schema+"update jordan_dev.streamit_countries set (country_image_url, languages, population) = ('{0}', '{1}', {2}) where country_id = {3}".format(image_url, langs, pop, country_id)
+
+    print(sql_query)
+    send_sql_query(sql_query)
+    dbconnection.commit()
+    # sql_query = schema+"select lastval();"
+    # send_sql_query(sql_query)
+    #res = get_sql_results()
+    #print("image updated ID HERE: ",res[0][0])
+    dbconnection.commit()
+    #return res
+
+def db_update_country_region_latlng(country_id, region, latitude, longitude):
+    global dbconnection
+    global schema
+
+    #sql_query = schema+"update jordan_dev.streamit_countries set country_image_url = '{0}', languages = '{1}', population = '{2}' where country_id = {3}".format(image_url, langs, pop, country_id)
+    sql_query = schema+"update jordan_dev.streamit_countries set (region, latitude, longitude) = ('{0}', '{1}', {2}) where country_id = {3}".format(region, latitude, longitude, country_id)
 
     print(sql_query)
     send_sql_query(sql_query)
