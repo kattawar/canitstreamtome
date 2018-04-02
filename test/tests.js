@@ -3,18 +3,15 @@ import Enzyme from 'enzyme';
 import { mount, shallow } from 'enzyme';
 import {expect} from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
+
 Enzyme.configure({ adapter: new Adapter() });
 
 import Home from '../src/components/Home';
 import NavBarr from '../src/components/NavBar';
 import Bottom from '../src/components/Footer';
-//import About from '../src/components/About';
-//import ModelGrid from '../src/components/Grid';
-//import splitArray from '../src/components/Grid';
-//import MovieInstance from '../src/components/MovieInstance';
-//import CountryInstance from '../src/components/CountryInstance';
-//import ServiceInstance from '../src/components/ServiceInstance';
-
+import About from '../src/components/About';
+import ModelGrid from '../src/components/Grid';
+import MovieInstance from '../src/components/MovieInstance';
 
 describe('Test Home', () => {
 	it ('contains header', () => {
@@ -45,16 +42,19 @@ describe('Test Footer', () => {
 	})
 })
 
-/*describe('Test About', () => {
+describe('Test ModelGrid', () => {
+	it ('contains card', () => {
+		expect(shallow(< ModelGrid/>).find('section').length).to.equal(0);
+	})
+})
+
+describe('Test About', () => {
 	it ('contains all section headers', () => {
 		expect(shallow(<About />).contains('PURPOSE')).to.equal(true);		
-		expect(shallow(<About />).contains('HOW WE')).to.equal(true);		
-		expect(shallow(<About />).contains('APPROVE US, INC. MEMBERS')).to.equal(true);		
 		expect(shallow(<About />).contains('STATS')).to.equal(true);		
 		expect(shallow(<About />).contains('DATA')).to.equal(true);		
 		expect(shallow(<About />).contains('TOOLS')).to.equal(true);		
-		expect(shallow(<About />).contains('LINKS')).to.equal(true);		
-
+		expect(shallow(<About />).contains('LINKS')).to.equal(true);
 	})
 
 	it ('contains all members', () => {
@@ -64,4 +64,4 @@ describe('Test Footer', () => {
 		expect(shallow(<About />).contains('Zach Kattawar')).to.equal(true);
 		expect(shallow(<About />).contains('Jordan Howe')).to.equal(true);
 	})
-})*/
+})

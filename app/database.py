@@ -330,7 +330,7 @@ def db_update_country(country_id,column,value):
 def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global movie_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast,trailer_url from streamit_omdb_movies "
+        sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast,trailer_url,genres from streamit_omdb_movies "
         if filtertype in movie_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
@@ -344,8 +344,8 @@ def db_select_movie(filtertype = None, value = None, comparison = "=",pagesize =
 def db_select_country(filtertype = None, value = None, comparison = "=",pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global country_filter_values,comparison_values
         offset = pagenum*pagesize
-        sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url from  "
-        sql_query += "(SELECT * FROM final.streamit_countries WHERE country_id IN (SELECT country_id FROM final.streamit_country_to_om  group by country_id)) as t "
+        sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url,t.region,t.latitude,t.longitude from  "
+        sql_query += "(SELECT * FROM jordan_dev.streamit_countries WHERE country_id IN (SELECT country_id FROM jordan_dev.streamit_country_to_om  group by country_id)) as t "
         if filtertype in country_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
@@ -449,6 +449,7 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["image"]        = x[6]
                         out["data"][index]["movie_cast"]   = x[7]
                         out["data"][index]["trailer_url"]  = x[8]
+                        out["data"][index]["genre"]        = x[9]
                         index += 1
         elif typeofreply == "countries":
                 out["data_type"] ="countries"
@@ -460,6 +461,9 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["population"]  = str(x[2])
                         out["data"][index]["languages"]   = x[3]
                         out["data"][index]["image"]       = x[4]
+                        out["data"][index]["region"]      = x[5]
+                        out["data"][index]["latitude"]    = x[6]
+                        out["data"][index]["longitude"]   = x[7]
                         index +=1
         elif typeofreply == "streamingservices":
                 out["data_type"] ="streamingservices"
