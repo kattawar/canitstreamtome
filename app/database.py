@@ -13,7 +13,7 @@ person_filter_values = None
 tweet_filter_values = None
 stream_filter_values = None
 comparison_values = ["=",">=","<=","like"]
-schema = "set schema 'jordan_dev';"
+schema = "set schema 'complete';"
 
 ### Database connection startup and shutdone functions
 def close_database_connection():
@@ -325,7 +325,7 @@ def db_select_country(filtertype = None, value = None, comparison = "=",pagesize
         global country_filter_values,comparison_values
         offset = pagenum*pagesize
         sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url,t.region,t.latitude,t.longitude from  "
-        sql_query += "(SELECT * FROM jordan_dev.streamit_countries WHERE country_id IN (SELECT country_id FROM jordan_dev.streamit_country_to_om  group by country_id)) as t "
+        sql_query += "(SELECT * FROM complete.streamit_countries WHERE country_id IN (SELECT country_id FROM complete.streamit_country_to_om  group by country_id)) as t "
         if filtertype in country_filter_values and comparison in comparison_values and value != None:
                 if comparison == "like":
                         value+="%"
