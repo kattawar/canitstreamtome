@@ -1,4 +1,7 @@
-
+.test{
+  height: 500px;
+  width:100%;
+}
 
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -9,7 +12,7 @@
 }
 hr {
     margin-top: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     margin-left: 10px;
     border: 0;
     border-top: 1px solid #eee;

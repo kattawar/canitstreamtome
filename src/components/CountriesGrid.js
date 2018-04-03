@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 function splitArray(input, spacing) {
   var output = [];
@@ -107,6 +108,48 @@ export class CountriesGrid extends React.Component {
           value = 'Spanish'
 
           break;
+        case 'ar':
+          filter = 'languages'
+          comparison = '%3D'
+          value = 'Arabic'
+
+          break;
+        case 'fr':
+          filter = 'languages'
+          comparison = '%3D'
+          value = 'French'
+
+          break;
+        case 'africa':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Africa'
+
+          break;
+        case 'americas':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Americas'
+
+          break;
+        case 'asia':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Asia'
+
+          break;
+        case 'europe':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Europe'
+
+          break;
+        case 'oceania':
+          filter = 'region'
+          comparison = '%3D'
+          value = 'Oceania'
+
+          break;
         default:
           console.log("HERE3");
 
@@ -179,16 +222,16 @@ export class CountriesGrid extends React.Component {
             <Select name="form-field-name" value={valueSort} onChange={this.handleChange} options={[
                 {
                   value: 'name_asc',
-                  label: 'Name A-Z'
+                  label: 'Name: A-Z'
                 }, {
                   value: 'name_desc',
-                  label: 'Name Z-A'
+                  label: 'Name: Z-A'
                 }, {
                   value: 'population_asc',
-                  label: 'Population Low-High'
+                  label: 'Population: Low-High'
                 }, {
                   value: 'population_desc',
-                  label: 'Population High-Low'
+                  label: 'Population: High-Low'
                 }
               ]}/>
           </div>
@@ -200,10 +243,31 @@ export class CountriesGrid extends React.Component {
             <Select name="form-field-name" value={valueFilter} onChange={this.handleFilter} options={[
                 {
                   value: 'en',
-                  label: 'English'
+                  label: 'Language: English'
                 }, {
                   value: 'sp',
-                  label: 'Spanish'
+                  label: 'Language: Spanish'
+                }, {
+                  value: 'ar',
+                  label: 'Language: Arabic'
+                }, {
+                  value: 'fr',
+                  label: 'Language: French'
+                }, {
+                  value: 'africa',
+                  label: 'Region: Africa'
+                }, {
+                  value: 'americas',
+                  label: 'Region: Americas'
+                }, {
+                  value: 'asia',
+                  label: 'Region: Asia'
+                }, {
+                  value: 'europe',
+                  label: 'Region: Europe'
+                }, {
+                  value: 'oceania',
+                  label: 'Region: Oceania'
                 }
               ]}/>
           </div>
@@ -221,18 +285,27 @@ export class CountriesGrid extends React.Component {
                   ? null
                   : <div className="row">
                     {
-                      rowList.map(item => <div className="col-sm-2" onClick={this.handleClick}>
-                        <Link to={{
-                            pathname: `/country/${item.name}`,
-                            state: {
-                              item: item.id
-                            }
-                          }}>
-                          <div className="card">
-                            <img src={item.image} alt=""/>
-                            <h5 align="center">{item.name}</h5>
-                          </div>
-                        </Link>
+                      rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
+                        <OverlayTrigger trigger={['hover','focus']}
+                          placement={i <= 2 ? "right" : "left"}
+                          overlay={<Popover id="popover-trigger-hover-focus">
+                            <strong>Population: </strong>
+                            {Number(item.population).toLocaleString()}<br/>
+                            <strong>Languages: </strong>
+                            {item.languages}<br/>
+                          </Popover>}>
+                          <Link to={{
+                              pathname: `/country/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
+                            <div className="card">
+                              <img src={item.image} alt=""/>
+                              <h5 align="center">{item.name}</h5>
+                            </div>
+                          </Link>
+                          </OverlayTrigger>
                       </div>)
                     }
                   </div>)

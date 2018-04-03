@@ -48,16 +48,29 @@ class MovieInstance extends React.Component {
             <img className="img-responsive" src={this.state.movieItem.image} alt=""/>
           </div>
           <div className="col-sm-8">
+            <h4>Release Date</h4>
+            <p>{this.state.movieItem.release_date}</p>
+            <hr></hr>
             <h4>Rating</h4>
             <p>{this.state.movieItem.rating}</p>
+            <hr></hr>
+            <h4>Genre</h4>
+            <p>{this.state.movieItem.genre}</p>
             <hr></hr>
             <h4>Desc</h4>
             <p>{this.state.movieItem.description}</p>
             <hr></hr>
             <h4>Cast</h4>
             <p>{this.state.movieItem.movie_cast}</p>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-6">
+        <div className="card">
+          <div className="col-sm-12">
+            <h3>Popular Countries</h3>
             <hr></hr>
-            <h4>Popular Countries</h4>
             <p>
               <ol>
                 {
@@ -72,8 +85,14 @@ class MovieInstance extends React.Component {
                 }
               </ol>
             </p>
+          </div>
+        </div>
+        </div>
+        <div className="col-sm-6">        
+        <div className="card">        
+          <div className="col-sm-12">          
+            <h3>Compatible Streaming Services</h3>
             <hr></hr>
-            <h4>Compatible Streaming Services</h4>
             <p>
               <ul>
               {
@@ -90,6 +109,7 @@ class MovieInstance extends React.Component {
             </p>
           </div>
         </div>
+      </div>      
       </div>
       <div className="row">
         <div className="card">
@@ -100,7 +120,6 @@ class MovieInstance extends React.Component {
           </div>
         </div>
       </div>
-
     </div>);
   }
 }

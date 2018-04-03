@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import GoogleMapReact from 'google-map-react';
 
 class CountryInstance extends React.Component {
 
@@ -41,8 +42,14 @@ class CountryInstance extends React.Component {
     const pop = Number(this.state.countryItem.population);
     let x = pop.toLocaleString()
 
-    //console.log(String(pop.numberWithCommas));
+    const lat1 = Number(this.state.countryItem.latitude);
+    const long1 =Number(this.state.countryItem.longitude);
+    //lat1 = 50.0;
+    //long1 = 50.0;
+    console.log(lat1);
 
+    //console.log(String(pop.numberWithCommas));
+if(this.state.countryItem.latitude){
     return (<div className="container">
       <div className="row">
 
@@ -60,8 +67,15 @@ class CountryInstance extends React.Component {
             <hr></hr>
             <h4>Spoken Languages</h4>
             <p>{this.state.countryItem.languages}</p>
+          </div>
+        </div>
+      </div>
+            <div className="row">
+        <div className="col-sm-6">
+        <div className="card">
+          <div className="col-sm-12">
+            <h3>Top Streaming Services</h3>
             <hr></hr>
-            <h4>Top Streaming Services</h4>
             <p>
               <ol>
 
@@ -84,8 +98,14 @@ class CountryInstance extends React.Component {
                 }
               </ol>
             </p>
+          </div>
+        </div>
+        </div>
+        <div className="col-sm-6">        
+        <div className="card">        
+          <div className="col-sm-12">          
+            <h3>Top Movies</h3>
             <hr></hr>
-            <h4>Top Movies</h4>
             <p>
               <ol>
                 {
@@ -100,12 +120,28 @@ class CountryInstance extends React.Component {
                 }
               </ol>
             </p>
-            <hr></hr>
           </div>
         </div>
+      </div>      
       </div>
+      <div className="row">
+      <div className= "card">
+        <div className="test">
+
+        <GoogleMapReact
+    bootstrapURLKeys={{ key: 'AIzaSyCDiHkgbdcRTJQnYPN0I_USDbkKUmKuYJE' }}
+    zoom={6}
+    center={[lat1,long1]}>
+
+  </GoogleMapReact>
+  </div>
+        </div>
+        </div>
     </div>);
   }
+  return(<div></div>);
+}
+
 }
 
 export default CountryInstance;

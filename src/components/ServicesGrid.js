@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 function splitArray(input, spacing) {
   var output = [];
@@ -65,8 +66,8 @@ export class ServicesGrid extends React.Component {
       this.setState({ selectedOptionFilter });
       var data = {"data": []}
       var idx = 0
-      var service_inst = [] 
-      var x = 0   
+      var service_inst = []
+      var x = 0
       if(selectedOptionFilter){
         switch(selectedOptionFilter.value) {
           case 'filt free':
@@ -212,17 +213,28 @@ export class ServicesGrid extends React.Component {
                 ? null
                 : <div className="row">
                   {
-                    rowList.map(item =>
+                    rowList.map((item,i) =>
                       <div className="col-sm-2" onClick={this.handleClick}>
-                        <Link to={{
-                            pathname: `/streaming_service/${item.name}`,
-                            state: { item: item.id }
-                          }}>
-                          <div className="card">
-                            <img src={item.image} alt=""/>
-                            <h5 align="center">{item.name}</h5>
-                          </div>
-                        </Link>
+                        <OverlayTrigger trigger={['hover','focus']}
+                          placement={i <= 2 ? "right" : "left"}
+                          overlay={<Popover id="popover-trigger-hover-focus">
+                            <strong>Pricing: </strong>
+                            <ul>
+                              {Object.keys(item.pricing).map(tier => (
+                                <li>{tier} : {item.pricing[tier]}</li>
+                              ))}
+                            </ul>
+                          </Popover>}>
+                          <Link to={{
+                              pathname: `/streaming_service/${item.name}`,
+                              state: { item: item.id }
+                            }}>
+                            <div className="card">
+                              <img src={item.image} alt=""/>
+                              <h5 align="center">{item.name}</h5>
+                            </div>
+                          </Link>
+                        </OverlayTrigger>
                     </div>)
                   }
                 </div>)
