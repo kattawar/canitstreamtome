@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 function splitArray(input, spacing) {
   var output = [];
@@ -221,16 +222,16 @@ export class CountriesGrid extends React.Component {
             <Select name="form-field-name" value={valueSort} onChange={this.handleChange} options={[
                 {
                   value: 'name_asc',
-                  label: 'Name A-Z'
+                  label: 'Name: A-Z'
                 }, {
                   value: 'name_desc',
-                  label: 'Name Z-A'
+                  label: 'Name: Z-A'
                 }, {
                   value: 'population_asc',
-                  label: 'Population Low-High'
+                  label: 'Population: Low-High'
                 }, {
                   value: 'population_desc',
-                  label: 'Population High-Low'
+                  label: 'Population: High-Low'
                 }
               ]}/>
           </div>
@@ -242,31 +243,31 @@ export class CountriesGrid extends React.Component {
             <Select name="form-field-name" value={valueFilter} onChange={this.handleFilter} options={[
                 {
                   value: 'en',
-                  label: 'Language - English'
+                  label: 'Language: English'
                 }, {
                   value: 'sp',
-                  label: 'Language - Spanish'
+                  label: 'Language: Spanish'
                 }, {
                   value: 'ar',
-                  label: 'Language - Arabic'
+                  label: 'Language: Arabic'
                 }, {
                   value: 'fr',
-                  label: 'Language - French'
+                  label: 'Language: French'
                 }, {
                   value: 'africa',
-                  label: 'Region - Africa'
+                  label: 'Region: Africa'
                 }, {
                   value: 'americas',
-                  label: 'Region - Americas'
+                  label: 'Region: Americas'
                 }, {
                   value: 'asia',
-                  label: 'Region - Asia'
+                  label: 'Region: Asia'
                 }, {
                   value: 'europe',
-                  label: 'Region - Europe'
+                  label: 'Region: Europe'
                 }, {
                   value: 'oceania',
-                  label: 'Region - Oceania'
+                  label: 'Region: Oceania'
                 }
               ]}/>
           </div>
@@ -284,8 +285,28 @@ export class CountriesGrid extends React.Component {
                   ? null
                   : <div className="row">
                     {
-                      rowList.map(item => <div className="col-sm-2" onClick={this.handleClick}>
-                        <Link to={{
+                      rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
+                        <OverlayTrigger trigger={['hover','focus']}
+                          placement={i === 0 ? "right" : "left"}
+                          overlay={<Popover id="popover-trigger-hover-focus">
+                            <strong>Population: </strong>
+                            {Number(item.population).toLocaleString()}<br/>
+                            <strong>Languages: </strong>
+                            {item.languages}<br/>
+                          </Popover>}>
+                          <Link to={{
+                              pathname: `/country/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
+                            <div className="card">
+                              <img src={item.image} alt=""/>
+                              <h5 align="center">{item.name}</h5>
+                            </div>
+                          </Link>
+                          </OverlayTrigger>
+                        {/* <Link to={{
                             pathname: `/country/${item.name}`,
                             state: {
                               item: item.id
@@ -295,7 +316,7 @@ export class CountriesGrid extends React.Component {
                             <img src={item.image} alt=""/>
                             <h5 align="center">{item.name}</h5>
                           </div>
-                        </Link>
+                        </Link> */}
                       </div>)
                     }
                   </div>)
