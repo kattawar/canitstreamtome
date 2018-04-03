@@ -287,7 +287,7 @@ export class CountriesGrid extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
                         <OverlayTrigger trigger={['hover','focus']}
-                          placement={i === 0 ? "right" : "left"}
+                          placement={i <= 2 ? "right" : "left"}
                           overlay={<Popover id="popover-trigger-hover-focus">
                             <strong>Population: </strong>
                             {Number(item.population).toLocaleString()}<br/>
@@ -306,17 +306,6 @@ export class CountriesGrid extends React.Component {
                             </div>
                           </Link>
                           </OverlayTrigger>
-                        {/* <Link to={{
-                            pathname: `/country/${item.name}`,
-                            state: {
-                              item: item.id
-                            }
-                          }}>
-                          <div className="card">
-                            <img src={item.image} alt=""/>
-                            <h5 align="center">{item.name}</h5>
-                          </div>
-                        </Link> */}
                       </div>)
                     }
                   </div>)
