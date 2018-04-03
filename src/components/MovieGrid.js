@@ -1,12 +1,11 @@
 import React from 'react';
-import {
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../movies.css';
 import Pagination from "react-js-pagination";
 import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 function splitArray(input, spacing) {
   var output = [];
@@ -463,14 +462,26 @@ export class MovieGrid extends React.Component {
               <section>
                 <div className="container">
                   {instanceRows.map(rowList => !rowList ? null :
-                    <div className="row"> {rowList.map(item =>
+                    <div className="row"> {rowList.map((item,i) =>
                       <div className="col-sm-2" onClick={this.handleClick}>
-                        <Link to={{pathname: `/movie/${item.name}`, state: {item:item.id}}}>
-                        <div className="card">
-                          <img src={item.image} alt=""/>
-                          <h5 align="center"> {item.name}</h5>
-                        </div>
-                        </Link>
+                        <OverlayTrigger trigger={['hover','focus']}
+                          placement={i <= 2 ? "right" : "left"}
+                          overlay={<Popover id="popover-trigger-hover-focus">
+                            <strong>Release date: </strong>
+                            {item.release_date} <br/>
+                            <strong>Rating: </strong>
+                            {item.rating} <br/>
+                            <strong>Genre: </strong>
+                            {item.genre} <br/>
+                          </Popover>}>
+                          <Link to={{pathname: `/movie/${item.name}`, state: {item:item.id}}}>
+                          <div className="card">
+                            <img src={item.image} alt=""/>
+                            <h5 align="center"> {item.name}</h5>
+                          </div>
+                          </Link>
+                        </OverlayTrigger>
+
                       </div>)}
                     </div>)}
                 </div>
