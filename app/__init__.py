@@ -4,6 +4,7 @@ import urllib.request
 import json
 import pdb
 import canitstreamtome_api as api
+import canitstreamtome_apiv2 as v2
 import sys
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
@@ -70,6 +71,49 @@ def callstreammovieapi(stream_id):
 def nothing():
     return redirect("http://www.canitstreamto.me",code=302)
 
+### Movie endpoint stuff
+@app.route('/v2/movie',subdomain="api",methods=['GET'])
+def callmovieapiv2():
+    print("In api call",file=sys.stderr)
+    return v2.movieapi()
+@app.route('/v2/movie/<int:movie_id>',subdomain="api",methods=['GET'])
+def callsinglemovieapiv2(movie_id):
+    return v2.singlemovieapi(movie_id)
+@app.route('/v2/movie/<int:movie_id>/popularity',subdomain="api",methods=['GET'])
+def callmoviepopularityapiv2(movie_id):
+    return v2.moviepopularityapi(movie_id)
+@app.route('/v2/movie/<int:movie_id>/streaming',subdomain="api",methods=['GET'])
+def callmoviestreamapiv2(movie_id):
+    return v2.moviestreamapi(movie_id)
+
+### Country endpoint stuff
+@app.route('/v2/country',subdomain="api",methods=['GET'])
+def callcountryapiv2():
+    return v2.countryapi()
+@app.route('/v2/country/<int:country_id>',subdomain="api",methods=['GET'])
+def callsinglecountryapiv2(country_id):
+    return v2.singlecountryapi(country_id)
+@app.route('/v2/country/<int:country_id>/streaming',subdomain="api",methods=['GET'])
+def callcountrystreamapiv2(country_id):
+    return v2.countrystreamapi(country_id)
+@app.route('/v2/country/<int:country_id>/movie',subdomain="api",methods=['GET'])
+def callcountrymovieapiv2(country_id):
+    return v2.countrymovieapi(country_id)
+
+
+### Streaming service endpoint stuff
+@app.route('/v2/streaming_service',subdomain="api",methods=['GET'])
+def callstreamingapiv2():
+    return v2.streamingapi()
+@app.route('/v2/streaming_service/<int:stream_id>',subdomain="api",methods=['GET'])
+def callsinglestreamingapiv2(stream_id):
+    return v2.singlestreamingapi(stream_id)
+@app.route('/v2/streaming_service/<int:stream_id>/popcountry',subdomain="api",methods=['GET'])
+def callstreampopcountryapiv2(stream_id):
+    return v2.streampopcountryapi(stream_id)
+@app.route('/v2/streaming_service/<int:stream_id>/movie',subdomain="api",methods=['GET'])
+def callstreammovieapiv2(stream_id):
+    return v2.streammovieapi(stream_id)
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ country_filter_values = None
 person_filter_values = None
 tweet_filter_values = None
 stream_filter_values = None
-comparison_values = ["=",">=","<=","like"]
+comparison_values = ["=",">=","<=","like","~*","ilike"]
 schema = "set schema 'complete';"
 
 ### Database connection startup and shutdone functions
@@ -344,6 +344,67 @@ def db_select_streaming_service(filtertype = None, value = None, comparison = "=
                 if comparison == "like":
                         value="%"+value+"%"
                 sql_query += "where {0} {1} '{2}' ".format(filtertype,comparison,value)
+        if sortby in stream_filter_values:
+                sql_query += "order by {0} {1} ".format(sortby,sortdir)
+        sql_query += "limit {0} offset {1} ".format(pagesize,offset)
+        send_sql_query(sql_query)
+        return format_db_reply("streamingservices",get_sql_results())
+
+def db_select_moviev2(filtertype = None,pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
+        global movie_filter_values,comparison_values
+        offset = pagenum*pagesize
+        sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast,trailer_url,genres from streamit_omdb_movies "
+        if len(filtertype)>0:
+                sql_query += "where "
+                for key in filtertype:
+                        value = filtertype[key][0]
+                        comparison = filtertype[key][1]
+                        if key in movie_filter_values and comparison in comparison_values:
+                                if comparison == "like":
+                                        value="%"+value+"%"
+                                sql_query += " {0} {1} '{2}' and ".format(key,comparison,value)
+                sql_query = sql_query[:-4]
+        if sortby in movie_filter_values:
+                sql_query += "order by {0} {1} ".format(sortby,sortdir)
+        sql_query += "limit {0} offset {1} ".format(pagesize,offset)
+        send_sql_query(sql_query)
+        return format_db_reply("movies",get_sql_results())
+
+def db_select_countryv2(filtertype = None,pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
+        global country_filter_values,comparison_values
+        offset = pagenum*pagesize
+        sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url,t.region,t.latitude,t.longitude from  "
+        sql_query += "(SELECT * FROM complete.streamit_countries WHERE country_id IN (SELECT country_id FROM complete.streamit_country_to_om  group by country_id)) as t "
+        if len(filtertype)>0:
+                sql_query += "where "
+                for key in filtertype:
+                        value = filtertype[key][0]
+                        comparison = filtertype[key][1]
+                        if key in country_filter_values and comparison in comparison_values:
+                                if comparison == "like":
+                                        value="%"+value+"%"
+                                sql_query += " {0} {1} '{2}' and ".format(key,comparison,value)
+                sql_query = sql_query[:-4]
+        if sortby in country_filter_values:
+                sql_query += "order by {0} {1} ".format(sortby,sortdir)
+        sql_query += "limit {0} offset {1} ".format(pagesize,offset)
+        send_sql_query(sql_query)
+        return format_db_reply("countries",get_sql_results())
+
+def db_select_streaming_servicev2(filtertype = None, pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
+        global stream_filter_values,comparison_values
+        offset = pagenum*pagesize
+        sql_query = schema+"select stream_id,name, pricing, available_countries,image_url,website_url from streamit_streaming_service "
+        if len(filtertype)>0:
+                sql_query += "where "
+                for key in filtertype:
+                        value = filtertype[key][0]
+                        comparison = filtertype[key][1]
+                        if key in stream_filter_values and comparison in comparison_values:
+                                if comparison == "like":
+                                        value="%"+value+"%"
+                                sql_query += " {0} {1} '{2}' and ".format(key,comparison,value)
+                sql_query = sql_query[:-4]
         if sortby in stream_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
         sql_query += "limit {0} offset {1} ".format(pagesize,offset)
