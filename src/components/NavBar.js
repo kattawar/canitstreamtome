@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar.js'
 
 class NavBarr extends React.Component {
 	render() {
@@ -13,7 +14,7 @@ class NavBarr extends React.Component {
     <Navbar.Toggle />
   </Navbar.Header>
   <Navbar.Collapse>
-    <Nav pullRight>
+    <Nav pullLeft>
       <NavItem eventKey={1}>
         <Link to="/movie">Movies</Link>
       </NavItem>
@@ -27,6 +28,9 @@ class NavBarr extends React.Component {
         <Link to="/about">About Us</Link>
       </NavItem>
     </Nav>
+    <Navbar.Form pullRight>
+			<SearchBar />
+    </Navbar.Form>
   </Navbar.Collapse>
 </Navbar>
     );

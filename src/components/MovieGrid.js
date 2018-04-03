@@ -339,224 +339,156 @@ export class MovieGrid extends React.Component {
 
           console.log(this.state.data.data);
 
-          return ( < div >
-
-              <
-              div className = "col-sm-3" >
-              <
-              /div>
-
-              <
-              div className = "row" >
-              <
-              div className = "col-sm-3" >
-              <
-              h4 > Sort By < /h4> <
-              Select name = "form-field-name"
-              value = {
-                value
-              }
-              onChange = {
-                this.handleChange
-              }
-              options = {
-                [{
-                    value: '1',
-                    label: 'Title A-Z'
-                  },
-                  {
-                    value: '2',
-                    label: 'Title Z-A'
-                  },
-                  {
-                    value: '3',
-                    label: 'Rating High-Low'
-                  },
-                  {
-                    value: '4',
-                    label: 'Rating Low-High'
-                  },
-                  {
-                    value: '5',
-                    label: 'Release Date Newest-Oldest'
-                  },
-                  {
-                    value: '6',
-                    label: 'Release Date Oldest-Newest'
-                  },
-                ]
-              }
-              /> <
-              /div>
-
-              <
-              div className = "col-sm-3" >
-              <
-              h4 > Filter By < /h4> <
-              Select name = "form-field-name2"
-              value = {
-                valueFilter
-              }
-              onChange = {
-                this.handleFilterChange
-              }
-              options = {
-                [{
-                value: 'science',
-                label: 'Genre: Science Fiction'
-              },
-              {
-              value: 'crime',
-              label: 'Genre: Crime'
-            },
-                  {
-                  value: 'action',
-                  label: 'Genre: Action'
-                },
-                {
-                value: 'comedy',
-                label: 'Genre: Comedy'
-              },
-              {
-              value: 'history',
-              label: 'Genre: History'
-            },
-                {
-                value: 'drama',
-                label: 'Genre: Drama'
-              },
-                  {
-                  value: 'war',
-                  label: 'Genre: War'
-                },
-                    {
-                    value: 'thriller',
-                    label: 'Genre: Thriller'
-                  },
-                  {
-                    value: '11',
-                    label: 'Rating > 8'
-                  },
-                  {
-                    value: '22',
-                    label: 'Rating > 7'
-                  },
-                  {
-                    value: '33',
-                    label: 'Rating > 6'
-                  },
-                  {
-                    value: '44',
-                    label: 'Rating > 5'
-                  },
-                  {
-                    value: '55',
-                    label: 'Rating > 4'
-                  },
-                  {
-                    value: '66',
-                    label: 'Release Date > 2010'
-                  },
-                  {
-                    value: '77',
-                    label: 'Realease Date > 2000'
-                  },
-                  {
-                    value: '88',
-                    label: 'Release Date < 2000'
-                  },
-                  {
-                    value: '99',
-                    label: 'Release Date < 1970'
-                  },
-
-                ]
-              }
-              /> <
-              /div> <
-              div className = "col-sm-2" >
-              <
-              /div>
-
-              <
-              /div>
-
-              <
-              div className = "movie" >
-              <
-              section >
-
-              <
-              div className = "container" > {
-                instanceRows.map(
-                  rowList => !rowList ?
-                  null :
-                  < div className = "row" > {
-                    rowList.map(item =>
-                      <
-                      div className = "col-sm-2"
-                      onClick = {
-                        this.handleClick
-                      } >
-                      <
-                      Link to = {
+          return (
+            <div>
+              <div className="col-sm-3">
+              </div>
+              <div className="row">
+                <div className="col-sm-3">
+                  <h4>Sort By</h4>
+                    <Select
+                      name="form-field-name"
+                      value={value}
+                      onChange={this.handleChange}
+                      options={
+                        [{
+                          value: '1',
+                          label: 'Title A-Z'
+                        },
                         {
-                          pathname: `/movie/${item.name}`,
-                          state: {
-                            item: item.id
-                          }
-                        }
-                      } >
-                      <
-                      div className = "card" >
-                      <
-                      img src = {
-                        item.image
-                      }
-                      alt = "" / >
-                      <
-                      h5 align = "center" > {
-                        item.name
-                      } < /h5> <
-                      /div> <
-                      /Link> <
-                      /div>)
-                    } <
-                    /div>)
-                  }
+                          value: '2',
+                          label: 'Title Z-A'
+                        },
+                        {
+                          value: '3',
+                          label: 'Rating High-Low'
+                        },
+                        {
+                          value: '4',
+                          label: 'Rating Low-High'
+                        },
+                        {
+                          value: '5',
+                          label: 'Release Date Newest-Oldest'
+                        },
+                        {
+                          value: '6',
+                          label: 'Release Date Oldest-Newest'
+                        }]
+                      }/>
+                  </div>
+                <div className="col-sm-3">
+                <h4>Filter By</h4>
+                <Select
+                  name="form-field-name2"
+//                multi
+//                simpleValue
+                  value={valueFilter}
+                  onChange={this.handleFilterChange}
+                  options={
+                    [{
+                      value: 'science',
+                      label: 'Genre: Science Fiction'
+                    },
+                    {
+                      value: 'crime',
+                      label: 'Genre: Crime'
+                    },
+                    {
+                      value: 'action',
+                      label: 'Genre: Action'
+                    },
+                    {
+                      value: 'comedy',
+                      label: 'Genre: Comedy'
+                    },
+                    {
+                      value: 'history',
+                      label: 'Genre: History'
+                    },
+                    {
+                      value: 'drama',
+                      label: 'Genre: Drama'
+                    },
+                    {
+                      value: 'war',
+                      label: 'Genre: War'
+                    },
+                    {
+                      value: 'thriller',
+                      label: 'Genre: Thriller'
+                    },
+                    {
+                      value: '11',
+                      label: 'Rating > 8'
+                    },
+                    {
+                      value: '22',
+                      label: 'Rating > 7'
+                    },
+                    {
+                      value: '33',
+                      label: 'Rating > 6'
+                    },
+                    {
+                      value: '44',
+                      label: 'Rating > 5'
+                    },
+                    {
+                      value: '55',
+                      label: 'Rating > 4'
+                    },
+                    {
+                      value: '66',
+                      label: 'Release Date > 2010'
+                    },
+                    {
+                      value: '77',
+                      label: 'Realease Date > 2000'
+                    },
+                    {
+                      value: '88',
+                      label: 'Release Date < 2000'
+                    },
+                    {
+                      value: '99',
+                      label: 'Release Date < 1970'
+                    }]
+                  }/>
+              </div>
+              <div className="col-sm-2">
+              </div>
+            </div>
+            <div className="movie">
+              <section>
+                <div className="container">
+                  {instanceRows.map(rowList => !rowList ? null :
+                    <div className="row"> {rowList.map(item =>
+                      <div className="col-sm-2" onClick={this.handleClick}>
+                        <Link to={{pathname: `/movie/${item.name}`, state: {item:item.id}}}>
+                        <div className="card">
+                          <img src={item.image} alt=""/>
+                          <h5 align="center"> {item.name}</h5>
+                        </div>
+                        </Link>
+                      </div>)}
+                    </div>)}
+                </div>
+              </section>
+            </div>
+            <div className="text-center">
+              <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={24}
+                totalItemsCount={totalItems}
+                pageRangeDisplayed={5}
+                onChange = {this.handlePageChange}
+              />
+            </div>
+          </div>);
+        }
+      return (<div></div>);
+    }
+}
 
-                  <
-                  /div>
-
-                  <
-                  /section> <
-                  /div>
-
-                  <
-                  div className = "text-center" >
-                  <
-                  Pagination activePage = {
-                    this.state.activePage
-                  }
-                  itemsCountPerPage = {
-                    24
-                  }
-                  totalItemsCount = {
-                    totalItems
-                  }
-                  pageRangeDisplayed = {
-                    5
-                  }
-                  onChange = {
-                    this.handlePageChange
-                  }
-                  /> <
-                  /div> <
-                  /div>);
-                }
-                return ( < div > < /div>);
-
-                }
-              }
-
-              export default MovieGrid;
+export default MovieGrid;
