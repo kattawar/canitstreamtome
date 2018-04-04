@@ -93,71 +93,71 @@ export class MovieGrid extends React.Component {
       if (selectedOptionFilter) {
         console.log(selectedOptionFilter)
           if (selectedOptionFilter.includes('science')) {
-            filter = '"genres": ["Science Fiction", "like"]';
+            filter = '"genres":["Science Fiction","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('crime')) {
-            filter = '"genres": ["Crime", "like"]';
+            filter = '"genres":["Crime","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('action')) {
-            filter = '"genres": ["Action", "like"]';
+            filter = '"genres":["Action","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('comedy')) {
-            filter = '"genres": ["Comedy", "like"]';
+            filter = '"genres":["Comedy","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('history')) {
-            filter = '"genres": ["History", "like"]';
+            filter = '"genres":["History","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('drama')) {
-            filter = '"genres": ["Drama", "like"]';
+            filter = '"genres":["Drama","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('war')) {
-            filter = '"genres": ["War", "like"]';
+            filter = '"genres":["War","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('thriller')) {
-            filter = '"genres": ["Thriller", "like"]';
+            filter = '"genres":["Thriller","like"]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('11')) {
-            filter = '"rating": ["8", ">="]';
+            filter = '"rating":["8",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('22')) {
-            filter = '"rating": ["7", ">="]';
+            filter = '"rating":["7",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('33')) {
-            filter = '"rating": ["6", ">="]';
+            filter = '"rating":["6",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('44')) {
-            filter = '"rating": ["5", ">="]';
+            filter = '"rating":["5",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('55')) {
-            filter = '"rating": ["4", ">="]';
+            filter = '"rating":["4",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('66')) {
-            filter = '"release_date": ["2010-01-01", ">="]';
+            filter = '"release_date":["2010-01-01",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('77')) {
-            filter = '"release_date": ["2000-01-01", ">="]';
+            filter = '"release_date":["2000-01-01",">="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('88')) {
-            filter = '"release_date": ["2000-01-01", "<="]';
+            filter = '"release_date":["2000-01-01","<="]';
             filters.push(filter)
           }
           if (selectedOptionFilter.includes('99')) {
-            filter = '"release_date": ["1970-01-01", "<="]';
+            filter = '"release_date":["1970-01-01","<="]';
             filters.push(filter)
           }
       }
@@ -189,7 +189,6 @@ export class MovieGrid extends React.Component {
         if (isFirst) {
           isFirst = false
         } else {
-          console.log("in else")
           filters = filters + ',' + this.state.activeFilters[filter]
         }
       }
