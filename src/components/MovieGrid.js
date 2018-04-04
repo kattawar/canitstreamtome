@@ -9,11 +9,9 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 function splitArray(input, spacing) {
   var output = [];
-
   for (var i = 0; i < input.length; i += spacing) {
     output[output.length] = input.slice(i, i + spacing);
   }
-
   return output;
 }
 
@@ -26,16 +24,15 @@ export class MovieGrid extends React.Component {
         data: [],
         activePage: 1,
         selectedOption: '',
-        selectedOptionFilter: '',
+        selectedOptionFilter: [],
         activeSort: 'title',
         activeDir: 'asc',
-        activeFilter: '',
-        activeValue: '',
-        activeComparison: '',
+        activeFilters: [],
+        //activeValue: '',
+        //activeComparison: '',
         realPage: 0
       };
       this.updateData();
-
     }
 
     handleChange = (selectedOption) => {
@@ -47,243 +44,130 @@ export class MovieGrid extends React.Component {
       if (selectedOption) {
         switch (selectedOption.value) {
           case '1':
-
             sort = 'title'
             dir = 'asc'
-
             break;
-
           case '2':
-
             sort = 'title'
             dir = 'desc'
-
             break;
-
           case '3':
-
             sort = 'rating'
             dir = 'desc'
-
             break;
           case '4':
-
             sort = 'rating'
             dir = 'asc'
-
             break;
-
           case '5':
-
             sort = 'release_date'
             dir = 'desc'
-
             break;
-
           case '6':
-
             sort = 'release_date'
             dir = 'asc'
-
             break;
-
           default:
             console.log("HERE3");
-
         }
-      }
-      else{
+      } else {
         sort = 'title'
         dir = 'asc'
       }
-        this.setState({
-          activeDir: dir
-        }, function() {
-          this.setState({
-            activeSort: sort
-          }, function() {
-            this.setState({
-              activePage: 1
-            });
-            this.setState({
-              realPage: 0
-            }, function() {
-              this.updateData();
-            });
-
-
-
+      this.setState({activeDir: dir}, function() {
+        this.setState({activeSort: sort}, function() {
+          this.setState({activePage: 1});
+          this.setState({realPage: 0}, function() {
+            this.updateData();
           });
         });
-
-
-
+      });
       //  this.updateData();
     }
 
-
     handleFilterChange = (selectedOptionFilter) => {
       console.log("FILTER");
-      this.setState({
-        selectedOptionFilter
-      });
+      this.setState({selectedOptionFilter});
+      var filters = [];
       var filter = '';
-      var value = '';
-      var comparison = '';
       if (selectedOptionFilter) {
-        switch (selectedOptionFilter.value) {
-
-          case 'crime':
-          filter = 'genres';
-          value = 'Crime';
-          comparison = 'like';
-          break;
-          case 'action':
-          filter = 'genres';
-          value = 'Action';
-          comparison = 'like';
-          break;
-          case 'comedy':
-          filter = 'genres';
-          value = 'Comedy';
-          comparison = 'like';
-          break;
-
-          case 'history':
-          filter = 'genres';
-          value = 'History';
-          comparison = 'like';
-          break;
-
-          case 'drama':
-          filter = 'genres';
-          value = 'Drama';
-          comparison = 'like';
-          break;
-          case 'war':
-          filter = 'genres';
-          value = 'War';
-          comparison = 'like';
-          break;
-          case 'thriller':
-          filter = 'genres';
-          value = 'Thriller';
-          comparison = 'like';
-          break;
-          case 'science':
-          filter = 'genres';
-          value = 'Science Fiction';
-          comparison = 'like';
-          break;
-
-          case '11':
-
-            filter = 'rating';
-            value = '8';
-            comparison = '>=';
-
-
-            break;
-          case '22':
-
-            filter = 'rating';
-            value = '7';
-            comparison = '>=';
-
-
-            break;
-          case '33':
-
-            filter = 'rating';
-            value = '6';
-            comparison = '>=';
-
-
-            break;
-          case '44':
-
-            filter = 'rating';
-            value = '5';
-            comparison = '>=';
-
-
-            break;
-
-          case '55':
-
-            filter = 'rating';
-            value = '4';
-            comparison = '>=';
-
-
-            break;
-          case '66':
-
-            filter = 'release_date';
-            value = '2010-01-01';
-            comparison = '>=';
-
-
-            break;
-          case '77':
-
-            filter = 'release_date';
-            value = '2000-01-01';
-            comparison = '>=';
-
-
-            break;
-          case '88':
-
-            filter = 'release_date';
-            value = '2000-01-01';
-            comparison = '<=';
-
-
-            break;
-          case '99':
-
-            filter = 'release_date';
-            value = '1970-01-01';
-            comparison = '<=';
-
-
-            break;
-
-          default:
-            console.log("HERE3");
-
-        }
+        console.log(selectedOptionFilter)
+          if (selectedOptionFilter.includes('science')) {
+            filter = '"genres": ["Science Fiction", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('crime')) {
+            filter = '"genres": ["Crime", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('action')) {
+            filter = '"genres": ["Action", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('comedy')) {
+            filter = '"genres": ["Comedy", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('history')) {
+            filter = '"genres": ["History", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('drama')) {
+            filter = '"genres": ["Drama", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('war')) {
+            filter = '"genres": ["War", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('thriller')) {
+            filter = '"genres": ["Thriller", "like"]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('11')) {
+            filter = '"rating": ["8", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('22')) {
+            filter = '"rating": ["7", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('33')) {
+            filter = '"rating": ["6", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('44')) {
+            filter = '"rating": ["5", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('55')) {
+            filter = '"rating": ["4", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('66')) {
+            filter = '"release_date": ["2010-01-01", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('77')) {
+            filter = '"release_date": ["2000-01-01", ">="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('88')) {
+            filter = '"release_date": ["2000-01-01", "<="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('99')) {
+            filter = '"release_date": ["1970-01-01", "<="]';
+            filters.push(filter)
+          }
       }
-      else{
-
-      }
-        this.setState({
-          activeFilter: filter
-        }, function() {
-          this.setState({
-            activeValue: value
-          }, function() {
-            this.setState({
-              activeComparison: comparison
-            }, function() {
-              this.setState({
-                activePage: 1
-              });
-              this.setState({
-                realPage: 0
-              }, function() {
-                this.updateData();
-              });
+      console.log(filters)
+      this.setState({activeFilters: filters}, function() {
+            this.setState({activePage: 1});
+            this.setState({realPage: 0}, function() {
+              this.updateData();
             });
-
-
-          });
-        });
-
-
-
-      //  this.updateData();
+      });
     }
 
     handlePageChange = (pageNumber) => {
@@ -296,12 +180,24 @@ export class MovieGrid extends React.Component {
       }, function() {
         this.updateData();
       });
-
     }
 
     updateData = () => {
-
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/movie?pagesize=24&filter=${this.state.activeFilter}&value=${this.state.activeValue}&comparison=${this.state.activeComparison}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+      var filters = "" + this.state.activeFilters[0]
+      var isFirst = true
+      for (var filter in this.state.activeFilters) {
+        if (isFirst) {
+          isFirst = false
+        } else {
+          console.log("in else")
+          filters = filters + ',' + this.state.activeFilters[filter]
+        }
+      }
+      console.log(filters);
+      if (filters === 'undefined') {
+        filters = ""
+      }
+      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
       //console.log(url);
       console.log(url);
       axios.get(url).then(res => {
@@ -309,33 +205,24 @@ export class MovieGrid extends React.Component {
         this.setState({
           data: instanceList
         });
-
       }).catch((error) => {
         console.log(error);
       });
-
     }
 
     render() {
 
-        const {
-          selectedOption
-        } = this.state;
+        const {selectedOption} = this.state;
         const value = selectedOption && selectedOption.value;
 
-        const {
-          selectedOptionFilter
-        } = this.state;
-        const valueFilter = selectedOptionFilter && selectedOptionFilter.value;
-        //6
-        //1
+        const {selectedOptionFilter} = this.state;
+        const valueFilter = selectedOptionFilter;
+
         var totalItems = 1120;
 
         if (this.state.data.data) {
           const instanceGrouped = this.state.data.data;
-
           const instanceRows = splitArray(instanceGrouped, 6);
-
           console.log(this.state.data.data);
 
           return (
@@ -350,109 +237,41 @@ export class MovieGrid extends React.Component {
                       value={value}
                       onChange={this.handleChange}
                       options={
-                        [{
-                          value: '1',
-                          label: 'Title A-Z'
-                        },
-                        {
-                          value: '2',
-                          label: 'Title Z-A'
-                        },
-                        {
-                          value: '3',
-                          label: 'Rating High-Low'
-                        },
-                        {
-                          value: '4',
-                          label: 'Rating Low-High'
-                        },
-                        {
-                          value: '5',
-                          label: 'Release Date Newest-Oldest'
-                        },
-                        {
-                          value: '6',
-                          label: 'Release Date Oldest-Newest'
-                        }]
+                        [{value: '1', label: 'Title A-Z'},
+                        {value: '2', label: 'Title Z-A'},
+                        {value: '3', label: 'Rating High-Low'},
+                        {value: '4', label: 'Rating Low-High'},
+                        {value: '5', label: 'Release Date Newest-Oldest'},
+                        {value: '6', label: 'Release Date Oldest-Newest'}]
                       }/>
                   </div>
                 <div className="col-sm-3">
                 <h4>Filter By</h4>
                 <Select
                   name="form-field-name2"
-//                multi
-//                simpleValue
-                  value={valueFilter}
+                  multi={true}
+                  removeSelected={true}
                   onChange={this.handleFilterChange}
+                  simpleValue
+                  value={valueFilter}
                   options={
-                    [{
-                      value: 'science',
-                      label: 'Genre: Science Fiction'
-                    },
-                    {
-                      value: 'crime',
-                      label: 'Genre: Crime'
-                    },
-                    {
-                      value: 'action',
-                      label: 'Genre: Action'
-                    },
-                    {
-                      value: 'comedy',
-                      label: 'Genre: Comedy'
-                    },
-                    {
-                      value: 'history',
-                      label: 'Genre: History'
-                    },
-                    {
-                      value: 'drama',
-                      label: 'Genre: Drama'
-                    },
-                    {
-                      value: 'war',
-                      label: 'Genre: War'
-                    },
-                    {
-                      value: 'thriller',
-                      label: 'Genre: Thriller'
-                    },
-                    {
-                      value: '11',
-                      label: 'Rating > 8'
-                    },
-                    {
-                      value: '22',
-                      label: 'Rating > 7'
-                    },
-                    {
-                      value: '33',
-                      label: 'Rating > 6'
-                    },
-                    {
-                      value: '44',
-                      label: 'Rating > 5'
-                    },
-                    {
-                      value: '55',
-                      label: 'Rating > 4'
-                    },
-                    {
-                      value: '66',
-                      label: 'Release Date > 2010'
-                    },
-                    {
-                      value: '77',
-                      label: 'Realease Date > 2000'
-                    },
-                    {
-                      value: '88',
-                      label: 'Release Date < 2000'
-                    },
-                    {
-                      value: '99',
-                      label: 'Release Date < 1970'
-                    }]
+                    [{value: 'science', label: 'Genre: Science Fiction'},
+                    {value: 'crime', label: 'Genre: Crime'},
+                    {value: 'action', label: 'Genre: Action'},
+                    {value: 'comedy', label: 'Genre: Comedy'},
+                    {value: 'history', label: 'Genre: History'},
+                    {value: 'drama', label: 'Genre: Drama'},
+                    {value: 'war', label: 'Genre: War'},
+                    {value: 'thriller', label: 'Genre: Thriller'},
+                    {value: '11', label: 'Rating > 8'},
+                    {value: '22', label: 'Rating > 7'},
+                    {value: '33', label: 'Rating > 6'},
+                    {value: '44', label: 'Rating > 5'},
+                    {value: '55', label: 'Rating > 4'},
+                    {value: '66', label: 'Release Date > 2010'},
+                    {value: '77', label: 'Realease Date > 2000'},
+                    {value: '88', label: 'Release Date < 2000'},
+                    {value: '99', label: 'Release Date < 1970'}]
                   }/>
               </div>
               <div className="col-sm-2">
