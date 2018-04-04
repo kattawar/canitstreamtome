@@ -199,7 +199,6 @@ export class MovieGrid extends React.Component {
       }
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
       //console.log(url);
-      console.log(url);
       axios.get(url).then(res => {
         const instanceList = res.data;
         this.setState({

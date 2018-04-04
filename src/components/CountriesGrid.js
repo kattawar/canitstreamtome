@@ -26,10 +26,11 @@ export class CountriesGrid extends React.Component {
       data: [],
       activePage: 1,
       selectedSort: '',
-      selectedFilter: '',
+      selectedOptionFilter: [],
       activeSort: 'name',
       activeDir: 'asc',
-      activeFilter: '',
+      // activeFilter: '',
+      activeFilters: [],
       realPage: 0
     };
     this.updateData();
@@ -86,85 +87,56 @@ export class CountriesGrid extends React.Component {
     //  this.updateData();
   }
 
-  handleFilter = (selectedFilter) => {
-    this.setState({selectedFilter});
+  handleFilter = (selectedOptionFilter) => {
+    this.setState({selectedOptionFilter});
+    var filters = [];
     var filter = '';
-    var comparison = '';
-    var value = '';
-    let filterUrl = '';
 
-    if (selectedFilter) {
+    if (selectedOptionFilter) {
+        if(selectedOptionFilter.includes('English')) {
+          filter = '"languages":["English","like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('Spanish')) {
+          filter = '"languages":["Spanish","like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('Arabic')) {
+          filter = '"languages":["Arabic","like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('French')) {
+          filter = '"languages":["French","like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('Africa')) {
+          filter = '"languages":["Africa","like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('Americas')) {
+          filter = '"region":["Americas","like"]';
+          filters.push(filter);
+        }
 
-      switch (selectedFilter.value) {
-        case 'en':
-          filter = 'languages'
-          comparison = '%3D'
-          value = 'English'
-
-          break;
-        case 'sp':
-          filter = 'languages'
-          comparison = '%3D'
-          value = 'Spanish'
-
-          break;
-        case 'ar':
-          filter = 'languages'
-          comparison = '%3D'
-          value = 'Arabic'
-
-          break;
-        case 'fr':
-          filter = 'languages'
-          comparison = '%3D'
-          value = 'French'
-
-          break;
-        case 'africa':
-          filter = 'region'
-          comparison = '%3D'
-          value = 'Africa'
-
-          break;
-        case 'americas':
-          filter = 'region'
-          comparison = '%3D'
-          value = 'Americas'
-
-          break;
-        case 'asia':
-          filter = 'region'
-          comparison = '%3D'
-          value = 'Asia'
-
-          break;
-        case 'europe':
-          filter = 'region'
-          comparison = '%3D'
-          value = 'Europe'
-
-          break;
-        case 'oceania':
-          filter = 'region'
-          comparison = '%3D'
-          value = 'Oceania'
-
-          break;
-        default:
-          console.log("HERE3");
-
+        if(selectedOptionFilter.includes('Asia')) {
+          filter = '"region":["Asia","like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('Europe')) {
+          filter = '"region": ["Europe", "like"]';
+          filters.push(filter);
+        }
+        if(selectedOptionFilter.includes('Oceania')) {
+          filter = '"region": ["Oceania", "like"]';
+          filters.push(filter);
+        }
       }
-      filterUrl = `&filter=${filter}&comparison=${comparison}&value=${value}`;
-    } else {
-      filterUrl = '';
-    }
-    this.setState({
-      activeFilter: filterUrl
-    }, function() {
-      this.updateData();
+    this.setState({activeFilters: filters}, function() {
+      this.setState({activePage: 1});
+      this.setState({realPage: 0}, function() {
+        this.updateData();
+      });
     });
-
-    //  this.updateData();
   }
 
   handlePageChange = (pageNumber) => {
@@ -179,10 +151,22 @@ export class CountriesGrid extends React.Component {
   }
 
   updateData = () => {
-    console.log(this.state.activeDir);
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}${this.state.activeFilter}`;
-    //console.log(url);
-
+    var filters = "" + this.state.activeFilters[0]
+    var isFirst = true
+    for (var filter in this.state.activeFilters) {
+      if (isFirst) {
+        isFirst = false
+      } else {
+        console.log("in else")
+        filters = filters + ',' + this.state.activeFilters[filter]
+      }
+    }
+    console.log(filters);
+    if (filters === 'undefined') {
+      filters = ""
+    }
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    console.log(url);
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
@@ -197,8 +181,9 @@ export class CountriesGrid extends React.Component {
 
     const {selectedSort} = this.state;
     const valueSort = selectedSort && selectedSort.value;
-    const {selectedFilter} = this.state;
-    const valueFilter = selectedFilter && selectedFilter.value;
+
+    const {selectedOptionFilter} = this.state;
+    const valueFilter = selectedOptionFilter;
     //6
     //1
     var totalItems = 130;
@@ -207,8 +192,6 @@ export class CountriesGrid extends React.Component {
       const instanceGrouped = this.state.data.data;
 
       const instanceRows = splitArray(instanceGrouped, 6);
-
-      console.log(this.state.data.data);
 
       return (<div>
 
@@ -237,38 +220,24 @@ export class CountriesGrid extends React.Component {
           </div>
 
           <div className="col-sm-3">
-            <h4>
-              Filter By
-            </h4>
-            <Select name="form-field-name" value={valueFilter} onChange={this.handleFilter} options={[
-                {
-                  value: 'en',
-                  label: 'Language: English'
-                }, {
-                  value: 'sp',
-                  label: 'Language: Spanish'
-                }, {
-                  value: 'ar',
-                  label: 'Language: Arabic'
-                }, {
-                  value: 'fr',
-                  label: 'Language: French'
-                }, {
-                  value: 'africa',
-                  label: 'Region: Africa'
-                }, {
-                  value: 'americas',
-                  label: 'Region: Americas'
-                }, {
-                  value: 'asia',
-                  label: 'Region: Asia'
-                }, {
-                  value: 'europe',
-                  label: 'Region: Europe'
-                }, {
-                  value: 'oceania',
-                  label: 'Region: Oceania'
-                }
+            <h4>Filter By</h4>
+            <Select
+              name="form-field-name2"
+              multi={true}
+              removeSelected={true}
+              onChange={this.handleFilter}
+              simpleValue
+              value={valueFilter}
+              options={[
+                {value: 'English', label: 'Language: English'},
+                {value: 'Spansh', label: 'Language: Spanish'},
+                {value: 'Arabic', label: 'Language: Arabic'},
+                {value: 'French', label: 'Language: French'},
+                {value: 'Africa', label: 'Region: Africa'},
+                {value: 'Americas', label: 'Region: Americas'},
+                {value: 'Asia', label: 'Region: Asia'},
+                {value: 'Europe', label: 'Region: Europe'},
+                {value: 'Oceania', label: 'Region: Oceania'}
               ]}/>
           </div>
           <div className="col-sm-2"></div>
