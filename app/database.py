@@ -457,8 +457,9 @@ def db_search_movie(value):
         return format_db_reply("movies",get_sql_results())
 def db_search_country(value):
         global country_filter_values
-        sql_query = schema+"select country_id,name,population,languages,country_image_url,region,latitude,longitude from streamit_countries where "
-        sql_query += " name ~* '{0}' or languages ~* '{0}' or region ~* '{0}' or latitude ~* '{0}' or longitude ~* '{0}' ".format(value)
+        sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url,t.region,t.latitude,t.longitude from  "
+        sql_query += "(SELECT * FROM complete.streamit_countries WHERE country_id IN (SELECT country_id FROM complete.streamit_country_to_om  group by country_id)) as t where "
+        sql_query += " t.name ~* '{0}' or t.languages ~* '{0}' or t.region ~* '{0}' or t.latitude ~* '{0}' or t.longitude ~* '{0}' ".format(value)
         send_sql_query(sql_query)
         return format_db_reply("countries",get_sql_results())
 def db_search_streaming(value):
