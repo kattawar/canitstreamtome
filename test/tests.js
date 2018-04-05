@@ -12,6 +12,7 @@ import Bottom from '../src/components/Footer';
 import About from '../src/components/About';
 import ModelGrid from '../src/components/Grid';
 import MovieInstance from '../src/components/MovieInstance';
+import SearchBar from '../src/components/SearchBar';
 
 describe('Test Home', () => {
 	it ('contains header', () => {
@@ -25,14 +26,14 @@ describe('Test Home', () => {
 
 describe('Test NavBar', () => {
 	it ('contains brand', () => {
-		expect(shallow(<NavBarr />).contains('CanItStreamTo.me')).to.equal(true);		
+		expect(shallow(<NavBarr />).contains('CanItStreamTo.me')).to.equal(true);
 	})
 
 	it ('contains all navitems', () => {
-		expect(shallow(<NavBarr />).contains('Movies')).to.equal(true);		
-		expect(shallow(<NavBarr />).contains('Streaming Services')).to.equal(true);		
-		expect(shallow(<NavBarr />).contains('Countries')).to.equal(true);		
-		expect(shallow(<NavBarr />).contains('About Us')).to.equal(true);		
+		expect(shallow(<NavBarr />).contains('Movies')).to.equal(true);
+		expect(shallow(<NavBarr />).contains('Streaming Services')).to.equal(true);
+		expect(shallow(<NavBarr />).contains('Countries')).to.equal(true);
+		expect(shallow(<NavBarr />).contains('About Us')).to.equal(true);
 	})
 })
 
@@ -50,10 +51,10 @@ describe('Test ModelGrid', () => {
 
 describe('Test About', () => {
 	it ('contains all section headers', () => {
-		expect(shallow(<About />).contains('PURPOSE')).to.equal(true);		
-		expect(shallow(<About />).contains('STATS')).to.equal(true);		
-		expect(shallow(<About />).contains('DATA')).to.equal(true);		
-		expect(shallow(<About />).contains('TOOLS')).to.equal(true);		
+		expect(shallow(<About />).contains('PURPOSE')).to.equal(true);
+		expect(shallow(<About />).contains('STATS')).to.equal(true);
+		expect(shallow(<About />).contains('DATA')).to.equal(true);
+		expect(shallow(<About />).contains('TOOLS')).to.equal(true);
 		expect(shallow(<About />).contains('LINKS')).to.equal(true);
 	})
 
@@ -64,4 +65,17 @@ describe('Test About', () => {
 		expect(shallow(<About />).contains('Zach Kattawar')).to.equal(true);
 		expect(shallow(<About />).contains('Jordan Howe')).to.equal(true);
 	})
+})
+
+describe('Test SearchBar', () => {
+	it ('contains form group', () => {
+		expect(shallow(<SearchBar />).find('FormGroup').length).to.equal(0);
+	})
+})
+
+describe('Test Search', () => {
+	it('contains all members', () => {
+		expect(shallow(<Search />).find('Pagination').to.equal(0));
+		expect(shallow(<Search />).find('section').to.equal(0));
+	}
 })
