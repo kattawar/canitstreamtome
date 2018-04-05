@@ -10,8 +10,11 @@ import Home from '../src/components/Home';
 import NavBarr from '../src/components/NavBar';
 import Bottom from '../src/components/Footer';
 import About from '../src/components/About';
-import ModelGrid from '../src/components/Grid';
-import MovieInstance from '../src/components/MovieInstance';
+import CountriesGrid from '../src/components/CountriesGrid';
+import MovieGrid from '../src/components/MovieGrid';
+import ServicesGrid from '../src/components/ServicesGrid';
+import SearchBar from '../src/components/SearchBar';
+import Search from '../src/components/Search';
 
 describe('Test Home', () => {
 	it ('contains header', () => {
@@ -25,14 +28,20 @@ describe('Test Home', () => {
 
 describe('Test NavBar', () => {
 	it ('contains brand', () => {
-		expect(shallow(<NavBarr />).contains('CanItStreamTo.me')).to.equal(true);		
+		expect(shallow(<NavBarr />).contains('CanItStreamTo.me')).to.equal(true);
 	})
 
 	it ('contains all navitems', () => {
-		expect(shallow(<NavBarr />).contains('Movies')).to.equal(true);		
-		expect(shallow(<NavBarr />).contains('Streaming Services')).to.equal(true);		
-		expect(shallow(<NavBarr />).contains('Countries')).to.equal(true);		
-		expect(shallow(<NavBarr />).contains('About Us')).to.equal(true);		
+		expect(shallow(<NavBarr />).contains('Movies')).to.equal(true);
+		expect(shallow(<NavBarr />).contains('Streaming Services')).to.equal(true);
+		expect(shallow(<NavBarr />).contains('Countries')).to.equal(true);
+		expect(shallow(<NavBarr />).contains('About Us')).to.equal(true);
+	})
+})
+
+describe('Test SearchBar', () => {
+	it ('exists', () => {
+		expect(shallow(<SearchBar />).find('form').length).to.equal(0)
 	})
 })
 
@@ -42,18 +51,38 @@ describe('Test Footer', () => {
 	})
 })
 
-describe('Test ModelGrid', () => {
+/*describe('Test Search', () => {
+	it ('contains models', () => {
+		expect(shallow(< Search/>).contains('Movies')).to.equal(true);
+		expect(shallow(< Search/>).contains('Streaming Services')).to.equal(true);
+		expect(shallow(< Search/>).contains('Countries')).to.equal(true);
+	})
+})*/
+
+describe('Test CountriesGrid', () => {
 	it ('contains card', () => {
-		expect(shallow(< ModelGrid/>).find('section').length).to.equal(0);
+		expect(shallow(< CountriesGrid/>).find('section').length).to.equal(0);
+	})
+})
+
+describe('Test MovieGrid', () => {
+	it ('contains card', () => {
+		expect(shallow(< MovieGrid/>).find('section').length).to.equal(0);
+	})
+})
+
+describe('Test ServicesGrid', () => {
+	it ('contains card', () => {
+		expect(shallow(< ServicesGrid/>).find('section').length).to.equal(0);
 	})
 })
 
 describe('Test About', () => {
 	it ('contains all section headers', () => {
-		expect(shallow(<About />).contains('PURPOSE')).to.equal(true);		
-		expect(shallow(<About />).contains('STATS')).to.equal(true);		
-		expect(shallow(<About />).contains('DATA')).to.equal(true);		
-		expect(shallow(<About />).contains('TOOLS')).to.equal(true);		
+		expect(shallow(<About />).contains('PURPOSE')).to.equal(true);
+		expect(shallow(<About />).contains('STATS')).to.equal(true);
+		expect(shallow(<About />).contains('DATA')).to.equal(true);
+		expect(shallow(<About />).contains('TOOLS')).to.equal(true);
 		expect(shallow(<About />).contains('LINKS')).to.equal(true);
 	})
 

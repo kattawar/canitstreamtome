@@ -98,7 +98,7 @@ class TestGui(unittest.TestCase):
         assert "Population" in self.driver.page_source
         assert "Spoken Languages" in self.driver.page_source
         assert "Top Streaming Services" in self.driver.page_source
-        assert "Top Movies" in self.driver.page_source        
+        assert "Top Movies" in self.driver.page_source
 
     def test_service_link_to_movie(self):
         service_link = self.driver.find_element_by_link_text("Streaming Services")
@@ -138,8 +138,10 @@ class TestGui(unittest.TestCase):
         assert "Popular Countries" in self.driver.page_source
         assert "Compatible Streaming Services" in self.driver.page_source
 
+  # testing search
+    #def test_search_contains
+
     def tearDown(self):
     	self.driver.close()
 
 unittest.main()
-
