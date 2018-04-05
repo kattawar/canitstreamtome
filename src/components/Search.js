@@ -92,9 +92,9 @@ class Search extends React.Component {
     // If any results are returned, then render the results page
     if (movieResult.length >= 0 && countryResult.length >= 0 && streamResult.length >= 0) {
 
-      let movies = splitArray(movieResult, 6).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage);
-      let countries = splitArray(countryResult, 6).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage);
-      let services = splitArray(streamResult, 6).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage);
+      let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage);
+      let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage);
+      let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage);
       //let countries = this.state.countrySplit[this.state.activeCountryPage-1];
       //let services = this.state.streamSplit[this.state.activeStreamPage-1];
       return (<div>
@@ -109,10 +109,10 @@ class Search extends React.Component {
                   ? null
                   : <div className="row">
                     {
-                      rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
+                      rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
                           <Link to={{pathname: `/movie/${item.name}`, state: {item: item.id}}}>
-                            <h2 className="display-4">
+                            <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
                             <hr/>
@@ -134,7 +134,7 @@ class Search extends React.Component {
                             <Highlighter highlightClassName="descriptionHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.description}/>
                             <hr/>
                             <h4>Cast</h4>
-                            <Highlighter highlightClassName="castHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.cast}/>
+                            <Highlighter highlightClassName="castHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.movie_cast}/>
                           </div>
                         </div>
                       </div>)
@@ -144,7 +144,7 @@ class Search extends React.Component {
           </div>
         </section>
         <div className="text-center">
-          <Pagination activePage={this.state.activeMoviePage} itemsCountPerPage={6} totalItemsCount={movieResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeMovie}/>
+          <Pagination activePage={this.state.activeMoviePage} itemsCountPerPage={3} totalItemsCount={movieResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeMovie}/>
         </div>
         <h1 align='center'>Countries</h1>
         <section>
@@ -157,10 +157,10 @@ class Search extends React.Component {
                   ? null
                   : <div className="row">
                     {
-                      rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
+                      rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
                           <Link to={{pathname: `/country/${item.name}`, state: {item: item.id}}}>
-                            <h2 className="display-4">
+                            <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
                             <hr/>
@@ -183,7 +183,7 @@ class Search extends React.Component {
           </div>
         </section>
         <div className="text-center">
-          <Pagination activePage={this.state.activeCountryPage} itemsCountPerPage={6} totalItemsCount={countryResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeCountry}/>
+          <Pagination activePage={this.state.activeCountryPage} itemsCountPerPage={3} totalItemsCount={countryResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeCountry}/>
         </div>
         <h1 align='center'>Streaming Services</h1>
         <section>
@@ -196,10 +196,10 @@ class Search extends React.Component {
                   ? null
                   : <div className="row">
                     {
-                      rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
+                      rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
                           <Link to={{pathname: `/streaming_service/${item.name}`, state: {item: item.id}}}>
-                            <h2 className="display-4">
+                            <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
                             <hr/>
@@ -219,7 +219,7 @@ class Search extends React.Component {
           </div>
         </section>
         <div className="text-center">
-          <Pagination activePage={this.state.activeStreamPage} itemsCountPerPage={6} totalItemsCount={streamResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeStream}/>
+          <Pagination activePage={this.state.activeStreamPage} itemsCountPerPage={3} totalItemsCount={streamResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeStream}/>
         </div>
       </div>);
     }
