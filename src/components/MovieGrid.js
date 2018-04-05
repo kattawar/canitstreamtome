@@ -370,7 +370,7 @@ export class MovieGrid extends React.Component {
                             <strong>Rating: </strong>
                             {item.rating} <br/>
                             <strong>Genre: </strong>
-                            {item.genre} <br/>
+                            {item.genres} <br/>
                           </Popover>}>
                           <Link to={{pathname: `/movie/${item.name}`, state: {item:item.id}}}>
                           <div className="card">

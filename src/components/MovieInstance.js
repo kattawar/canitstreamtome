@@ -55,7 +55,7 @@ class MovieInstance extends React.Component {
               <p>{this.state.movieItem.rating}</p>
               <hr></hr>
               <h4>Genre</h4>
-              <p>{this.state.movieItem.genre}</p>
+              <p>{this.state.movieItem.genres}</p>
               <hr></hr>
               <h4>Desc</h4>
               <p>{this.state.movieItem.description}</p>
