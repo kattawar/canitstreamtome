@@ -13,9 +13,11 @@ class CountryInstance extends React.Component {
 
   componentDidMount() {
     const country = this.props.location.state.item;
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country/${country}`;
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/${country}`;
+    console.log(country);
     if (country) {
       axios.get(url).then(res => {
+        console.log(res);
         this.setState({countryItem: res.data.data[0]});
       });
       let movieUrl = url + '/movie';
@@ -110,7 +112,7 @@ if(this.state.countryItem.latitude){
             <p>
               <ol>
                 {
-                  this.state.movieranks.slice(0, 10).map(item => <li>
+                  this.state.movieranks.length === 0 ? null : this.state.movieranks.slice(0, 10).map(item => <li>
                     <Link to={{
                         pathname: `/movie/${item.name}`,
                         state: {
