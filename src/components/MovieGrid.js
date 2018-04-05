@@ -252,11 +252,7 @@ export class MovieGrid extends React.Component {
       this.setState({
         activePage: pageNumber
       });
-      this.setState({
-        realPage: pageNumber - 1
-      }, function() {
-        this.updateData();
-      });
+
     }
 
     updateData = () => {
@@ -273,7 +269,7 @@ export class MovieGrid extends React.Component {
       if (filters === 'undefined') {
         filters = ""
       }
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
       //console.log(url);
       axios.get(url).then(res => {
         const instanceList = res.data;
@@ -310,11 +306,12 @@ export class MovieGrid extends React.Component {
 
         const options = create_options
 
-        var totalItems = 1120;
+        var totalItems = 0;
 
         if (this.state.data.data) {
           const instanceGrouped = this.state.data.data;
-          const instanceRows = splitArray(instanceGrouped, 6);
+          const instanceRows = splitArray(instanceGrouped, 6).slice(4*(this.state.activePage-1),4*(this.state.activePage-1)+3);
+          totalItems=instanceGrouped.length;
           console.log(this.state.data.data);
 
           return (
