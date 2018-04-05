@@ -84,7 +84,7 @@ class Search extends React.Component {
                 countries.map(rowList => !rowList ? null :
                 <div className="row"> {rowList.map((item,i) =>
                   <div className="col-sm-2" onClick={this.handleClick}>
-                      <Link to={{pathname: `/movie/${item.name}`, state: {item:item.id}}}>
+                      <Link to={{pathname: `/country/${item.name}`, state: {item:item.id}}}>
                       <div className="card">
                         <img src={item.image} alt=""/>
                         <h5 align="center"> {item.name}</h5>
@@ -101,7 +101,7 @@ class Search extends React.Component {
                 services.map(rowList => !rowList ? null :
                 <div className="row"> {rowList.map((item,i) =>
                   <div className="col-sm-2" onClick={this.handleClick}>
-                      <Link to={{pathname: `/movie/${item.name}`, state: {item:item.id}}}>
+                      <Link to={{pathname: `/streaming_service/${item.name}`, state: {item:item.id}}}>
                       <div className="card">
                         <img src={item.image} alt=""/>
                         <h5 align="center"> {item.name}</h5>
