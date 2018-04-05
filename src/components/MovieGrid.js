@@ -247,10 +247,6 @@ export class MovieGrid extends React.Component {
       });
     }
 
-    updateOptions = () => {
-
-    }
-
     handlePageChange = (pageNumber) => {
       console.log(`active page is ${pageNumber}`);
       this.setState({

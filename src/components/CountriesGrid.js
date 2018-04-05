@@ -7,6 +7,31 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
+const LANG_FILTERS = [
+  {value: 'english',label: 'Language: English'},
+  {value: 'spanish',label: 'Language: Spanish'},
+  {value: 'arabic',label: 'Language: Arabic'},
+  {value: 'french',label: 'Language: French'},
+  {value: 'german',label: 'Language: German'},
+  {value: 'dutch',label: 'Language: Dutch'}
+]
+
+const REGION_FILTERS = [
+  {value: 'africa',label: 'Region: Africa'},
+  {value: 'americas',label: 'Region: Americas'},
+  {value: 'asia',label: 'Region: Asia'},
+  {value: 'europe',label: 'Region: Europe'},
+  {value: 'oceania',label: 'Region: Oceania'}
+]
+
+const REGION_FILTERS_DISABLED = [
+  {value: 'africa',label: 'Region: Africa',disabled: true},
+  {value: 'americas',label: 'Region: Americas',disabled: true},
+  {value: 'asia',label: 'Region: Asia',disabled: true},
+  {value: 'europe',label: 'Region: Europe',disabled: true},
+  {value: 'oceania',label: 'Region: Oceania',disabled: true}
+]
+
 function splitArray(input, spacing) {
   var output = [];
 
@@ -30,7 +55,8 @@ export class CountriesGrid extends React.Component {
       activeSort: 'name',
       activeDir: 'asc',
       activeFilters: [],
-      realPage: 0
+      realPage: 0,
+      region_selected: false
     };
     this.updateData();
 
@@ -79,43 +105,82 @@ export class CountriesGrid extends React.Component {
     this.setState({selectedFilter});
     var filters = [];
     var filter = '';
+    var languages = [];
+    var region_selected = false
+
     if (selectedFilter) {
       if (selectedFilter.includes('english')) {
-        filter = '"languages":["English","%3D"]'
-        filters.push(filter)
+        filter = '"English","like"'
+        languages.push(filter)
       }
       if (selectedFilter.includes('spanish')) {
-        filter = '"languages":["Spanish","%3D"]'
-        filters.push(filter)
+        filter = '"Spanish","like"'
+        languages.push(filter)
       }
       if (selectedFilter.includes('arabic')) {
-        filter = '"languages":["Arabic","%3D"]'
-        filters.push(filter)
+        filter = '"Arabic","like"'
+        languages.push(filter)
       }
       if (selectedFilter.includes('french')) {
-        filter = '"languages":["French","%3D"]'
-        filters.push(filter)
+        filter = '"French","like"'
+        languages.push(filter)
+      }
+      if (selectedFilter.includes('german')) {
+        filter = '"German","like"'
+        languages.push(filter)
+      }      
+      if (selectedFilter.includes('dutch')) {
+        filter = '"Dutch","like"'
+        languages.push(filter)
       }
       if (selectedFilter.includes('africa')) {
+        this.setState({region_selected: true});
+        region_selected = true
         filter = '"region":["Africa","%3D"]'
         filters.push(filter)
       }
       if (selectedFilter.includes('americas')) {
+        this.setState({region_selected: true});
+        region_selected = true
         filter = '"region":["Americas","%3D"]'
         filters.push(filter)
       }
       if (selectedFilter.includes('asia')) {
+        this.setState({region_selected: true});
+        region_selected = true
         filter = '"region":["Asia","%3D"]'
         filters.push(filter)
       }
       if (selectedFilter.includes('europe')) {
+        this.setState({region_selected: true});
+        region_selected = true
         filter = '"region":["Europe","%3D"]'
         filters.push(filter)
       }
       if (selectedFilter.includes('oceania')) {
+        this.setState({region_selected: true});
+        region_selected = true
         filter = '"region":["Oceania","%3D"]'
         filters.push(filter)
       }
+    }
+
+    if (languages.length > 0) {
+      var lang_filter = '"languages":[' + languages[0]
+      var isFirst = true
+      for (var lang in languages) {
+        if (isFirst) {
+          isFirst = false
+        } else {
+          lang_filter = lang_filter + ',' + languages[lang]
+        }
+      }
+      lang_filter = lang_filter + ']'
+      filters.push(lang_filter)
+    }
+
+    if (!region_selected) {
+      this.setState({region_selected: false});
     }
 
     this.setState({activeFilters: filters}, function() {
@@ -171,8 +236,16 @@ export class CountriesGrid extends React.Component {
     const valueSort = selectedSort && selectedSort.value;
     const {selectedFilter} = this.state;
     const valueFilter = selectedFilter;
-    //6
-    //1
+
+    var create_options = LANG_FILTERS
+    if (this.state.region_selected) {
+      create_options = create_options.concat(REGION_FILTERS_DISABLED)
+    } else {
+      create_options = create_options.concat(REGION_FILTERS)
+    }
+
+    const options = create_options
+
     var totalItems = 130;
 
     if (this.state.data.data) {
@@ -206,17 +279,8 @@ export class CountriesGrid extends React.Component {
               simpleValue
               value={valueFilter}
               onChange={this.handleFilter}
-              options={[
-                {value: 'english',label: 'Language: English'},
-                {value: 'spanish',label: 'Language: Spanish'},
-                {value: 'arabic',label: 'Language: Arabic'},
-                {value: 'french',label: 'Language: French'},
-                {value: 'africa',label: 'Region: Africa'},
-                {value: 'americas',label: 'Region: Americas'},
-                {value: 'asia',label: 'Region: Asia'},
-                {value: 'europe',label: 'Region: Europe'},
-                {value: 'oceania',label: 'Region: Oceania'}
-              ]}/>
+              options={options}
+            />
           </div>
           <div className="col-sm-2"></div>
         </div>
