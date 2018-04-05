@@ -15,16 +15,22 @@ function splitArray(input, spacing) {
   return output;
 }
 
+function splitSearch(criteria) {
+  let queries = criteria.split(/( or )|(%20or%20)/);
+  queries = queries.filter(e => e !== undefined).filter(e => e !== " or ").filter(e => e !== "%20or%20");
+  return queries;
+}
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
-
 
     let phrase = this.props.location.search;
     const searchCriteria = phrase.split('=').pop();
 
     this.state = {
       searchCriteria: searchCriteria,
+      queries: splitSearch(searchCriteria),
       movieResult: [],
       streamResult: [],
       countryResult: [],
@@ -38,9 +44,7 @@ class Search extends React.Component {
     this.updateCountry = this.updateCountry.bind(this);
     this.updateService = this.updateService.bind(this);
 
-    this.updateMovie();
-    this.updateCountry();
-    this.updateService();
+    this.updateData();
   }
 
   handlePageChangeMovie = (pageNumber) => {
@@ -65,52 +69,80 @@ class Search extends React.Component {
     const newSearch = newPhrase.split('=').pop();
     const {searchCriteria} = this.state;
     if (searchCriteria !== newSearch) {
-      this.setState({searchCriteria: newSearch}, function() {this.updateData()});
+      this.setState({queries:splitSearch(newSearch)});
+      this.setState({
+        searchCriteria: newSearch
+      }, function() {
+        this.updateData()
+      });
     }
   }
 
   updateData = () => {
-    this.updateMovie();
-    this.updateCountry();
-    this.updateService();
+    const {searchCriteria} = this.state;
+    let queries = searchCriteria.split(/( or )|(%20or%20)/);
+    queries = queries.filter(e => e !== undefined).filter(e => e !== " or ").filter(e => e !== "%20or%20");
+    this.setState({queries: queries});
+    this.updateMovie(queries);
+    this.updateCountry(queries);
+    this.updateService(queries);
   }
 
-  updateMovie = () => {
-    const {searchCriteria} = this.state;
-    console.log("movie update - " + searchCriteria);
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/search?value=${searchCriteria}`;
-    axios.get(url).then(res => {
-      let movies = res.data.data;
-      this.setState({movieResult: movies});
-    });
+  updateMovie = (queries) => {
+    let newDict = {}
+    for (let term of queries) {
+      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/search?value=${term}`;
+      axios.get(url).then(res => {
+        let results = res.data.data;
+        for (let movie of results) {
+          newDict[movie.id] = movie;
+        }
+        this.setState({movieResult: Object.values(newDict)});
+        this.setState({activeMoviePage: 1});
+
+      });
+
+    }
   }
 
-  updateCountry = () => {
-    const {searchCriteria} = this.state;
-    console.log("country update - " + searchCriteria);
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${searchCriteria}`;
-    axios.get(url).then(res => {
-      let countries = res.data.data;
-      this.setState({countryResult: countries});
-    });
+  updateCountry = (queries) => {
+    let newDict = {}
+    for (let term of queries) {
+      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${term}`;
+      axios.get(url).then(res => {
+        let results = res.data.data;
+        for (let country of results) {
+          newDict[country.id] = country;
+        }
+        this.setState({countryResult: Object.values(newDict)});
+        this.setState({activeCountryPage: 1});
+      });
 
+    }
   }
 
-  updateService = () => {
-    const {searchCriteria} = this.state;
-    console.log("service update - " + searchCriteria);
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${searchCriteria}`;
-    axios.get(url).then(res => {
-      let services = res.data.data;
-      this.setState({streamResult: services});
-    });
+  updateService = (queries) => {
+    let newDict = {}
+    for (let term of queries) {
+      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${term}`;
+      axios.get(url).then(res => {
+        let results = res.data.data;
+        for (let service of results) {
+          newDict[service.id] = service;
+        }
+        this.setState({streamResult: Object.values(newDict)});
+        this.setState({activeStreamPage: 1});
+      });
+
+    }
   }
 
   render() {
     // Grab the returned results
     //const {movieResult, countryResult, streamResult} = this.state;
-    const {searchCriteria} = this.state;
-    const {movieResult,countryResult,streamResult} = this.state;
+    const {queries} = this.state;
+    console.log(queries);
+    const {movieResult, countryResult, streamResult} = this.state;
 
     // If any results are returned, then render the results page
     if (movieResult.length >= 0 && countryResult.length >= 0 && streamResult.length >= 0) {
@@ -133,30 +165,37 @@ class Search extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
-                          <Link to={{pathname: `/movie/${item.name}`, state: {item: item.id}}}>
+                          <Link to={{
+                              pathname: `/movie/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
                             <h2 className="display-3">
-                              <Highlighter highlightClassName="nameHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.name}/>
+                              <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
                             <hr/>
                             <div className="col-sm-3">
                               <img className="img-responsive" src={item.image} alt=""/>
                             </div>
                           </Link>
-                          <div className="col-sm-8">
+                          <div className="col-sm-9">
                             <h4>Release Date</h4>
-                            <Highlighter highlightClassName="releaseHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.release_date}/>
+                            <p><Highlighter highlightClassName="releaseHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.release_date}/></p>
                             <hr/>
                             <h4>Rating</h4>
-                            <Highlighter highlightClassName="ratingHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.rating}/>
+                            <p><Highlighter highlightClassName="ratingHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.rating}/></p>
                             <hr/>
-                            <h4>Genre</h4>
-                            <Highlighter highlightClassName="genresHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.genres}/>
-                            <hr/>
-                            <h4>Description</h4>
-                            <Highlighter highlightClassName="descriptionHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.description}/>
-                            <hr/>
-                            <h4>Cast</h4>
-                            <Highlighter highlightClassName="castHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.movie_cast}/>
+                          </div>
+                          <div className="col-sm-12">
+                          <h4>Genre</h4>
+                          <p><Highlighter highlightClassName="genresHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.genres}/></p>
+                          <hr/>
+                          <h4>Description</h4>
+                          <p><Highlighter highlightClassName="descriptionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.description}/></p>
+                          <hr/>
+                          <h4>Cast</h4>
+                          <p><Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/></p>
                           </div>
                         </div>
                       </div>)
@@ -181,9 +220,14 @@ class Search extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
-                          <Link to={{pathname: `/country/${item.name}`, state: {item: item.id}}}>
+                          <Link to={{
+                              pathname: `/country/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
                             <h2 className="display-3">
-                              <Highlighter highlightClassName="nameHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.name}/>
+                              <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
                             <hr/>
                             <div className="col-sm-4">
@@ -192,16 +236,21 @@ class Search extends React.Component {
                           </Link>
                           <div className="col-sm-8">
                             <h4>Population</h4>
-                          
-                            <Highlighter highlightClassName="populationHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/>
-
+                            <p><Highlighter highlightClassName="populationHighlight" searchWords={queries} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/></p>
                             <hr/>
-                            <h4>Spoken Languages</h4>
-                            <Highlighter highlightClassName="languageHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.languages}/>
+                          </div>
+                          <div className="col-sm-12">
+                          <h4>Region</h4>
+                          <p><Highlighter highlightClassName="regionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.region}/></p>
+                          <hr/>
+                          <h4>Spoken Languages</h4>
+                          <p><Highlighter highlightClassName="languageHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.languages}/></p>
                           </div>
                         </div>
-                      </div>)}
-                  </div>)}
+                      </div>)
+                    }
+                  </div>)
+            }
           </div>
         </section>
         <div className="text-center">
@@ -220,24 +269,31 @@ class Search extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
-                          <Link to={{pathname: `/streaming_service/${item.name}`, state: {item: item.id}}}>
+                          <Link to={{
+                              pathname: `/streaming_service/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
                             <h2 className="display-3">
-                              <Highlighter highlightClassName="nameHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={item.name}/>
+                              <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
                             <hr/>
                             <div className="col-sm-3">
                               <img className="img-responsive" src={item.image} alt=""/>
                             </div>
                           </Link>
-                          <div className="col-sm-8">
+                          <div className="col-sm-9">
                             <h4>URL</h4>
                             <p>
                               <a href={item.website}>{item.website}</a>
                             </p>
                           </div>
                         </div>
-                      </div>)}
-                  </div>)}
+                      </div>)
+                    }
+                  </div>)
+            }
           </div>
         </section>
         <div className="text-center">

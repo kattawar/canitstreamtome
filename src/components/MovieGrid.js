@@ -107,7 +107,7 @@ export class MovieGrid extends React.Component {
             dir = 'asc'
             break;
           default:
-            console.log("HERE3");
+            console.log("default");
         }
       } else {
         sort = 'title'
@@ -125,7 +125,6 @@ export class MovieGrid extends React.Component {
     }
 
     handleFilterChange = (selectedOptionFilter) => {
-      console.log("FILTER");
       this.setState({selectedOptionFilter});
       var filters = [];
       var genres = [];
@@ -134,7 +133,6 @@ export class MovieGrid extends React.Component {
       var release_selected = false
 
       if (selectedOptionFilter) {
-        console.log(selectedOptionFilter)
           if (selectedOptionFilter.includes('science')) {
             filter = '"Science Fiction","like"';
             genres.push(filter)
@@ -231,7 +229,6 @@ export class MovieGrid extends React.Component {
         filters.push(genre_filter)
       }
 
-      console.log(filters)
       if (!release_selected) {
         this.setState({release_selected: false});
       }
@@ -248,11 +245,15 @@ export class MovieGrid extends React.Component {
     }
 
     handlePageChange = (pageNumber) => {
-      console.log(`active page is ${pageNumber}`);
+      //console.log(`active page is ${pageNumber}`);
       this.setState({
         activePage: pageNumber
       });
-
+      this.setState({
+        realPage: pageNumber - 1
+      }, function() {
+        this.updateData();
+      });
     }
 
     updateData = () => {
@@ -265,11 +266,11 @@ export class MovieGrid extends React.Component {
           filters = filters + ',' + this.state.activeFilters[filter]
         }
       }
-      console.log(filters);
       if (filters === 'undefined') {
         filters = ""
       }
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+
+      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
       //console.log(url);
       axios.get(url).then(res => {
         const instanceList = res.data;
@@ -300,19 +301,15 @@ export class MovieGrid extends React.Component {
         } else {
           create_options = create_options.concat(RELEASE_FILTERS)
         }
-        console.log(this.state.rating_selected)
-        console.log(this.state.release_selected)
-        console.log(create_options)
 
         const options = create_options
 
-        var totalItems = 0;
+        var totalItems = 1120;
 
         if (this.state.data.data) {
           const instanceGrouped = this.state.data.data;
-          const instanceRows = splitArray(instanceGrouped, 6).slice(4*(this.state.activePage-1),4*(this.state.activePage-1)+3);
-          totalItems=instanceGrouped.length;
-          console.log(this.state.data.data);
+          const instanceRows = splitArray(instanceGrouped, 6);
+          //console.log(this.state.data.data);
 
           return (
             <div>

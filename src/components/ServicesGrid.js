@@ -51,7 +51,7 @@ export class ServicesGrid extends React.Component {
             dir='desc'
             break;
           default:
-            console.log("HERE3");
+            console.log("default");
         }
         this.setState({activeDir: dir}, function () {
           this.setState({activeSort: sort}, function () {
@@ -73,8 +73,7 @@ export class ServicesGrid extends React.Component {
           case 'filt free':
             for (x = 0; x < 21; x++) {
               service_inst = this.state.unfilteredData.data[x]
-              if (service_inst.pricing.basic === 'FREE' || service_inst.pricing.basic === 'Free') {
-                console.log(service_inst.name);
+              if (service_inst.pricing.basic === 'Free') {
                 data.data[idx] = service_inst;
                 idx++
               }
@@ -84,7 +83,6 @@ export class ServicesGrid extends React.Component {
             for (x = 0; x < 21; x++) {
               service_inst = this.state.unfilteredData.data[x]
               if (service_inst.pricing.basic[0] === '$') {
-                console.log(service_inst.name);
                 data.data[idx] = service_inst;
                 idx++
               }
@@ -93,8 +91,7 @@ export class ServicesGrid extends React.Component {
           case 'filt rent':
             for (x = 0; x < 21; x++) {
               service_inst = this.state.unfilteredData.data[x]
-              if (service_inst.pricing.basic === 'Pricing Varies' || service_inst.pricing.basic === 'pricing varies by movie') {
-                console.log(service_inst.name);
+              if (service_inst.pricing.basic === 'Pricing Varies') {
                 data.data[idx] = service_inst;
                 idx++
               }
@@ -103,15 +100,14 @@ export class ServicesGrid extends React.Component {
           case 'filt provider':
             for (x = 0; x < 21; x++) {
               service_inst = this.state.unfilteredData.data[x]
-              if (service_inst.pricing.basic === 'Through Cable Provider' || service_inst.pricing.basic === 'through cable provider') {
-                console.log(service_inst.name);
+              if (service_inst.pricing.basic === 'Through Cable Provider') {
                 data.data[idx] = service_inst;
                 idx++
               }
             }
             break;
           default:
-            console.log("HERE3");
+            console.log("default");
         }
         this.setState({data: data}, function () {
           //this.updateDataFilt();
@@ -132,7 +128,7 @@ export class ServicesGrid extends React.Component {
   }
 
   updateData = () => {
-    console.log(this.state.activeDir);
+    //console.log(this.state.activeDir);
     let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
