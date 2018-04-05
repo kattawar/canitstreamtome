@@ -80,19 +80,19 @@ export class CountriesGrid extends React.Component {
     var filters = [];
     var filter = '';
     if (selectedFilter) {
-      if (selectedFilter.includes('en')) {
+      if (selectedFilter.includes('english')) {
         filter = '"languages":["English","%3D"]'
         filters.push(filter)
       }
-      if (selectedFilter.includes('sp')) {
+      if (selectedFilter.includes('spanish')) {
         filter = '"languages":["Spanish","%3D"]'
         filters.push(filter)
       }
-      if (selectedFilter.includes('ar')) {
+      if (selectedFilter.includes('arabic')) {
         filter = '"languages":["Arabic","%3D"]'
         filters.push(filter)
       }
-      if (selectedFilter.includes('fr')) {
+      if (selectedFilter.includes('french')) {
         filter = '"languages":["French","%3D"]'
         filters.push(filter)
       }
@@ -207,10 +207,10 @@ export class CountriesGrid extends React.Component {
               value={valueFilter}
               onChange={this.handleFilter}
               options={[
-                {value: 'en',label: 'Language: English'},
-                {value: 'sp',label: 'Language: Spanish'},
-                {value: 'ar',label: 'Language: Arabic'},
-                {value: 'fr',label: 'Language: French'},
+                {value: 'english',label: 'Language: English'},
+                {value: 'spanish',label: 'Language: Spanish'},
+                {value: 'arabic',label: 'Language: Arabic'},
+                {value: 'french',label: 'Language: French'},
                 {value: 'africa',label: 'Region: Africa'},
                 {value: 'americas',label: 'Region: Americas'},
                 {value: 'asia',label: 'Region: Asia'},
