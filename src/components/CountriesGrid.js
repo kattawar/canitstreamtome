@@ -128,7 +128,7 @@ export class CountriesGrid extends React.Component {
       if (selectedFilter.includes('german')) {
         filter = '"German","like"'
         languages.push(filter)
-      }      
+      }
       if (selectedFilter.includes('dutch')) {
         filter = '"Dutch","like"'
         languages.push(filter)
@@ -194,15 +194,10 @@ export class CountriesGrid extends React.Component {
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
-    this.setState({
-      realPage: pageNumber - 1
-    }, function() {
-      this.updateData();
-    });
-
   }
 
   updateData = () => {
+    this.setState({activePage: 1});
     var filters = "" + this.state.activeFilters[0]
     var isFirst = true
     for (var filter in this.state.activeFilters) {
@@ -217,7 +212,7 @@ export class CountriesGrid extends React.Component {
       filters = ""
     }
     console.log(this.state.activeDir);
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
     axios.get(url).then(res => {
@@ -229,6 +224,7 @@ export class CountriesGrid extends React.Component {
     });
 
   }
+
 
   render() {
 
@@ -246,12 +242,13 @@ export class CountriesGrid extends React.Component {
 
     const options = create_options
 
-    var totalItems = 130;
 
+
+  var totalItems = 0;
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
-
-      const instanceRows = splitArray(instanceGrouped, 6);
+      const instanceRows = splitArray(instanceGrouped, 6).slice(4*(this.state.activePage-1),4*(this.state.activePage-1)+3);
+      totalItems=instanceGrouped.length;
 
       return (<div>
 
