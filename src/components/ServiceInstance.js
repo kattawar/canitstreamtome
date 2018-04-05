@@ -12,7 +12,7 @@ class ServiceInstance extends React.Component {
 
   componentDidMount() {
     const service = this.props.location.state.item;
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service/${service}`;
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/${service}`;
     if (service) {
       axios.get(url).then(res => {
         const item = res.data.data[0];
@@ -90,8 +90,8 @@ class ServiceInstance extends React.Component {
           </div>
         </div>
         </div>
-        <div className="col-sm-6">        
-        <div className="card">        
+        <div className="col-sm-6">
+        <div className="card">
           <div className="col-sm-12">
             <h3>Top Movies on {this.state.serviceItem.name}</h3>
             <hr></hr>
@@ -111,7 +111,7 @@ class ServiceInstance extends React.Component {
             </p>
           </div>
         </div>
-      </div>      
+      </div>
       </div>
     </div>);
   }

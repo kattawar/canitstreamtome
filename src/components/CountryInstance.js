@@ -13,9 +13,11 @@ class CountryInstance extends React.Component {
 
   componentDidMount() {
     const country = this.props.location.state.item;
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/country/${country}`;
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/${country}`;
+    console.log(country);
     if (country) {
       axios.get(url).then(res => {
+        console.log(res);
         this.setState({countryItem: res.data.data[0]});
       });
       let movieUrl = url + '/movie';
@@ -61,9 +63,11 @@ if(this.state.countryItem.latitude){
             <img className="img-responsive" src={this.state.countryItem.image} alt=""/>
           </div>
           <div className="col-sm-8">
-
             <h4>Population</h4>
             <p>{x}</p>
+            <hr></hr>
+            <h4>Region</h4>
+            <p>{this.state.countryItem.region}</p>
             <hr></hr>
             <h4>Spoken Languages</h4>
             <p>{this.state.countryItem.languages}</p>
@@ -78,7 +82,6 @@ if(this.state.countryItem.latitude){
             <hr></hr>
             <p>
               <ol>
-
                 { this.state.streamranks.length === 0 ? <li>
                   <Link to={{
                       pathname: `/streaming_service/266`,
@@ -101,15 +104,15 @@ if(this.state.countryItem.latitude){
           </div>
         </div>
         </div>
-        <div className="col-sm-6">        
-        <div className="card">        
-          <div className="col-sm-12">          
+        <div className="col-sm-6">
+        <div className="card">
+          <div className="col-sm-12">
             <h3>Top Movies</h3>
             <hr></hr>
             <p>
               <ol>
                 {
-                  this.state.movieranks.slice(0, 10).map(item => <li>
+                  this.state.movieranks.length === 0 ? null : this.state.movieranks.slice(0, 10).map(item => <li>
                     <Link to={{
                         pathname: `/movie/${item.name}`,
                         state: {
@@ -122,7 +125,7 @@ if(this.state.countryItem.latitude){
             </p>
           </div>
         </div>
-      </div>      
+      </div>
       </div>
       <div className="row">
       <div className= "card">

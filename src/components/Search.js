@@ -18,19 +18,31 @@ function splitArray(input, spacing) {
 class Search extends React.Component {
   constructor(props) {
     super(props);
+
+
+    let phrase = this.props.location.search;
+    const searchCriteria = phrase.split('=').pop();
+
     this.state = {
-      searchCriteria: '',
+      searchCriteria: searchCriteria,
       movieResult: [],
       streamResult: [],
       countryResult: [],
-      movieSplit: [],
-      streamSplit: [],
-      countrySplit: [],
       activeMoviePage: 1,
       activeCountryPage: 1,
       activeStreamPage: 1
     }
+
+    this.updateData = this.updateData.bind(this);
+    this.updateMovie = this.updateMovie.bind(this);
+    this.updateCountry = this.updateCountry.bind(this);
+    this.updateService = this.updateService.bind(this);
+
+    this.updateMovie();
+    this.updateCountry();
+    this.updateService();
   }
+
   handlePageChangeMovie = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({activeMoviePage: pageNumber});
@@ -48,35 +60,50 @@ class Search extends React.Component {
 
   }
 
-  componentDidMount() {
-    // Get the search term - we will split the strings here
-    let phrase = this.props.location.search;
-    const searchCriteria = phrase.split('=').pop();
-    this.setState({searchCriteria})
+  componentDidUpdate() {
+    let newPhrase = this.props.location.search;
+    const newSearch = newPhrase.split('=').pop();
+    const {searchCriteria} = this.state;
+    if (searchCriteria !== newSearch) {
+      this.setState({searchCriteria: newSearch}, function() {this.updateData()});
+    }
+  }
 
-    // API calls for each model, sending in the search term - for the 'or' case, need to do this multiple times
+  updateData = () => {
+    this.updateMovie();
+    this.updateCountry();
+    this.updateService();
+  }
+
+  updateMovie = () => {
+    const {searchCriteria} = this.state;
+    console.log("movie update - " + searchCriteria);
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/search?value=${searchCriteria}`;
     axios.get(url).then(res => {
       let movies = res.data.data;
-      let moviesSplit = splitArray(movies, 6);
       this.setState({movieResult: movies});
-      this.setState({movieSplit: moviesSplit});
     });
-    url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${searchCriteria}`;
+  }
+
+  updateCountry = () => {
+    const {searchCriteria} = this.state;
+    console.log("country update - " + searchCriteria);
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${searchCriteria}`;
     axios.get(url).then(res => {
       let countries = res.data.data;
-      let countriesSplit = splitArray(countries, 6);
       this.setState({countryResult: countries});
-      this.setState({countrySplit: countriesSplit});
-    });
-    url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${searchCriteria}`;
-    axios.get(url).then(res => {
-      let services = res.data.data;
-      let splitServices = splitArray(services, 6);
-      this.setState({streamResult: services});
-      this.setState({streamSplit: splitServices});
     });
 
+  }
+
+  updateService = () => {
+    const {searchCriteria} = this.state;
+    console.log("service update - " + searchCriteria);
+    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${searchCriteria}`;
+    axios.get(url).then(res => {
+      let services = res.data.data;
+      this.setState({streamResult: services});
+    });
   }
 
   render() {
@@ -85,18 +112,13 @@ class Search extends React.Component {
     const {searchCriteria} = this.state;
     const {movieResult,countryResult,streamResult} = this.state;
 
-    // let movieResult = this.state.movieResult;
-    // let countryResult = this.state.countryResult;
-    // let streamResult = this.state.streamResult;
-    console.log(countryResult);
     // If any results are returned, then render the results page
     if (movieResult.length >= 0 && countryResult.length >= 0 && streamResult.length >= 0) {
 
       let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage);
       let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage);
       let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage);
-      //let countries = this.state.countrySplit[this.state.activeCountryPage-1];
-      //let services = this.state.streamSplit[this.state.activeStreamPage-1];
+
       return (<div>
         <h1 align='center'>Movies</h1>
         <section>

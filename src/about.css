@@ -3,3 +3,8 @@
     font-weight: 400 !important;
     line-height: 1.2;
 }
+
+.mark, mark{
+  padding: 0;
+  background-color: #ff0;
+}
