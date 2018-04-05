@@ -34,6 +34,7 @@
     "jsdom": "^11.6.2",
     "mocha": "^5.0.4",
     "react-addons-test-utils": "^15.6.2",
+    "react-highlight-words": "^0.11.0",
     "react-select": "^1.2.1"
   }
 }
