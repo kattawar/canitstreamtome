@@ -216,14 +216,14 @@ class About extends React.Component {
           <h3 className="display-4">LINKS</h3>
           <p></p>
           <p>
-            <a href="https://www.gitbook.com/book/kevinsalcedo/report/welcome">GitBook Report</a>
+            <a href="https://kevinsalcedo.gitbooks.io/report/content/">Technical Report</a>
           </p>
           <p></p>
           <p>
             <a href="https://github.com/kattawar/canitstreamtome">GitHub Repo</a>
           </p>
           <p>
-            <a href="https://www.gitbook.com/book/kevinsalcedo/api/welcome">API Documentation</a>
+            <a href="https://kevinsalcedo.gitbooks.io/api/content/">API Documentation</a>
           </p>
         </div>
       </section>
