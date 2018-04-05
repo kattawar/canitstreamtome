@@ -170,7 +170,7 @@ class Search extends React.Component {
                           </Link>
                           <div className="col-sm-8">
                             <h4>Population</h4>
-                            <p>{Number(item.population).toLocaleString()}</p>
+                          
                             <Highlighter highlightClassName="populationHighlight" searchWords={[searchCriteria]} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/>
 
                             <hr/>
