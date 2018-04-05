@@ -15,17 +15,22 @@ function splitArray(input, spacing) {
   return output;
 }
 
+function splitSearch(criteria) {
+  let queries = criteria.split(/( or )|(%20or%20)/);
+  queries = queries.filter(e => e !== undefined).filter(e => e !== " or ").filter(e => e !== "%20or%20");
+  return queries;
+}
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
-
 
     let phrase = this.props.location.search;
     const searchCriteria = phrase.split('=').pop();
 
     this.state = {
       searchCriteria: searchCriteria,
-      queries: [],
+      queries: splitSearch(searchCriteria),
       movieResult: [],
       streamResult: [],
       countryResult: [],
@@ -64,23 +69,24 @@ class Search extends React.Component {
     const newSearch = newPhrase.split('=').pop();
     const {searchCriteria} = this.state;
     if (searchCriteria !== newSearch) {
-      this.setState({searchCriteria: newSearch}, function() {this.updateData()});
+      this.setState({queries:splitSearch(newSearch)});
+      this.setState({
+        searchCriteria: newSearch
+      }, function() {
+        this.updateData()
+      });
     }
   }
 
   updateData = () => {
-    // this.updateMovie();
-    // this.updateCountry();
-    // this.updateService();
     const {searchCriteria} = this.state;
     let queries = searchCriteria.split(/( or )|(%20or%20)/);
-    queries = queries.filter(e => e!== undefined).filter(e => e !== " or ").filter(e => e !== "%20or%20");
-    this.setState({queries:queries});
+    queries = queries.filter(e => e !== undefined).filter(e => e !== " or ").filter(e => e !== "%20or%20");
+    this.setState({queries: queries});
     this.updateMovie(queries);
     this.updateCountry(queries);
     this.updateService(queries);
   }
-
 
   updateMovie = (queries) => {
     let newDict = {}
@@ -88,11 +94,11 @@ class Search extends React.Component {
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/search?value=${term}`;
       axios.get(url).then(res => {
         let results = res.data.data;
-        for(let movie of results) {
+        for (let movie of results) {
           newDict[movie.id] = movie;
         }
-        this.setState({movieResult:Object.values(newDict)});
-        this.setState({activeMoviePage:1});
+        this.setState({movieResult: Object.values(newDict)});
+        this.setState({activeMoviePage: 1});
 
       });
 
@@ -105,11 +111,11 @@ class Search extends React.Component {
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${term}`;
       axios.get(url).then(res => {
         let results = res.data.data;
-        for(let country of results) {
+        for (let country of results) {
           newDict[country.id] = country;
         }
-        this.setState({countryResult:Object.values(newDict)});
-        this.setState({activeCountryPage:1});
+        this.setState({countryResult: Object.values(newDict)});
+        this.setState({activeCountryPage: 1});
       });
 
     }
@@ -121,22 +127,22 @@ class Search extends React.Component {
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${term}`;
       axios.get(url).then(res => {
         let results = res.data.data;
-        for(let service of results) {
+        for (let service of results) {
           newDict[service.id] = service;
         }
-        this.setState({streamResult:Object.values(newDict)});
-        this.setState({activeStreamPage:1});
+        this.setState({streamResult: Object.values(newDict)});
+        this.setState({activeStreamPage: 1});
       });
 
     }
   }
 
-
   render() {
     // Grab the returned results
     //const {movieResult, countryResult, streamResult} = this.state;
     const {queries} = this.state;
-    const {movieResult,countryResult,streamResult} = this.state;
+    console.log(queries);
+    const {movieResult, countryResult, streamResult} = this.state;
 
     // If any results are returned, then render the results page
     if (movieResult.length >= 0 && countryResult.length >= 0 && streamResult.length >= 0) {
@@ -159,7 +165,12 @@ class Search extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
-                          <Link to={{pathname: `/movie/${item.name}`, state: {item: item.id}}}>
+                          <Link to={{
+                              pathname: `/movie/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
                             <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
@@ -207,7 +218,12 @@ class Search extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
-                          <Link to={{pathname: `/country/${item.name}`, state: {item: item.id}}}>
+                          <Link to={{
+                              pathname: `/country/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
                             <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
@@ -226,8 +242,10 @@ class Search extends React.Component {
                             <Highlighter highlightClassName="languageHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.languages}/>
                           </div>
                         </div>
-                      </div>)}
-                  </div>)}
+                      </div>)
+                    }
+                  </div>)
+            }
           </div>
         </section>
         <div className="text-center">
@@ -246,7 +264,12 @@ class Search extends React.Component {
                     {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
-                          <Link to={{pathname: `/streaming_service/${item.name}`, state: {item: item.id}}}>
+                          <Link to={{
+                              pathname: `/streaming_service/${item.name}`,
+                              state: {
+                                item: item.id
+                              }
+                            }}>
                             <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                             </h2>
@@ -262,8 +285,10 @@ class Search extends React.Component {
                             </p>
                           </div>
                         </div>
-                      </div>)}
-                  </div>)}
+                      </div>)
+                    }
+                  </div>)
+            }
           </div>
         </section>
         <div className="text-center">
