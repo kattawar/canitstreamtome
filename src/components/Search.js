@@ -179,21 +179,23 @@ class Search extends React.Component {
                               <img className="img-responsive" src={item.image} alt=""/>
                             </div>
                           </Link>
-                          <div className="col-sm-8">
+                          <div className="col-sm-9">
                             <h4>Release Date</h4>
-                            <Highlighter highlightClassName="releaseHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.release_date}/>
+                            <p><Highlighter highlightClassName="releaseHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.release_date}/></p>
                             <hr/>
                             <h4>Rating</h4>
-                            <Highlighter highlightClassName="ratingHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.rating}/>
+                            <p><Highlighter highlightClassName="ratingHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.rating}/></p>
                             <hr/>
-                            <h4>Genre</h4>
-                            <Highlighter highlightClassName="genresHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.genres}/>
-                            <hr/>
-                            <h4>Description</h4>
-                            <Highlighter highlightClassName="descriptionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.description}/>
-                            <hr/>
-                            <h4>Cast</h4>
-                            <Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/>
+                          </div>
+                          <div className="col-sm-12">
+                          <h4>Genre</h4>
+                          <p><Highlighter highlightClassName="genresHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.genres}/></p>
+                          <hr/>
+                          <h4>Description</h4>
+                          <p><Highlighter highlightClassName="descriptionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.description}/></p>
+                          <hr/>
+                          <h4>Cast</h4>
+                          <p><Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/></p>
                           </div>
                         </div>
                       </div>)
@@ -234,12 +236,15 @@ class Search extends React.Component {
                           </Link>
                           <div className="col-sm-8">
                             <h4>Population</h4>
-
-                            <Highlighter highlightClassName="populationHighlight" searchWords={queries} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/>
-
+                            <p><Highlighter highlightClassName="populationHighlight" searchWords={queries} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/></p>
                             <hr/>
-                            <h4>Spoken Languages</h4>
-                            <Highlighter highlightClassName="languageHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.languages}/>
+                          </div>
+                          <div className="col-sm-12">
+                          <h4>Region</h4>
+                          <p><Highlighter highlightClassName="regionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.region}/></p>
+                          <hr/>
+                          <h4>Spoken Languages</h4>
+                          <p><Highlighter highlightClassName="languageHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.languages}/></p>
                           </div>
                         </div>
                       </div>)
@@ -278,7 +283,7 @@ class Search extends React.Component {
                               <img className="img-responsive" src={item.image} alt=""/>
                             </div>
                           </Link>
-                          <div className="col-sm-8">
+                          <div className="col-sm-9">
                             <h4>URL</h4>
                             <p>
                               <a href={item.website}>{item.website}</a>
