@@ -349,6 +349,19 @@ def db_select_streaming_service(filtertype = None, value = None, comparison = "=
         sql_query += "limit {0} offset {1} ".format(pagesize,offset)
         send_sql_query(sql_query)
         return format_db_reply("streamingservices",get_sql_results())
+def buildmultifilter(filtertype,listvar,filter_values):
+        out = ""
+        if(len(listvar)%2==0):
+                for i in range(0,len(listvar)-1,2):
+                        value = listvar[i]
+                        comparison = listvar[i+1]
+                        if filtertype in filter_values and comparison in comparison_values:
+                                if comparison == "like" or comparison == "ilike":
+                                        value="%"+value+"%"
+                                out += " {0} {1} '{2}' and ".format(filtertype,comparison,value)
+        return out
+                                        
+                
 
 def db_select_moviev2(filtertype = None,pagesize = 25,pagenum = 0,sortby = "title",sortdir="asc"):
         global movie_filter_values,comparison_values
@@ -357,12 +370,7 @@ def db_select_moviev2(filtertype = None,pagesize = 25,pagenum = 0,sortby = "titl
         if len(filtertype)>0:
                 sql_query += "where "
                 for key in filtertype:
-                        value = filtertype[key][0]
-                        comparison = filtertype[key][1]
-                        if key in movie_filter_values and comparison in comparison_values:
-                                if comparison == "like":
-                                        value="%"+value+"%"
-                                sql_query += " {0} {1} '{2}' and ".format(key,comparison,value)
+                        sql_query += buildmultifilter(key,filtertype[key],movie_filter_values)
                 sql_query = sql_query[:-4]
         if sortby in movie_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -378,12 +386,7 @@ def db_select_countryv2(filtertype = None,pagesize = 25,pagenum = 0,sortby = "ti
         if len(filtertype)>0:
                 sql_query += "where "
                 for key in filtertype:
-                        value = filtertype[key][0]
-                        comparison = filtertype[key][1]
-                        if key in country_filter_values and comparison in comparison_values:
-                                if comparison == "like":
-                                        value="%"+value+"%"
-                                sql_query += " {0} {1} '{2}' and ".format(key,comparison,value)
+                        sql_query += buildmultifilter(key,filtertype[key],country_filter_values)
                 sql_query = sql_query[:-4]
         if sortby in country_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -398,12 +401,7 @@ def db_select_streaming_servicev2(filtertype = None, pagesize = 25,pagenum = 0,s
         if len(filtertype)>0:
                 sql_query += "where "
                 for key in filtertype:
-                        value = filtertype[key][0]
-                        comparison = filtertype[key][1]
-                        if key in stream_filter_values and comparison in comparison_values:
-                                if comparison == "like":
-                                        value="%"+value+"%"
-                                sql_query += " {0} {1} '{2}' and ".format(key,comparison,value)
+                        sql_query += buildmultifilter(key,filtertype[key],stream_filter_values)
                 sql_query = sql_query[:-4]
         if sortby in stream_filter_values:
                 sql_query += "order by {0} {1} ".format(sortby,sortdir)
@@ -451,6 +449,24 @@ def db_select_stream_movie(stream_id):
         send_sql_query(sql_query)
         return format_db_reply("streammovie",get_sql_results())
 
+def db_search_movie(value):
+        global movie_filter_values
+        sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast,trailer_url,genres from streamit_omdb_movies where "
+        sql_query += " title ~* '{0}' or description ~* '{0}' or rating ~* '{0}' or release_date ~* '{0}' or movie_cast ~* '{0}' or genres ~* '{0}' ".format(value)
+        send_sql_query(sql_query)
+        return format_db_reply("movies",get_sql_results())
+def db_search_country(value):
+        global country_filter_values
+        sql_query = schema+"select country_id,name,population,languages,country_image_url,region,latitude,longitude from streamit_countries where "
+        sql_query += " name ~* '{0}' or languages ~* '{0}' or region ~* '{0}' or latitude ~* '{0}' or longitude ~* '{0}' ".format(value)
+        send_sql_query(sql_query)
+        return format_db_reply("countries",get_sql_results())
+def db_search_streaming(value):
+        global stream_filter_values
+        sql_query = schema+"select stream_id,name, pricing, available_countries,image_url,website_url from streamit_streaming_service where "
+        sql_query += " name ~* '{0}' ".format(value)
+        send_sql_query(sql_query)
+        return format_db_reply("streamingservices",get_sql_results())
 
 
 def db_select_person(filtertype = None, value = None, comparison = "="):
@@ -490,7 +506,7 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["image"]        = x[6]
                         out["data"][index]["movie_cast"]   = x[7]
                         out["data"][index]["trailer_url"]  = x[8]
-                        out["data"][index]["genre"]        = x[9]
+                        out["data"][index]["genres"]        = x[9]
                         index += 1
         elif typeofreply == "countries":
                 out["data_type"] ="countries"

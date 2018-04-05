@@ -85,6 +85,10 @@ def callmoviepopularityapiv2(movie_id):
 @app.route('/v2/movie/<int:movie_id>/streaming',subdomain="api",methods=['GET'])
 def callmoviestreamapiv2(movie_id):
     return v2.moviestreamapi(movie_id)
+@app.route('/v2/movie/search',subdomain="api",methods=['GET'])
+def callsearchmovie():
+    return v2.searchmovie()
+
 
 ### Country endpoint stuff
 @app.route('/v2/country',subdomain="api",methods=['GET'])
@@ -99,7 +103,9 @@ def callcountrystreamapiv2(country_id):
 @app.route('/v2/country/<int:country_id>/movie',subdomain="api",methods=['GET'])
 def callcountrymovieapiv2(country_id):
     return v2.countrymovieapi(country_id)
-
+@app.route('/v2/country/search',subdomain="api",methods=['GET'])
+def callsearchcountry():
+    return v2.searchcountry()
 
 ### Streaming service endpoint stuff
 @app.route('/v2/streaming_service',subdomain="api",methods=['GET'])
@@ -114,7 +120,9 @@ def callstreampopcountryapiv2(stream_id):
 @app.route('/v2/streaming_service/<int:stream_id>/movie',subdomain="api",methods=['GET'])
 def callstreammovieapiv2(stream_id):
     return v2.streammovieapi(stream_id)
-
+@app.route('/v2/streaming_service/search',subdomain="api",methods=['GET'])
+def callsearchstreaming():
+    return v2.searchstreaming()
 
 if __name__ == "__main__":
     #app.run(host='localhost', port=5000)#,ssl_context='adhoc')
