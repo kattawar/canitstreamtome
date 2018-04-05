@@ -10,6 +10,7 @@ import Countries from './components/Countries';
 import CountryInstance from './components/CountryInstance';
 import Bottom from './components/Footer';
 import About from './components/About';
+import Search from './components/Search';
 
 class App extends React.Component {
 
@@ -27,6 +28,7 @@ class App extends React.Component {
           <Route exact path="/streaming_service" component={Services} />
           <Route path="/streaming_service/:serviceID" component={ServiceInstance}/>
           <Route exact path="/about" component={About} />
+          <Route exact path="/search" component={Search} />
         </Switch>
         <Bottom />
       </div>

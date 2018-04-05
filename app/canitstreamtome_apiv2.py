@@ -32,7 +32,7 @@ def singlestreamingapi(stream_id):
     return jsonify(out)
 
 def getGeneralArgs():
-    return json.loads(request.args.get("filter",default=None)),int(request.args.get("pagesize",default=25)),int(request.args.get(
+    return json.loads(request.args.get("filter",default="{}")),int(request.args.get("pagesize",default=25)),int(request.args.get(
         "pagenum",default=0)),request.args.get("sortdir",default="asc")
 def movieapi():
     filtertype,pagesize,pagenum,sortdir = getGeneralArgs()
@@ -95,6 +95,26 @@ def countrymovieapi(country_id):
 ### Stream movie
 def streammovieapi(stream_id):
     out = database.db_select_stream_movie(stream_id)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+
+### Search methods
+def searchmovie():
+    val = request.args.get("value")
+    out = database.db_search_movie(val)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+def searchcountry():
+    val = request.args.get("value")
+    out = database.db_search_country(val)
+    if len(out) == 0:
+        abort(404)
+    return jsonify(out)
+def searchstreaming():
+    val = request.args.get("value")
+    out = database.db_search_streaming(val)
     if len(out) == 0:
         abort(404)
     return jsonify(out)

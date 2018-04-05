@@ -26,10 +26,9 @@ export class CountriesGrid extends React.Component {
       data: [],
       activePage: 1,
       selectedSort: '',
-      selectedOptionFilter: [],
+      selectedFilter: [],
       activeSort: 'name',
       activeDir: 'asc',
-      // activeFilter: '',
       activeFilters: [],
       realPage: 0
     };
@@ -48,94 +47,82 @@ export class CountriesGrid extends React.Component {
         case 'name_asc':
           sort = 'name'
           dir = 'asc'
-
           break;
         case 'name_desc':
           sort = 'name'
           dir = 'desc'
-
           break;
         case 'population_asc':
           sort = 'population'
           dir = 'asc'
-
           break;
         case 'population_desc':
           sort = 'population'
           dir = 'desc'
-
           break;
         default:
           console.log("HERE3");
-
       }
     } else {
       sort = 'name';
       dir = 'asc';
     }
-
-    this.setState({
-      activeDir: dir
-    }, function() {
-      this.setState({
-        activeSort: sort
-      }, function() {
+    this.setState({activeDir: dir}, function() {
+      this.setState({activeSort: sort}, function() {
         this.updateData();
       });
     });
-
     //  this.updateData();
   }
 
-  handleFilter = (selectedOptionFilter) => {
-    this.setState({selectedOptionFilter});
+  handleFilter = (selectedFilter) => {
+    this.setState({selectedFilter});
     var filters = [];
     var filter = '';
-
-    if (selectedOptionFilter) {
-        if(selectedOptionFilter.includes('English')) {
-          filter = '"languages":["English","like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('Spanish')) {
-          filter = '"languages":["Spanish","like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('Arabic')) {
-          filter = '"languages":["Arabic","like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('French')) {
-          filter = '"languages":["French","like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('Africa')) {
-          filter = '"languages":["Africa","like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('Americas')) {
-          filter = '"region":["Americas","like"]';
-          filters.push(filter);
-        }
-
-        if(selectedOptionFilter.includes('Asia')) {
-          filter = '"region":["Asia","like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('Europe')) {
-          filter = '"region": ["Europe", "like"]';
-          filters.push(filter);
-        }
-        if(selectedOptionFilter.includes('Oceania')) {
-          filter = '"region": ["Oceania", "like"]';
-          filters.push(filter);
-        }
+    if (selectedFilter) {
+      if (selectedFilter.includes('en')) {
+        filter = '"languages":["English","%3D"]'
+        filters.push(filter)
       }
+      if (selectedFilter.includes('sp')) {
+        filter = '"languages":["Spanish","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('ar')) {
+        filter = '"languages":["Arabic","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('fr')) {
+        filter = '"languages":["French","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('africa')) {
+        filter = '"region":["Africa","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('americas')) {
+        filter = '"region":["Americas","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('asia')) {
+        filter = '"region":["Asia","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('europe')) {
+        filter = '"region":["Europe","%3D"]'
+        filters.push(filter)
+      }
+      if (selectedFilter.includes('oceania')) {
+        filter = '"region":["Oceania","%3D"]'
+        filters.push(filter)
+      }
+    }
+
     this.setState({activeFilters: filters}, function() {
-      this.setState({activePage: 1});
-      this.setState({realPage: 0}, function() {
-        this.updateData();
-      });
+          this.setState({activePage: 1});
+          this.setState({realPage: 0}, function() {
+            this.updateData();
+          });
     });
   }
 
@@ -157,7 +144,6 @@ export class CountriesGrid extends React.Component {
       if (isFirst) {
         isFirst = false
       } else {
-        console.log("in else")
         filters = filters + ',' + this.state.activeFilters[filter]
       }
     }
@@ -165,8 +151,10 @@ export class CountriesGrid extends React.Component {
     if (filters === 'undefined') {
       filters = ""
     }
+    console.log(this.state.activeDir);
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
-    console.log(url);
+    //console.log(url);
+
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
@@ -181,9 +169,8 @@ export class CountriesGrid extends React.Component {
 
     const {selectedSort} = this.state;
     const valueSort = selectedSort && selectedSort.value;
-
-    const {selectedOptionFilter} = this.state;
-    const valueFilter = selectedOptionFilter;
+    const {selectedFilter} = this.state;
+    const valueFilter = selectedFilter;
     //6
     //1
     var totalItems = 130;
@@ -196,57 +183,45 @@ export class CountriesGrid extends React.Component {
       return (<div>
 
         <div className="col-sm-3"></div>
-
         <div className="row">
           <div className="col-sm-3">
-            <h4>
-              Sort By
-            </h4>
-            <Select name="form-field-name" value={valueSort} onChange={this.handleChange} options={[
-                {
-                  value: 'name_asc',
-                  label: 'Name: A-Z'
-                }, {
-                  value: 'name_desc',
-                  label: 'Name: Z-A'
-                }, {
-                  value: 'population_asc',
-                  label: 'Population: Low-High'
-                }, {
-                  value: 'population_desc',
-                  label: 'Population: High-Low'
-                }
+            <h4>Sort By</h4>
+            <Select
+              name="form-field-name"
+              value={valueSort}
+              onChange={this.handleChange}
+              options={[
+                {value: 'name_asc',label: 'Name: A-Z'},
+                {value: 'name_desc',label: 'Name: Z-A'},
+                {value: 'population_asc',label: 'Population: Low-High'},
+                {value: 'population_desc',label: 'Population: High-Low'}
               ]}/>
           </div>
-
           <div className="col-sm-3">
             <h4>Filter By</h4>
             <Select
-              name="form-field-name2"
+              name="form-field-name"
               multi={true}
               removeSelected={true}
-              onChange={this.handleFilter}
               simpleValue
               value={valueFilter}
+              onChange={this.handleFilter}
               options={[
-                {value: 'English', label: 'Language: English'},
-                {value: 'Spansh', label: 'Language: Spanish'},
-                {value: 'Arabic', label: 'Language: Arabic'},
-                {value: 'French', label: 'Language: French'},
-                {value: 'Africa', label: 'Region: Africa'},
-                {value: 'Americas', label: 'Region: Americas'},
-                {value: 'Asia', label: 'Region: Asia'},
-                {value: 'Europe', label: 'Region: Europe'},
-                {value: 'Oceania', label: 'Region: Oceania'}
+                {value: 'en',label: 'Language: English'},
+                {value: 'sp',label: 'Language: Spanish'},
+                {value: 'ar',label: 'Language: Arabic'},
+                {value: 'fr',label: 'Language: French'},
+                {value: 'africa',label: 'Region: Africa'},
+                {value: 'americas',label: 'Region: Americas'},
+                {value: 'asia',label: 'Region: Asia'},
+                {value: 'europe',label: 'Region: Europe'},
+                {value: 'oceania',label: 'Region: Oceania'}
               ]}/>
           </div>
           <div className="col-sm-2"></div>
-
         </div>
-
         <div className="country">
           <section>
-
             <div className="container">
               {
                 instanceRows.map(
@@ -279,19 +254,15 @@ export class CountriesGrid extends React.Component {
                     }
                   </div>)
               }
-
             </div>
-
           </section>
         </div>
-
         <div className="text-center">
           <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
       </div>);
     }
     return (<div></div>);
-
   }
 }
 
