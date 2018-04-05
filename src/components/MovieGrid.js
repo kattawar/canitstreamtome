@@ -7,6 +7,45 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
+const GENRE_FILTERS = [
+  {value: 'science', label: 'Genre: Science Fiction'},
+  {value: 'crime', label: 'Genre: Crime'},
+  {value: 'action', label: 'Genre: Action'},
+  {value: 'comedy', label: 'Genre: Comedy'},
+  {value: 'history', label: 'Genre: History'},
+  {value: 'drama', label: 'Genre: Drama'},
+  {value: 'war', label: 'Genre: War'},
+  {value: 'thriller', label: 'Genre: Thriller'}
+]
+
+const RATING_FILTERS = [
+  {value: 'rating_0_4', label: 'Rating 0 to 4'},
+  {value: 'rating_4_6', label: 'Rating 4 to 6'},
+  {value: 'rating_6_8', label: 'Rating 6 to 8'},
+  {value: 'rating_8_10', label: 'Rating 8 to 10'}
+]
+
+const RATING_FILTERS_DISABLED = [
+  {value: 'rating_0_4', label: 'Rating 0 to 4', disabled: true},
+  {value: 'rating_4_6', label: 'Rating 4 to 6', disabled: true},
+  {value: 'rating_6_8', label: 'Rating 6 to 8', disabled: true},
+  {value: 'rating_8_10', label: 'Rating 8 to 10', disabled: true}
+]
+
+const RELEASE_FILTERS = [
+  {value: 'release_pre_80', label: 'Release Date before 1980'},
+  {value: 'release_80_00', label: 'Realease Date 1980 to 2000'},
+  {value: 'release_00_10', label: 'Release Date 2000 to 2010'},
+  {value: 'release_10_now', label: 'Release Date after 2010'}
+]
+
+const RELEASE_FILTERS_DISABLED = [
+  {value: 'release_pre_80', label: 'Release Date before 1980', disabled: true},
+  {value: 'release_80_00', label: 'Realease Date 1980 to 2000', disabled: true},
+  {value: 'release_00_10', label: 'Release Date 2000 to 2010', disabled: true},
+  {value: 'release_10_now', label: 'Release Date after 2010', disabled: true}
+]
+
 function splitArray(input, spacing) {
   var output = [];
   for (var i = 0; i < input.length; i += spacing) {
@@ -28,9 +67,9 @@ export class MovieGrid extends React.Component {
         activeSort: 'title',
         activeDir: 'asc',
         activeFilters: [],
-        //activeValue: '',
-        //activeComparison: '',
-        realPage: 0
+        realPage: 0,
+        rating_selected: false,
+        release_selected: false
       };
       this.updateData();
     }
@@ -89,85 +128,127 @@ export class MovieGrid extends React.Component {
       console.log("FILTER");
       this.setState({selectedOptionFilter});
       var filters = [];
+      var genres = [];
       var filter = '';
+      var rating_selected = false
+      var release_selected = false
+
       if (selectedOptionFilter) {
         console.log(selectedOptionFilter)
           if (selectedOptionFilter.includes('science')) {
-            filter = '"genres":["Science Fiction","like"]';
-            filters.push(filter)
+            filter = '"Science Fiction","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('crime')) {
-            filter = '"genres":["Crime","like"]';
-            filters.push(filter)
+            filter = '"Crime","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('action')) {
-            filter = '"genres":["Action","like"]';
-            filters.push(filter)
+            filter = '"Action","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('comedy')) {
-            filter = '"genres":["Comedy","like"]';
-            filters.push(filter)
+            filter = '"Comedy","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('history')) {
-            filter = '"genres":["History","like"]';
-            filters.push(filter)
+            filter = '"History","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('drama')) {
-            filter = '"genres":["Drama","like"]';
-            filters.push(filter)
+            filter = '"Drama","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('war')) {
-            filter = '"genres":["War","like"]';
-            filters.push(filter)
+            filter = '"War","like"';
+            genres.push(filter)
           }
           if (selectedOptionFilter.includes('thriller')) {
-            filter = '"genres":["Thriller","like"]';
+            filter = '"Thriller","like"';
+            genres.push(filter)
+          }
+          if (selectedOptionFilter.includes('rating_0_4')) {
+            this.setState({rating_selected: true});
+            rating_selected = true
+            filter = '"rating":["0.0",">=","4.0","<="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('11')) {
-            filter = '"rating":["8",">="]';
+          if (selectedOptionFilter.includes('rating_4_6')) {
+            this.setState({rating_selected: true});
+            rating_selected = true
+            filter = '"rating":["4.0",">=","6.0","<="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('22')) {
-            filter = '"rating":["7",">="]';
+          if (selectedOptionFilter.includes('rating_6_8')) {
+            this.setState({rating_selected: true});
+            rating_selected = true
+            filter = '"rating":["6.0",">=","8.0","<="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('33')) {
-            filter = '"rating":["6",">="]';
+          if (selectedOptionFilter.includes('rating_8_10')) {
+            this.setState({rating_selected: true});
+            rating_selected = true
+            filter = '"rating":["8.0",">=","9.9","<="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('44')) {
-            filter = '"rating":["5",">="]';
+          if (selectedOptionFilter.includes('release_pre_80')) {
+            this.setState({release_selected: true});
+            release_selected = true
+            filter = '"release_date":["1980-01-01","<="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('55')) {
-            filter = '"rating":["4",">="]';
+          if (selectedOptionFilter.includes('release_80_00')) {
+            this.setState({release_selected: true});
+            release_selected = true
+            filter = '"release_date":["1980-01-01",">=","2000-01-01","<="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('66')) {
+          if (selectedOptionFilter.includes('release_00_10')) {
+            this.setState({release_selected: true});
+            release_selected = true
+            filter = '"release_date":["2000-01-01",">=","2010-01-01","<="]';
+            filters.push(filter)
+          }
+          if (selectedOptionFilter.includes('release_10_now')) {
+            this.setState({release_selected: true});
+            release_selected = true
             filter = '"release_date":["2010-01-01",">="]';
             filters.push(filter)
           }
-          if (selectedOptionFilter.includes('77')) {
-            filter = '"release_date":["2000-01-01",">="]';
-            filters.push(filter)
-          }
-          if (selectedOptionFilter.includes('88')) {
-            filter = '"release_date":["2000-01-01","<="]';
-            filters.push(filter)
-          }
-          if (selectedOptionFilter.includes('99')) {
-            filter = '"release_date":["1970-01-01","<="]';
-            filters.push(filter)
-          }
       }
+
+      if (genres.length > 0) {
+        var genre_filter = '"genres":[' + genres[0]
+        var isFirst = true
+        for (var genre in genres) {
+          if (isFirst) {
+            isFirst = false
+          } else {
+            genre_filter = genre_filter + ',' + genres[genre]
+          }
+        }
+        genre_filter = genre_filter + ']'
+        filters.push(genre_filter)
+      }
+
       console.log(filters)
+      if (!release_selected) {
+        this.setState({release_selected: false});
+      }
+      if (!rating_selected) {
+        this.setState({rating_selected: false});
+      }
+
       this.setState({activeFilters: filters}, function() {
             this.setState({activePage: 1});
             this.setState({realPage: 0}, function() {
               this.updateData();
             });
       });
+    }
+
+    updateOptions = () => {
+
     }
 
     handlePageChange = (pageNumber) => {
@@ -216,6 +297,23 @@ export class MovieGrid extends React.Component {
         const {selectedOptionFilter} = this.state;
         const valueFilter = selectedOptionFilter;
 
+        var create_options = GENRE_FILTERS
+        if (this.state.rating_selected) {
+          create_options = create_options.concat(RATING_FILTERS_DISABLED)
+        } else {
+          create_options = create_options.concat(RATING_FILTERS)
+        }
+        if (this.state.release_selected) {
+          create_options = create_options.concat(RELEASE_FILTERS_DISABLED)
+        } else {
+          create_options = create_options.concat(RELEASE_FILTERS)
+        }
+        console.log(this.state.rating_selected)
+        console.log(this.state.release_selected)
+        console.log(create_options)
+
+        const options = create_options
+
         var totalItems = 1120;
 
         if (this.state.data.data) {
@@ -252,25 +350,8 @@ export class MovieGrid extends React.Component {
                   onChange={this.handleFilterChange}
                   simpleValue
                   value={valueFilter}
-                  options={
-                    [{value: 'science', label: 'Genre: Science Fiction'},
-                    {value: 'crime', label: 'Genre: Crime'},
-                    {value: 'action', label: 'Genre: Action'},
-                    {value: 'comedy', label: 'Genre: Comedy'},
-                    {value: 'history', label: 'Genre: History'},
-                    {value: 'drama', label: 'Genre: Drama'},
-                    {value: 'war', label: 'Genre: War'},
-                    {value: 'thriller', label: 'Genre: Thriller'},
-                    {value: '11', label: 'Rating > 8'},
-                    {value: '22', label: 'Rating > 7'},
-                    {value: '33', label: 'Rating > 6'},
-                    {value: '44', label: 'Rating > 5'},
-                    {value: '55', label: 'Rating > 4'},
-                    {value: '66', label: 'Release Date > 2010'},
-                    {value: '77', label: 'Realease Date > 2000'},
-                    {value: '88', label: 'Release Date < 2000'},
-                    {value: '99', label: 'Release Date < 1970'}]
-                  }/>
+                  options={options}
+                />
               </div>
               <div className="col-sm-2">
               </div>
