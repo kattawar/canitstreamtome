@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormGroup, FormControl } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class SearchBar extends React.Component {
   constructor(props, context) {
@@ -10,30 +10,36 @@ class SearchBar extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+}
+
+handleChange = (eventKey) => {
+  this.setState({input: eventKey.target.value});
 }
 
   handleSubmit = (eventKey) => {
       eventKey.preventDefault();
-      //var endPoint = this.state.input;
-      //this.props.history.push("/search?q=" + endPoint);
+      var endPoint = this.state.input;
+      this.props.history.push("/search?value=" + endPoint);
   };
 
   render() {
   	return (
       <div>
-        //<form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <FormGroup>
-            <FormControl type="text" placeholder="Search" />
+            <FormControl
+              type="text"
+              value={this.state.input}
+              placeholder="Search"
+              onChange={this.handleChange}
+              />
+
           </FormGroup>{' '}
-          <Link to={{pathname: `/search`}}>
-          <button className="btn btn-default" type="submit">
-            <i className="glyphicon glyphicon-search"/>
-          </button>
-          </Link>
-        //</form>
+        </form>
       </div>
     );
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);
