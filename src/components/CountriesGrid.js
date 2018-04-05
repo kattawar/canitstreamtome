@@ -87,7 +87,7 @@ export class CountriesGrid extends React.Component {
           dir = 'desc'
           break;
         default:
-          console.log("HERE3");
+          console.log("default");
       }
     } else {
       sort = 'name';
@@ -207,11 +207,11 @@ export class CountriesGrid extends React.Component {
         filters = filters + ',' + this.state.activeFilters[filter]
       }
     }
-    console.log(filters);
     if (filters === 'undefined') {
       filters = ""
     }
-    console.log(this.state.activeDir);
+
+    //console.log(this.state.activeDir);
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
