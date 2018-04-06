@@ -111,7 +111,7 @@ class About extends React.Component {
               <p>Major Responsibilities: Front-End CSS & HTML</p>
               <p>No. Commits: {this.state.erin_commits}</p>
               <p>No. Issues: {this.state.erin_issues}</p>
-              <p>No. Unit Tests: 21</p>
+              <p>No. Unit Tests: 25</p>
             </div>
             <div className="col-sm-4">
               <img className="img-responsive" src={nick_hs} alt=""></img>
@@ -129,7 +129,7 @@ class About extends React.Component {
               <p>Major Responsibilities: Front End/React</p>
               <p>No. Commits: {this.state.kevin_commits}</p>
               <p>No. Issues: {this.state.kevin_issues}</p>
-              <p>No. Unit Tests: 0</p>
+              <p>No. Unit Tests: 2</p>
             </div>
 
           </div>

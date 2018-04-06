@@ -39,12 +39,6 @@ describe('Test NavBar', () => {
 	})
 })
 
-describe('Test SearchBar', () => {
-	it ('exists', () => {
-		expect(shallow(<SearchBar />).find('form').length).to.equal(0)
-	})
-})
-
 describe('Test Footer', () => {
 	it ('contains footer', () => {
 		expect(shallow(< Bottom/>).find('footer').hasClass('py-5 bg-black')).to.equal(true);
@@ -92,5 +86,11 @@ describe('Test About', () => {
 		expect(shallow(<About />).contains('Kevin Salcedo')).to.equal(true);
 		expect(shallow(<About />).contains('Zach Kattawar')).to.equal(true);
 		expect(shallow(<About />).contains('Jordan Howe')).to.equal(true);
+	})
+})
+
+describe('Test SearchBar', () => {
+	it ('contains form group', () => {
+		expect(shallow(<SearchBar />).find('FormGroup').length).to.equal(0);
 	})
 })
