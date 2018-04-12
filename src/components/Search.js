@@ -166,10 +166,7 @@ class Search extends React.Component {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
                           <Link to={{
-                              pathname: `/movie/${item.name}`,
-                              state: {
-                                item: item.id
-                              }
+                              pathname: `/movie/${item.id}`
                             }}>
                             <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
@@ -221,10 +218,7 @@ class Search extends React.Component {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
                           <Link to={{
-                              pathname: `/country/${item.name}`,
-                              state: {
-                                item: item.id
-                              }
+                              pathname: `/country/${item.id}`
                             }}>
                             <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
@@ -270,10 +264,7 @@ class Search extends React.Component {
                       rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
                         <div className="card">
                           <Link to={{
-                              pathname: `/streaming_service/${item.name}`,
-                              state: {
-                                item: item.id
-                              }
+                              pathname: `/streaming_service/${item.id}`
                             }}>
                             <h2 className="display-3">
                               <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
