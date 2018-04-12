@@ -76,10 +76,7 @@ class MovieInstance extends React.Component {
                   {
                     this.state.rankings.map(item => <li>
                       <Link to={{
-                          pathname: `/country/${item.country}`,
-                          state: {
-                            item: item.id
-                          }
+                          pathname: `/country/${item.id}`
                         }}>{item.country}</Link>
                     </li>)
                   }
@@ -98,10 +95,7 @@ class MovieInstance extends React.Component {
                 {
                   this.state.streaming.map(item => <li>
                     <Link to={{
-                        pathname: `/streaming_service/${item.name}`,
-                        state: {
-                          item: item.id
-                        }
+                        pathname: `/streaming_service/${item.id}`
                       }}>{item.name}</Link>
                   </li>)
                 }
