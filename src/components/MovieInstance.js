@@ -13,7 +13,7 @@ class MovieInstance extends React.Component {
   }
 
   componentDidMount() {
-    const movie = this.props.location.state.item;
+    const movie = (this.props.location.pathname).split("/movie/").pop();
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/${movie}`;
     if (movie) {
       axios.get(url).then(res => {

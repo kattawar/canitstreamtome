@@ -12,12 +12,10 @@ class CountryInstance extends React.Component {
   }
 
   componentDidMount() {
-    const country = this.props.location.state.item;
+    let country = (this.props.location.pathname).split("/country/").pop();
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/${country}`;
-    console.log(country);
     if (country) {
       axios.get(url).then(res => {
-        console.log(res);
         this.setState({countryItem: res.data.data[0]});
       });
       let movieUrl = url + '/movie';
@@ -34,23 +32,17 @@ class CountryInstance extends React.Component {
   }
 
   numberWithCommas = (x) => {
-    console.log(x)
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   render() {
 
-    console.log(this.state.movies);
     const pop = Number(this.state.countryItem.population);
     let x = pop.toLocaleString()
 
     const lat1 = Number(this.state.countryItem.latitude);
     const long1 =Number(this.state.countryItem.longitude);
-    //lat1 = 50.0;
-    //long1 = 50.0;
-    console.log(lat1);
 
-    //console.log(String(pop.numberWithCommas));
 if(this.state.countryItem.latitude){
     return (<div className="container">
       <div className="row">

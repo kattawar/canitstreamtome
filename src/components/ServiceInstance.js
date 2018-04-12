@@ -11,7 +11,7 @@ class ServiceInstance extends React.Component {
   }
 
   componentDidMount() {
-    const service = this.props.location.state.item;
+    const service = (this.props.location.pathname).split("/streaming_service/").pop();
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/${service}`;
     if (service) {
       axios.get(url).then(res => {

@@ -300,10 +300,7 @@ export class CountriesGrid extends React.Component {
                             {item.languages}<br/>
                           </Popover>}>
                           <Link to={{
-                              pathname: `/country/${item.name}`,
-                              state: {
-                                item: item.id
-                              }
+                              pathname: `/country/${item.id}`
                             }}>
                             <div className="card">
                               <img src={item.image} alt=""/>
