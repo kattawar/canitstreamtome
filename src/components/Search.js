@@ -69,7 +69,7 @@ class Search extends React.Component {
     const newSearch = newPhrase.split('=').pop();
     const {searchCriteria} = this.state;
     if (searchCriteria !== newSearch) {
-      this.setState({queries:splitSearch(newSearch)});
+      this.setState({queries: splitSearch(newSearch)});
       this.setState({
         searchCriteria: newSearch
       }, function() {
@@ -145,151 +145,172 @@ class Search extends React.Component {
     const {movieResult, countryResult, streamResult} = this.state;
 
     // If any results are returned, then render the results page
-    if (movieResult.length >= 0 && countryResult.length >= 0 && streamResult.length >= 0) {
+    if (movieResult.length > 0 || countryResult.length > 0 || streamResult.length > 0) {
 
       let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage);
       let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage);
       let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage);
 
       return (<div>
-        <h1 align='center'>Movies</h1>
         <section>
           <div className="container">
             {
               movieResult.length === 0
-                ? <h2 align='center'>Sorry, nothing here!</h2>
-                : movies.map(
-                  rowList => !rowList
-                  ? null
-                  : <div className="row">
-                    {
-                      rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
-                        <div className="card">
-                          <Link to={{
-                              pathname: `/movie/${item.id}`
-                            }}>
-                            <h2 className="display-3">
-                              <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
-                            </h2>
-                            <hr/>
-                            <div className="col-sm-3">
-                              <img className="img-responsive" src={item.image} alt=""/>
-                            </div>
-                          </Link>
-                          <div className="col-sm-9">
-                            <h4>Release Date</h4>
-                            <p><Highlighter highlightClassName="releaseHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.release_date}/></p>
-                            <hr/>
-                            <h4>Rating</h4>
-                            <p><Highlighter highlightClassName="ratingHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.rating}/></p>
-                            <hr/>
-                          </div>
-                          <div className="col-sm-12">
-                          <h4>Genre</h4>
-                          <p><Highlighter highlightClassName="genresHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.genres}/></p>
-                          <hr/>
-                          <h4>Description</h4>
-                          <p><Highlighter highlightClassName="descriptionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.description}/></p>
-                          <hr/>
-                          <h4>Cast</h4>
-                          <p><Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/></p>
-                          </div>
-                        </div>
-                      </div>)
-                    }
-                  </div>)
+                ? null
+                : <div>
+                    <h1 align='center'>Movies</h1>
+                    <section>
+                      {
+                        movies.map(
+                          rowList => !rowList
+                          ? null
+                          : <div className="row">
+                            {
+                              rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                                <div className="card">
+                                  <Link to={{
+                                      pathname: `/movie/${item.id}`
+                                    }}>
+                                    <h2 className="display-3">
+                                      <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
+                                    </h2>
+                                    <hr/>
+                                    <div className="col-sm-3">
+                                      <img className="img-responsive" src={item.image} alt=""/>
+                                    </div>
+                                  </Link>
+                                  <div className="col-sm-9">
+                                    <h4>Release Date</h4>
+                                    <p><Highlighter highlightClassName="releaseHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.release_date}/></p>
+                                    <hr/>
+                                    <h4>Rating</h4>
+                                    <p><Highlighter highlightClassName="ratingHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.rating}/></p>
+                                    <hr/>
+                                  </div>
+                                  <div className="col-sm-12">
+                                    <h4>Genre</h4>
+                                    <p><Highlighter highlightClassName="genresHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.genres}/></p>
+                                    <hr/>
+                                    <h4>Description</h4>
+                                    <p><Highlighter highlightClassName="descriptionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.description}/></p>
+                                    <hr/>
+                                    <h4>Cast</h4>
+                                    <p><Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/></p>
+                                  </div>
+                                </div>
+                              </div>)
+                            }
+                          </div>)
+                      }
+                    </section>
+                    <div className="text-center">
+                      <Pagination activePage={this.state.activeMoviePage} itemsCountPerPage={3} totalItemsCount={movieResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeMovie}/>
+                    </div>
+                  </div>
             }
           </div>
         </section>
-        <div className="text-center">
-          <Pagination activePage={this.state.activeMoviePage} itemsCountPerPage={3} totalItemsCount={movieResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeMovie}/>
-        </div>
-        <h1 align='center'>Countries</h1>
+
         <section>
           <div className="container">
             {
               countryResult.length === 0
-                ? <h2 align='center'>Sorry, nothing here!</h2>
-                : countries.map(
-                  rowList => !rowList
-                  ? null
-                  : <div className="row">
-                    {
-                      rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
-                        <div className="card">
-                          <Link to={{
-                              pathname: `/country/${item.id}`
-                            }}>
-                            <h2 className="display-3">
-                              <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
-                            </h2>
-                            <hr/>
-                            <div className="col-sm-4">
-                              <img className="img-responsive" src={item.image} alt=""/>
-                            </div>
-                          </Link>
-                          <div className="col-sm-8">
-                            <h4>Population</h4>
-                            <p><Highlighter highlightClassName="populationHighlight" searchWords={queries} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/></p>
-                            <hr/>
-                          </div>
-                          <div className="col-sm-12">
-                          <h4>Region</h4>
-                          <p><Highlighter highlightClassName="regionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.region}/></p>
-                          <hr/>
-                          <h4>Spoken Languages</h4>
-                          <p><Highlighter highlightClassName="languageHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.languages}/></p>
-                          </div>
-                        </div>
-                      </div>)
-                    }
-                  </div>)
+                ? null
+                : <div>
+                    <h1 align='center'>Countries</h1>
+                    <section>
+                      {
+                        countries.map(
+                          rowList => !rowList
+                          ? null
+                          : <div className="row">
+                            {
+                              rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                                <div className="card">
+                                  <Link to={{
+                                      pathname: `/country/${item.id}`
+                                    }}>
+                                    <h2 className="display-3">
+                                      <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
+                                    </h2>
+                                    <hr/>
+                                    <div className="col-sm-4">
+                                      <img className="img-responsive" src={item.image} alt=""/>
+                                    </div>
+                                  </Link>
+                                  <div className="col-sm-8">
+                                    <h4>Population</h4>
+                                    <p><Highlighter highlightClassName="populationHighlight" searchWords={queries} autoEscape={true} textToHighlight={Number(item.population).toLocaleString()}/></p>
+                                    <hr/>
+                                  </div>
+                                  <div className="col-sm-12">
+                                    <h4>Region</h4>
+                                    <p><Highlighter highlightClassName="regionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.region}/></p>
+                                    <hr/>
+                                    <h4>Spoken Languages</h4>
+                                    <p><Highlighter highlightClassName="languageHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.languages}/></p>
+                                  </div>
+                                </div>
+                              </div>)
+                            }
+                          </div>)
+                      }
+                    </section>
+                    <div className="text-center">
+                      <Pagination activePage={this.state.activeCountryPage} itemsCountPerPage={3} totalItemsCount={countryResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeCountry}/>
+                    </div>
+                  </div>
             }
           </div>
         </section>
-        <div className="text-center">
-          <Pagination activePage={this.state.activeCountryPage} itemsCountPerPage={3} totalItemsCount={countryResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeCountry}/>
-        </div>
-        <h1 align='center'>Streaming Services</h1>
+
         <section>
           <div className="container">
             {
               streamResult.length === 0
-                ? <h2 align='center'>Sorry, nothing here!</h2>
-                : services.map(
-                  rowList => !rowList
-                  ? null
-                  : <div className="row">
-                    {
-                      rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
-                        <div className="card">
-                          <Link to={{
-                              pathname: `/streaming_service/${item.id}`
-                            }}>
-                            <h2 className="display-3">
-                              <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
-                            </h2>
-                            <hr/>
-                            <div className="col-sm-3">
-                              <img className="img-responsive" src={item.image} alt=""/>
-                            </div>
-                          </Link>
-                          <div className="col-sm-9">
-                            <h4>URL</h4>
-                            <p>
-                              <a href={item.website}>{item.website}</a>
-                            </p>
-                          </div>
-                        </div>
-                      </div>)
-                    }
-                  </div>)
+                ? null
+                : <div>
+                    <h1 align='center'>Streaming Services</h1>
+                    <section>
+                      {
+                        services.map(
+                          rowList => !rowList
+                          ? null
+                          : <div className="row">
+                            {
+                              rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                                <div className="card">
+                                  <Link to={{
+                                      pathname: `/streaming_service/${item.id}`
+                                    }}>
+                                    <h2 className="display-3">
+                                      <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
+                                    </h2>
+                                    <hr/>
+                                    <div className="col-sm-3">
+                                      <img className="img-responsive" src={item.image} alt=""/>
+                                    </div>
+                                  </Link>
+                                  <div className="col-sm-9">
+                                    <h4>URL</h4>
+                                    <p>
+                                      <a href={item.website}>{item.website}</a>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>)
+                            }
+                          </div>)
+                      }
+                    </section>
+                    <div className="text-center">
+                      <Pagination activePage={this.state.activeStreamPage} itemsCountPerPage={3} totalItemsCount={streamResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeStream}/>
+                    </div>
+                  </div>
             }
           </div>
         </section>
-        <div className="text-center">
-          <Pagination activePage={this.state.activeStreamPage} itemsCountPerPage={3} totalItemsCount={streamResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeStream}/>
-        </div>
+
       </div>);
     }
     // If there are no results, then let the user know
