@@ -69,7 +69,7 @@ class MovieInstance extends React.Component {
           <div className="col-sm-6">
           <div className="card">
             <div className="col-sm-12">
-              <h3>Popular Countries</h3>
+              <h3>Top Trending In</h3>
               <hr></hr>
               <p>
                 <ol>

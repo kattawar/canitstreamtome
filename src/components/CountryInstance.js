@@ -96,7 +96,7 @@ if(this.state.countryItem.latitude){
         <div className="col-sm-6">
         <div className="card">
           <div className="col-sm-12">
-            <h3>Top Movies</h3>
+            <h3>Top Trending Movies</h3>
             <hr></hr>
             <p>
               <ol>
