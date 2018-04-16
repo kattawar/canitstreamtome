@@ -151,11 +151,12 @@ class Search extends React.Component {
                           : <div className="row">
                             {
                               rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                              <div className="movieSearch">
                                 <div className="card">
                                   <Link to={{
                                       pathname: `/movie/${item.id}`
                                     }}>
-                                    <h2 className="display-3">
+                                    <h2 className="display-1">
                                       <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                                     </h2>
                                     <hr/>
@@ -181,6 +182,7 @@ class Search extends React.Component {
                                     <h4>Cast</h4>
                                     <p><Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/></p>
                                   </div>
+                                </div>
                                 </div>
                               </div>)
                             }
