@@ -131,10 +131,10 @@ class Search extends React.Component {
     // If any results are returned, then render the results page
     if (movieResult.length > 0 || countryResult.length > 0 || streamResult.length > 0) {
 
-      let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage);
-      let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage);
-      let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage);
-
+      let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage+1);
+      let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage+1);
+      let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage+1);
+      console.log(movies);
       return (<div>
         <section>
           <div className="container">
@@ -188,7 +188,7 @@ class Search extends React.Component {
                       }
                     </section>
                     <div className="text-center">
-                      <Pagination activePage={this.state.activeMoviePage} itemsCountPerPage={3} totalItemsCount={movieResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeMovie}/>
+                      <Pagination activePage={this.state.activeMoviePage} itemsCountPerPage={6} totalItemsCount={movieResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeMovie}/>
                     </div>
                   </div>
             }
@@ -241,7 +241,7 @@ class Search extends React.Component {
                       }
                     </section>
                     <div className="text-center">
-                      <Pagination activePage={this.state.activeCountryPage} itemsCountPerPage={3} totalItemsCount={countryResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeCountry}/>
+                      <Pagination activePage={this.state.activeCountryPage} itemsCountPerPage={6} totalItemsCount={countryResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeCountry}/>
                     </div>
                   </div>
             }
@@ -288,7 +288,7 @@ class Search extends React.Component {
                       }
                     </section>
                     <div className="text-center">
-                      <Pagination activePage={this.state.activeStreamPage} itemsCountPerPage={3} totalItemsCount={streamResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeStream}/>
+                      <Pagination activePage={this.state.activeStreamPage} itemsCountPerPage={6} totalItemsCount={streamResult.length} pageRangeDisplayed={5} onChange={this.handlePageChangeStream}/>
                     </div>
                   </div>
             }
