@@ -1,8 +1,8 @@
 # Makefile specification
 # ----------------------
 
-GithubID = kattawar
-RepoName = canitstreamtome
+#GithubID = kattawar
+#RepoName = canitstreamtome
 
 
 # The Makefile should be present in the root of the project.
@@ -29,8 +29,8 @@ selenium:
 	python frontend/guitests.py
 
 # make frontend - runs frontend tests
-frontend:
-	npm test
+mocha:
+	@(cd frontend; npm test)
 
 # make backend  - runs backend tests
 backend:
