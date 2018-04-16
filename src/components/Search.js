@@ -1,25 +1,11 @@
 import React from 'react';
 import '../about.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import Highlighter from 'react-highlight-words';
+import { splitArray, splitSearch } from './Utilities.js';
 
-function splitArray(input, spacing) {
-  var output = [];
-
-  for (var i = 0; i < input.length; i += spacing) {
-    output[output.length] = input.slice(i, i + spacing);
-  }
-
-  return output;
-}
-
-function splitSearch(criteria) {
-  let queries = criteria.split(/( or )|(%20or%20)/);
-  queries = queries.filter(e => e !== undefined).filter(e => e !== " or ").filter(e => e !== "%20or%20");
-  return queries;
-}
 
 class Search extends React.Component {
   constructor(props) {
@@ -139,9 +125,7 @@ class Search extends React.Component {
 
   render() {
     // Grab the returned results
-    //const {movieResult, countryResult, streamResult} = this.state;
     const {queries} = this.state;
-    console.log(queries);
     const {movieResult, countryResult, streamResult} = this.state;
 
     // If any results are returned, then render the results page

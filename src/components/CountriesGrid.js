@@ -6,6 +6,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { splitArray } from './Utilities';
 
 const LANG_FILTERS = [
   {value: 'english',label: 'Language: English'},
@@ -31,16 +32,6 @@ const REGION_FILTERS_DISABLED = [
   {value: 'europe',label: 'Region: Europe',disabled: true},
   {value: 'oceania',label: 'Region: Oceania',disabled: true}
 ]
-
-function splitArray(input, spacing) {
-  var output = [];
-
-  for (var i = 0; i < input.length; i += spacing) {
-    output[output.length] = input.slice(i, i + spacing);
-  }
-
-  return output;
-}
 
 export class CountriesGrid extends React.Component {
 
@@ -98,7 +89,6 @@ export class CountriesGrid extends React.Component {
         this.updateData();
       });
     });
-    //  this.updateData();
   }
 
   handleFilter = (selectedFilter) => {
@@ -211,9 +201,7 @@ export class CountriesGrid extends React.Component {
       filters = ""
     }
 
-    //console.log(this.state.activeDir);
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
-    //console.log(url);
 
     axios.get(url).then(res => {
       const instanceList = res.data;

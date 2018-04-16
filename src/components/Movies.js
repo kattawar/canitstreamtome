@@ -3,13 +3,6 @@ import { MovieGrid } from './MovieGrid';
 
 
 class Movies extends React.Component {
-
-
-
-	render() {
-
-		 return (<MovieGrid/>);
-	}
+	render() { return (<MovieGrid/>); }
 }
-
 export default Movies;

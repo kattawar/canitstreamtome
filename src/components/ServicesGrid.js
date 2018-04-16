@@ -1,21 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../movies.css';
 import Pagination from "react-js-pagination";
 import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-
-function splitArray(input, spacing) {
-  var output = [];
-
-  for (var i = 0; i < input.length; i += spacing) {
-    output[output.length] = input.slice(i, i + spacing);
-  }
-
-  return output;
-}
+import { splitArray } from './Utilities'
 
 export class ServicesGrid extends React.Component {
 
@@ -59,7 +50,6 @@ export class ServicesGrid extends React.Component {
           });
         });
       }
-    //  this.updateData();
   }
 
   handleFilter = (selectedOptionFilter) => {
@@ -110,12 +100,10 @@ export class ServicesGrid extends React.Component {
             console.log("default");
         }
         this.setState({data: data}, function () {
-          //this.updateDataFilt();
         });
       } else {
         this.setState({data: this.state.unfilteredData}, function () {});
       }
-    //  this.updateData();
   }
 
   handlePageChange = (pageNumber) => {
@@ -128,9 +116,7 @@ export class ServicesGrid extends React.Component {
   }
 
   updateData = () => {
-    //console.log(this.state.activeDir);
     let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
-    //console.log(url);
 
     axios.get(url).then(res => {
       const instanceList = res.data;
@@ -151,16 +137,13 @@ export class ServicesGrid extends React.Component {
 
     const { selectedOptionFilter } = this.state;
     const valueFilter = selectedOptionFilter && selectedOptionFilter.value;
-    //6
-    //1
+
     var totalItems = 24;
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
 
       const instanceRows = splitArray(instanceGrouped, 6);
-
-      //console.log(this.state.data.data);
 
       return (<div>
 
