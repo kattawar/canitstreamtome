@@ -62,6 +62,9 @@ class MovieInstance extends React.Component {
               <hr></hr>
               <h4>Cast</h4>
               <p>{this.state.movieItem.movie_cast}</p>
+              <hr></hr>
+              <h4>Trailer Link</h4>
+              <p><a href={this.state.movieItem.trailer_url}>{this.state.movieItem.trailer_url}</a></p>
             </div>
           </div>
         </div>
