@@ -6,6 +6,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { splitArray } from './Utilities';
 
 const GENRE_FILTERS = [
   {value: 'science', label: 'Genre: Science Fiction'},
@@ -45,14 +46,6 @@ const RELEASE_FILTERS_DISABLED = [
   {value: 'release_00_10', label: 'Release Date 2000 to 2010', disabled: true},
   {value: 'release_10_now', label: 'Release Date after 2010', disabled: true}
 ]
-
-function splitArray(input, spacing) {
-  var output = [];
-  for (var i = 0; i < input.length; i += spacing) {
-    output[output.length] = input.slice(i, i + spacing);
-  }
-  return output;
-}
 
 export class MovieGrid extends React.Component {
 
@@ -121,7 +114,6 @@ export class MovieGrid extends React.Component {
           });
         });
       });
-      //  this.updateData();
     }
 
     handleFilterChange = (selectedOptionFilter) => {
@@ -245,7 +237,7 @@ export class MovieGrid extends React.Component {
     }
 
     handlePageChange = (pageNumber) => {
-      //console.log(`active page is ${pageNumber}`);
+      console.log(`active page is ${pageNumber}`);
       this.setState({
         activePage: pageNumber
       });
@@ -271,7 +263,6 @@ export class MovieGrid extends React.Component {
       }
 
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
-      //console.log(url);
       axios.get(url).then(res => {
         const instanceList = res.data;
         this.setState({

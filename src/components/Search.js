@@ -1,10 +1,10 @@
 import React from 'react';
 import '../about.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import Highlighter from 'react-highlight-words';
-import {splitArray, splitSearch} from './Utilities.js';
+import { splitArray, splitSearch } from './Utilities.js';
 
 
 class Search extends React.Component {
