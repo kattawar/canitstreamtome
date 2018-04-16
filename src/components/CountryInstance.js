@@ -12,12 +12,10 @@ class CountryInstance extends React.Component {
   }
 
   componentDidMount() {
-    const country = this.props.location.state.item;
+    let country = (this.props.location.pathname).split("/country/").pop();
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/${country}`;
-    console.log(country);
     if (country) {
       axios.get(url).then(res => {
-        console.log(res);
         this.setState({countryItem: res.data.data[0]});
       });
       let movieUrl = url + '/movie';
@@ -34,23 +32,17 @@ class CountryInstance extends React.Component {
   }
 
   numberWithCommas = (x) => {
-    console.log(x)
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   render() {
 
-    console.log(this.state.movies);
     const pop = Number(this.state.countryItem.population);
     let x = pop.toLocaleString()
 
     const lat1 = Number(this.state.countryItem.latitude);
     const long1 =Number(this.state.countryItem.longitude);
-    //lat1 = 50.0;
-    //long1 = 50.0;
-    console.log(lat1);
 
-    //console.log(String(pop.numberWithCommas));
 if(this.state.countryItem.latitude){
     return (<div className="container">
       <div className="row">
@@ -92,10 +84,7 @@ if(this.state.countryItem.latitude){
                 </li> :
                   this.state.streamranks.map(item => <li>
                     <Link to={{
-                        pathname: `/streaming_service/${item.name}`,
-                        state: {
-                          item: item.id
-                        }
+                        pathname: `/streaming_service/${item.id}`
                       }}>{item.name}</Link>
                   </li>)
                 }
@@ -107,17 +96,14 @@ if(this.state.countryItem.latitude){
         <div className="col-sm-6">
         <div className="card">
           <div className="col-sm-12">
-            <h3>Top Movies</h3>
+            <h3>Top Trending Movies</h3>
             <hr></hr>
             <p>
               <ol>
                 {
                   this.state.movieranks.length === 0 ? null : this.state.movieranks.slice(0, 10).map(item => <li>
                     <Link to={{
-                        pathname: `/movie/${item.name}`,
-                        state: {
-                          item: item.id
-                        }
+                        pathname: `/movie/${item.id}`
                       }}>{item.name}</Link>
                   </li>)
                 }

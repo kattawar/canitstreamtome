@@ -13,7 +13,7 @@ class MovieInstance extends React.Component {
   }
 
   componentDidMount() {
-    const movie = this.props.location.state.item;
+    const movie = (this.props.location.pathname).split("/movie/").pop();
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/${movie}`;
     if (movie) {
       axios.get(url).then(res => {
@@ -69,17 +69,14 @@ class MovieInstance extends React.Component {
           <div className="col-sm-6">
           <div className="card">
             <div className="col-sm-12">
-              <h3>Popular Countries</h3>
+              <h3>Top Trending In</h3>
               <hr></hr>
               <p>
                 <ol>
                   {
                     this.state.rankings.map(item => <li>
                       <Link to={{
-                          pathname: `/country/${item.country}`,
-                          state: {
-                            item: item.id
-                          }
+                          pathname: `/country/${item.id}`
                         }}>{item.country}</Link>
                     </li>)
                   }
@@ -98,10 +95,7 @@ class MovieInstance extends React.Component {
                 {
                   this.state.streaming.map(item => <li>
                     <Link to={{
-                        pathname: `/streaming_service/${item.name}`,
-                        state: {
-                          item: item.id
-                        }
+                        pathname: `/streaming_service/${item.id}`
                       }}>{item.name}</Link>
                   </li>)
                 }

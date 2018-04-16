@@ -11,7 +11,7 @@ class ServiceInstance extends React.Component {
   }
 
   componentDidMount() {
-    const service = this.props.location.state.item;
+    const service = (this.props.location.pathname).split("/streaming_service/").pop();
     let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/${service}`;
     if (service) {
       axios.get(url).then(res => {
@@ -78,10 +78,7 @@ class ServiceInstance extends React.Component {
                 {
                   this.state.rankings.map(item => <li>
                     <Link to={{
-                        pathname: `/country/${item.country}`,
-                        state: {
-                          item: item.id
-                        }
+                        pathname: `/country/${item.id}`
                       }}>{item.country}</Link>
                   </li>)
                 }
@@ -100,10 +97,7 @@ class ServiceInstance extends React.Component {
                 {
                   this.state.movies.slice(0,10).map(item => <li>
                     <Link to={{
-                        pathname: `/movie/${item.name}`,
-                        state: {
-                          item: item.id
-                        }
+                        pathname: `/movie/${item.id}`
                       }}>{item.name}</Link>
                   </li>)
                 }

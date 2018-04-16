@@ -222,8 +222,7 @@ export class ServicesGrid extends React.Component {
                             </ul>
                           </Popover>}>
                           <Link to={{
-                              pathname: `/streaming_service/${item.name}`,
-                              state: { item: item.id }
+                              pathname: `/streaming_service/${item.id}`
                             }}>
                             <div className="card">
                               <img src={item.image} alt=""/>
