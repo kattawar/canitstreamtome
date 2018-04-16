@@ -28,7 +28,7 @@ uml:
 # make selenium - runs selenium tests
 selenium:
 	pip install selenium;
-	python frontend/guitests.py
+	python3 frontend/guitests.py
 
 # make frontend - runs frontend tests
 frontend:

@@ -116,7 +116,7 @@ export class ServicesGrid extends React.Component {
   }
 
   updateData = () => {
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?pagesize=18&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
 
     axios.get(url).then(res => {
       const instanceList = res.data;
@@ -224,7 +224,7 @@ export class ServicesGrid extends React.Component {
         </div>
 
         <div className="text-center">
-          <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
+          <Pagination activePage={this.state.activePage} itemsCountPerPage={18} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
       </div>);
     }

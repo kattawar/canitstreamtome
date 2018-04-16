@@ -8,3 +8,9 @@
   padding: 0;
   background-color: #ff0;
 }
+
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
