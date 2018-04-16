@@ -7,6 +7,7 @@
 
 # The Makefile should be present in the root of the project.
 # There should be the following commands written:
+.PHONY: backend frontend
 
 # make github   - prints link to github repo
 github:
@@ -26,15 +27,17 @@ uml:
 
 # make selenium - runs selenium tests
 selenium:
+	pip install selenium;
 	python frontend/guitests.py
 
 # make frontend - runs frontend tests
-mocha:
+frontend:
 	@(cd frontend; npm test)
 
 # make backend  - runs backend tests
 backend:
-	python backend/tests.py
+	pip install psycopg2;
+	python backend/tests.py;
 
 # make website  - prints link to a website
 website:
