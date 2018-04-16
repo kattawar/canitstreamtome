@@ -63,6 +63,9 @@ if(this.state.countryItem.latitude){
             <hr></hr>
             <h4>Spoken Languages</h4>
             <p>{this.state.countryItem.languages}</p>
+            <hr></hr>
+            <h4>More Information</h4>
+            <p><a href={`https://en.wikipedia.org/wiki/${this.state.countryItem.name}`}>{`https://en.wikipedia.org/wiki/${this.state.countryItem.name}`}</a></p>
           </div>
         </div>
       </div>
