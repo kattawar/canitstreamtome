@@ -73,35 +73,13 @@ class About extends React.Component {
     return (<div>
       <section>
         <div className="container text-center">
-          <div className="row align-items-center">
-            <div className="p-4">
-              <h3 className="display-4">PURPOSE</h3>
-              <p>Canitstreamto.me provides the most talked about shows and films on streaming services right now! Not only can you see what the hottest works are in you own country, you can see what is popular across the world. With thousands of options online of what to watch next, we want to give our users information on what is being talked about everywhere! Our intended users are media subscribers across the world.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="container text-center">
-          <div className="row align-items-center">
-            <div className="p-4">
-              <h3 className="display-4">HOW WE'RE DIFFERENT</h3>
-              <p>By looking at Twitter and Google Trends for data on the popularity of streaming shows and film we don’t just show what got the best reviews, or what everyone loves. We show what everyone can’t stop talking about. Whether it is what they love to binge on, what has the biggest controversy, what they love to hate, or what is plainly the best.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="container text-center">
           <div className="p-4">
-            <h3 className="display-4">APPROVE US, INC. MEMBERS</h3>
+            <h3 className="display-3">APPROVE US, INC. MEMBERS</h3>
           </div>
         </div>
       </section>
 
-      <section>
+      <section align-items-center>
         <div className="container text-center">
           <div className="row">
             <div className="col-sm-4">
@@ -163,11 +141,17 @@ class About extends React.Component {
 
       <section>
         <div className="container text-center">
-          <div className="p-4">
-            <h3 className="display-4">STATS</h3>
-            <p>Total No. Commits: {this.state.jordan_commits + this.state.zach_commits + this.state.erin_commits + this.state.nick_commits + this.state.kevin_commits}</p>
-            <p>Total No. Issues: {this.state.jordan_issues + this.state.zach_issues + this.state.erin_issues + this.state.nick_issues + this.state.kevin_issues}</p>
-            <p>Total No. Unit Tests: 65</p>
+          <div className="row align-items-center">
+            <div className="p-4">
+              <div className="col-sm-6">
+              <h3 className="display-3">PURPOSE</h3>
+              <p>Canitstreamto.me provides the most talked about shows and films on streaming services right now! Not only can you see what the hottest works are in you own country, you can see what is popular across the world. With thousands of options online of what to watch next, we want to give our users information on what is being talked about everywhere! Our intended users are media subscribers across the world.</p>
+              </div>
+              <div className="col-sm-6">
+              <h3 className="display-3">HOW WE'RE DIFFERENT</h3>
+              <p>By looking at Twitter and Google Trends for data on the popularity of streaming shows and film we don’t just show what got the best reviews, or what everyone loves. We show what everyone can’t stop talking about. Whether it is what they love to binge on, what has the biggest controversy, what they love to hate, or what is plainly the best.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -175,26 +159,8 @@ class About extends React.Component {
       <section>
         <div className="container text-center">
           <div className="p-4">
-            <h3 className="display-4">DATA</h3>
-            <p><a href="https://developers.themoviedb.org/3/getting-started/introduction">
-                The Movie DB API</a>: provides our data for the details of each movie</p>
-            <p><a href="https://developer.twitter.com/en/docs">
-    			Twitter API</a>: provides a twitter feed for relevent tweets to each movie</p>
-			<p><a href="https://github.com/GeneralMills/pytrends">
-    			Pseudo API for Google Trends</a>: provides data for which countries are searching</p>
-    			<p>for a particular streaming service or movie the most</p>
-			<p><a href="hhttps://api.guidebox.com/docs/key">
-    			Guidebox API</a>: provides data for which movies each streaming service provides</p>
-    		<p><a href="https://restcountries.eu/">
-    			REST Countries</a>: provides flag images and details for each country</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="container text-center">
-          <div className="p-4">
-            <h3 className="display-4">TOOLS</h3>
+          <div className="col-sm-6">
+            <h3 className="display-3">TOOLS</h3>
             <p>Slack: team communication and Github updates</p>
             <p>GitBook: collaborative writing</p>
             <p>Github: version control and collaboration</p>
@@ -208,12 +174,31 @@ class About extends React.Component {
             <p>Mocha: front-end unit testing</p>
             <p>Postman: API design and testing</p>
           </div>
+          <div className="col-sm-6">
+            <h3 className="display-3">DATA</h3>
+            <p><a href="https://developers.themoviedb.org/3/getting-started/introduction">
+              The Movie DB API</a>: provides our data for the details of each movie</p>
+            <p><a href="https://developer.twitter.com/en/docs">
+              Twitter API</a>: provides a twitter feed for relevent tweets to each movie</p>
+            <p><a href="https://github.com/GeneralMills/pytrends">
+              Pseudo API for Google Trends</a>: provides data for which countries are searching</p>
+            <p>for a particular streaming service or movie the most</p>
+            <p><a href="hhttps://api.guidebox.com/docs/key">
+              Guidebox API</a>: provides data for which movies each streaming service provides</p>
+            <p><a href="https://restcountries.eu/">
+              REST Countries</a>: provides flag images and details for each country</p>
+              <h3 className="display-3">STATS</h3>
+              <p>Total No. Commits: {this.state.jordan_commits + this.state.zach_commits + this.state.erin_commits + this.state.nick_commits + this.state.kevin_commits}</p>
+              <p>Total No. Issues: {this.state.jordan_issues + this.state.zach_issues + this.state.erin_issues + this.state.nick_issues + this.state.kevin_issues}</p>
+              <p>Total No. Unit Tests: 65</p>
+          </div>
+          </div>
         </div>
       </section>
 
       <section>
         <div className="container text-center">
-          <h3 className="display-4">LINKS</h3>
+          <h3 className="display-3">LINKS</h3>
           <p></p>
           <p>
             <a href="https://kevinsalcedo.gitbooks.io/report/content/">Technical Report</a>

@@ -53,7 +53,7 @@ class TestGui(unittest.TestCase):
 		countries_link.click()
 		first_country_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div/div[@class='country']/section/div[@class='container']/div[@class='row'][1]/div[@class='col-sm-2'][1]/a/div[@class='card']")
 		first_country_link.click()
-		self.assertEqual("http://www.canitstreamto.me/country/Afghanistan", self.driver.current_url)
+		self.assertEqual("http://www.canitstreamto.me/country/823", self.driver.current_url)
 
 	def test_streaming_service_instance(self):
 		services_link = self.driver.find_element_by_link_text("Streaming Services")
@@ -73,7 +73,7 @@ class TestGui(unittest.TestCase):
 		first_movie_link.click()
 		first_country_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div[@class='container']/div[@class='row'][2]/div[@class='col-sm-6'][1]/div[@class='card']/div[@class='col-sm-12']/p/ol/li[1]/a")
 		first_country_link.click()
-		self.assertEqual("http://www.canitstreamto.me/country/United%20States", self.driver.current_url)
+		self.assertEqual("http://www.canitstreamto.me/country/1060", self.driver.current_url)
 
 	def test_movie_link_to_service(self):
 		movies_link = self.driver.find_element_by_link_text("Movies")
@@ -94,7 +94,7 @@ class TestGui(unittest.TestCase):
 		first_service_link.click()
 		first_country_link = self.driver.find_element_by_xpath("/html/body/div[@id='reactEntry']/div[@class='App']/div[@class='container']/div[@class='row'][2]/div[@class='col-sm-6'][1]/div[@class='card']/div[@class='col-sm-12']/p/ol/li[1]/a")
 		first_country_link.click()
-		self.assertEqual("http://www.canitstreamto.me/country/United%20States", self.driver.current_url)
+		self.assertEqual("http://www.canitstreamto.me/country/1060", self.driver.current_url)
 
 	def test_service_link_to_movie(self):
 		service_link = self.driver.find_element_by_link_text("Streaming Services")
