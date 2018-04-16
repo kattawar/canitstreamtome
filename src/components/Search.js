@@ -131,9 +131,9 @@ class Search extends React.Component {
     // If any results are returned, then render the results page
     if (movieResult.length > 0 || countryResult.length > 0 || streamResult.length > 0) {
 
-      let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage - 1, this.state.activeMoviePage+1);
-      let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage - 1, this.state.activeCountryPage+1);
-      let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage - 1, this.state.activeStreamPage+1);
+      let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage*2 - 2, this.state.activeMoviePage*2);
+      let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage*2 - 2, this.state.activeCountryPage*2);
+      let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage*2 - 2, this.state.activeStreamPage*2);
       console.log(movies);
       return (<div>
         <section>
