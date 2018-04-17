@@ -4,6 +4,11 @@
     line-height: 1.2;
 }
 
+.display-2 {
+    height: 52px;
+    font-size: 25px;
+}
+
 .mark, mark{
   padding: 0;
   background-color: #ff0;
@@ -15,6 +20,11 @@
   justify-content: center
 }
 
-.movieSearch .card {
-  height: 500px;
+/*.movieSearch .card {
+  height: 650px;
+}*/
+
+.description p {
+  height: 158px;
+  overflow:hidden;
 }

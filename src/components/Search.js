@@ -156,12 +156,12 @@ class Search extends React.Component {
                                   <Link to={{
                                       pathname: `/movie/${item.id}`
                                     }}>
-                                    <h2 className="display-1">
+                                    <h2 className="display-2">
                                       <Highlighter highlightClassName="nameHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.name}/>
                                     </h2>
                                     <hr/>
                                     <div className="col-sm-3">
-                                      <img className="img-responsive" src={item.image} alt=""/>
+                                      <img src={item.image} alt=""/>
                                     </div>
                                   </Link>
                                   <div className="col-sm-9">
@@ -177,7 +177,9 @@ class Search extends React.Component {
                                     <p><Highlighter highlightClassName="genresHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.genres}/></p>
                                     <hr/>
                                     <h4>Description</h4>
+                                    <div className="description">
                                     <p><Highlighter highlightClassName="descriptionHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.description}/></p>
+                                    </div>
                                     <hr/>
                                     <h4>Cast</h4>
                                     <p><Highlighter highlightClassName="castHighlight" searchWords={queries} autoEscape={true} textToHighlight={item.movie_cast}/></p>
