@@ -452,50 +452,45 @@ def db_select_stream_movie(stream_id):
 def db_search_movie(value):
         global movie_filter_values
         sql_query = schema+"select omdb_movie_id,title,description,rating,release_date,language,poster_url,movie_cast,trailer_url,genres from streamit_omdb_movies where "
-        sql_query += " title ~* '{0}' or description ~* '{0}' or rating ~* '{0}' or release_date ~* '{0}' or movie_cast ~* '{0}' or genres ~* '{0}' ".format(value)
-        send_sql_query(sql_query)
-        return format_db_reply("movies",get_sql_results())
+        columns = ["title","description","rating","release_date","movie_cast","genres"]
+        return db_search_builder(value,columns,sql_query,"movies")
+        
 def db_search_country(value):
         global country_filter_values
         sql_query = schema+"select t.country_id,t.name,t.population,t.languages,t.country_image_url,t.region,t.latitude,t.longitude from  "
         sql_query += "(SELECT * FROM complete.streamit_countries WHERE country_id IN (SELECT country_id FROM complete.streamit_country_to_om  group by country_id)) as t where "
-        sql_query += " t.name ~* '{0}' or t.languages ~* '{0}' or t.region ~* '{0}' or t.latitude ~* '{0}' or t.longitude ~* '{0}' ".format(value)
-        send_sql_query(sql_query)
-        return format_db_reply("countries",get_sql_results())
+        columns = ["t.name","t.languages","t.region","t.latitude","t.longitude"]
+        return db_search_builder(value,columns,sql_query,"countries")
 def db_search_streaming(value):
         global stream_filter_values
         sql_query = schema+"select stream_id,name, pricing, available_countries,image_url,website_url from streamit_streaming_service where "
-        sql_query += " name ~* '{0}' ".format(value)
-        send_sql_query(sql_query)
-        return format_db_reply("streamingservices",get_sql_results())
-
-
-def db_select_person(filtertype = None, value = None, comparison = "="):
-        global person_filter_values
-        if filtertype in person_filter_values:
-                sql_query = schema+"select last_name,first_name,photo_url,dob,gender from streamit_person where {0} {1} '{2}'".format(filtertype,comparison,value)
-        else:
-                sql_query = schema+"select last_name,first_name,photo_url,dob,gender from streamit_person"
-        send_sql_query(sql_query)
-        return get_sql_results()
-def db_select_tweet(filtertype = None, value = None, comparison = "="):
-        global tweet_filter_values
-        if filtertype in tweet_filter_values:
-                sql_query = schema+"select date_posted,twitter_handle,tweet_body,country_id from streamit_tweet_storage where {0} {1} {2}".format(filtertype,comparison,value)
-        else:
-                sql_query = schema+"select date_posted,twitter_handle,tweet_body,country_id from streamit_tweet_storage"
-        send_sql_query(sql_query)
-        return get_sql_results()
+        columns = ["name"]
+        return db_search_builder(value,columns,sql_query,"streamingservices")
+def db_search_builder(value,columns, basequery,typeofreply):
+        out = {}
+        out["data"] = []
+        out["data_type"] = typeofreply
+        for x in columns:
+                sql_query = basequery+" {0} ~* '{1}' ".format(x,value)
+                send_sql_query(sql_query)
+                temp = format_db_reply(typeofreply,get_sql_results())
+                out["data"] += temp["data"]
+                print("out:    ",out,file=sys.stderr)
+        a = out["data"]
+        b = []
+        [b.append(item) for item in a if item not in b]
+        out["data"] = b
+        return out
 
 
 ### JSON FORMATTING
 def format_db_reply(typeofreply,reply):
         out = {}
-        print(reply,file=sys.stderr)
+        #print(reply,file=sys.stderr)
         out["data"] = []
+        out["data_type"]= typeofreply
+        index = 0
         if typeofreply == "movies":
-                out["data_type"] ="movies"
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["id"]           = x[0]
@@ -510,8 +505,6 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["genres"]        = x[9]
                         index += 1
         elif typeofreply == "countries":
-                out["data_type"] ="countries"
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["id"]          = x[0]
@@ -524,8 +517,6 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["longitude"]   = x[7]
                         index +=1
         elif typeofreply == "streamingservices":
-                out["data_type"] ="streamingservices"
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["id"]                  = x[0]
@@ -536,8 +527,6 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["website"]             = x[5]
                         index +=1
         elif typeofreply == "moviepopularity":
-                out["data_type"] = typeofreply
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["rank"]   = x[0]
@@ -545,24 +534,18 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["id"]     = x[2]
                         index+=1
         elif typeofreply == "moviestream":
-                out["data_type"] = typeofreply
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["name"] = x[0]
                         out["data"][index]["id"]   = x[1]
                         index+=1
         elif typeofreply == "streammovie":
-                out["data_type"] = typeofreply
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["id"] = x[0]
                         out["data"][index]["name"]   = x[1]
                         index+=1
         elif typeofreply == "streamcountry":
-                out["data_type"] = typeofreply
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["rank"]   = x[0]
@@ -570,22 +553,17 @@ def format_db_reply(typeofreply,reply):
                         out["data"][index]["id"]     = x[2]
                         index+=1
         elif typeofreply == "countrystream":
-                out["data_type"] = typeofreply
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["name"]   = x[0]
                         out["data"][index]["id"]     = x[1]
                         index+=1
         elif typeofreply == "countrymovie":
-                out["data_type"] = typeofreply
-                index = 0
                 for x in reply:
                         out["data"].append({})
                         out["data"][index]["name"]   = x[0]
                         out["data"][index]["id"]     = x[1]
                         index+=1
-
         return out
 
 ### Testing functions
