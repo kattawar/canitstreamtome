@@ -78,10 +78,13 @@ class Search extends React.Component {
     let newDict = {}
     for (let term of queries) {
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/search?value=${term}`;
+      console.log(url)
       axios.get(url).then(res => {
+        let key = 0
         let results = res.data.data;
         for (let movie of results) {
-          newDict[movie.id] = movie;
+          newDict[key] = movie;
+          key += 1
         }
         this.setState({movieResult: Object.values(newDict)});
         this.setState({activeMoviePage: 1});
@@ -96,9 +99,11 @@ class Search extends React.Component {
     for (let term of queries) {
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${term}`;
       axios.get(url).then(res => {
+        let key = 0
         let results = res.data.data;
         for (let country of results) {
-          newDict[country.id] = country;
+          newDict[key] = country;
+          key += 1
         }
         this.setState({countryResult: Object.values(newDict)});
         this.setState({activeCountryPage: 1});
@@ -112,9 +117,11 @@ class Search extends React.Component {
     for (let term of queries) {
       let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${term}`;
       axios.get(url).then(res => {
+        let key = 0
         let results = res.data.data;
         for (let service of results) {
-          newDict[service.id] = service;
+          newDict[key] = service;
+          key += 1
         }
         this.setState({streamResult: Object.values(newDict)});
         this.setState({activeStreamPage: 1});

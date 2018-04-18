@@ -19,14 +19,14 @@ class Home extends React.Component {
 								<Carousel.Item>
             			<div className="container">
               			<h1 className="masthead-heading mb-0">Services</h1>
-              			<h2 className="masthead-subheading mb-0">How To Stream?</h2>
+              			<h2 className="masthead-subheading mb-0">Where To Stream?</h2>
               			<a href="/streaming_service" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
             			</div>
   							</Carousel.Item>
    							<Carousel.Item>
             			<div className="container">
               			<h1 className="masthead-heading mb-0">Countries</h1>
-              			<h2 className="masthead-subheading mb-0">Where At?</h2>
+              			<h2 className="masthead-subheading mb-0">Who's Watching?</h2>
               			<a href="/country" className="btn btn-primary btn-xl rounded-pill mt-5">Go</a>
             			</div>
   							</Carousel.Item>
