@@ -55,7 +55,7 @@ The primary use case of CanItStreamTo.Me is mainly for the general public, for t
       └── package.json
 
 ## Setup and Running
-- Install packages with 'npm run'
+- Install packages with 'npm install'
 - Run website locally with 'npm start'
 
 ## Screenshots
