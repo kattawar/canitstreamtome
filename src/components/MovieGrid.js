@@ -60,6 +60,7 @@ export class MovieGrid extends React.Component {
         activeSort: 'title',
         activeDir: 'asc',
         activeFilters: [],
+        datalength: 1120,
         realPage: 0,
         rating_selected: false,
         release_selected: false
@@ -267,11 +268,26 @@ export class MovieGrid extends React.Component {
         const instanceList = res.data;
         this.setState({
           data: instanceList
+        //  console.log(this.state.data);
         });
       }).catch((error) => {
         console.log(error);
       });
-    }
+
+      url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=1300&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
+       axios.get(url).then(res => {
+         const test = res.data.data.length;
+         console.log(test);
+         this.setState({
+           datalength: test
+         });
+       }).catch((error) => {
+         console.log(error);
+       });
+     }
+
+
+
 
     render() {
 
@@ -294,8 +310,9 @@ export class MovieGrid extends React.Component {
         }
 
         const options = create_options
+        const num = this.state.datalength;
+        console.log(num);
 
-        var totalItems = 1120;
 
         if (this.state.data.data) {
           const instanceGrouped = this.state.data.data;
@@ -370,7 +387,7 @@ export class MovieGrid extends React.Component {
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={24}
-                totalItemsCount={totalItems}
+                totalItemsCount={this.state.datalength}
                 pageRangeDisplayed={5}
                 onChange = {this.handlePageChange}
               />
