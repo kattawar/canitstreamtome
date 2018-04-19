@@ -1,12 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import '../movies.css';
 import Pagination from "react-js-pagination";
 import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { splitArray } from './Utilities'
+
+function splitArray(input, spacing) {
+  var output = [];
+
+  for (var i = 0; i < input.length; i += spacing) {
+    output[output.length] = input.slice(i, i + spacing);
+  }
+
+  return output;
+}
 
 export class ServicesGrid extends React.Component {
 
@@ -21,11 +30,10 @@ export class ServicesGrid extends React.Component {
       activeSort:'name',
       activeDir:'asc',
       realPage: 0,
-      totalItems: 24,
       unfilteredData: []
     };
-    this.updateUnfilteredData();
     this.updateData();
+
   }
 
   handleChange = (selectedOption) => {
@@ -47,14 +55,11 @@ export class ServicesGrid extends React.Component {
         }
         this.setState({activeDir: dir}, function () {
           this.setState({activeSort: sort}, function () {
-              this.updateData();
-              this.updateUnfilteredData();
-              if (!this.selectedOptionFilter) {
-                this.setState({data: this.state.unfilteredData})
-              }
+            this.updateData();
           });
         });
       }
+    //  this.updateData();
   }
 
   handleFilter = (selectedOptionFilter) => {
@@ -105,13 +110,12 @@ export class ServicesGrid extends React.Component {
             console.log("default");
         }
         this.setState({data: data}, function () {
-          this.setState({totalItems: data.data.length}, function() {});
+          //this.updateDataFilt();
         });
       } else {
-        this.setState({data: this.state.unfilteredData}, function () {
-          this.setState({totalItems: 24}, function() {});
-        });
+        this.setState({data: this.state.unfilteredData}, function () {});
       }
+    //  this.updateData();
   }
 
   handlePageChange = (pageNumber) => {
@@ -123,27 +127,21 @@ export class ServicesGrid extends React.Component {
 
   }
 
-  updateUnfilteredData = () => {
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
-
-    axios.get(url).then(res => {
-      const instanceList = res.data;
-      this.setState({unfilteredData: instanceList});
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
   updateData = () => {
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?pagesize=18&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    //console.log(this.state.activeDir);
+    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    //console.log(url);
 
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
+      this.setState({unfilteredData: instanceList});
       this.handleFilter(this.state.selectedOptionFilter);
+
     }).catch((error) => {
       console.log(error);
     });
+
   }
 
   render() {
@@ -153,11 +151,16 @@ export class ServicesGrid extends React.Component {
 
     const { selectedOptionFilter } = this.state;
     const valueFilter = selectedOptionFilter && selectedOptionFilter.value;
+    //6
+    //1
+    var totalItems = 24;
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
 
       const instanceRows = splitArray(instanceGrouped, 6);
+
+      //console.log(this.state.data.data);
 
       return (<div>
 
@@ -238,7 +241,7 @@ export class ServicesGrid extends React.Component {
         </div>
 
         <div className="text-center">
-          <Pagination activePage={this.state.activePage} itemsCountPerPage={18} totalItemsCount={this.state.totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
+          <Pagination activePage={this.state.activePage} itemsCountPerPage={24} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
       </div>);
     }

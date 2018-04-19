@@ -1,5 +1,3 @@
-
-
   export function splitArray(input, spacing) {
     var output = [];
 
