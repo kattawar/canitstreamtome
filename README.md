@@ -11,6 +11,9 @@ The primary use case of CanItStreamTo.Me is mainly for the general public, for t
 ## Setup and Running
 ## Screenshots
 ![GitHub Logo](/screenshots/s1.png)
+![GitHub Logo](/screenshots/s2.png)
+![GitHub Logo](/screenshots/s3.png)
+![GitHub Logo](/screenshots/s4.png)
 ## Resources
 ### Team
 **Slack**: We used the messaging tool, Slack, to communicate within our team and also as a way to keep up with the state of our Github. By connecting our Github repo to our slack team we are able to receive Slack message updates of commits, issues, and other events on our Github.
