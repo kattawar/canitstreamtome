@@ -102,7 +102,7 @@ export class ServicesGrid extends React.Component {
         this.setState({data: data}, function () {
         });
       } else {
-        this.setState({data: this.state.unfilteredData}, function () {});
+        this.setState({data: this.state.data}, function () {});
       }
   }
 
@@ -121,9 +121,16 @@ export class ServicesGrid extends React.Component {
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
-      this.setState({unfilteredData: instanceList});
       this.handleFilter(this.state.selectedOptionFilter);
+    }).catch((error) => {
+      console.log(error);
+    });
 
+    let url2 =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
+
+    axios.get(url2).then(res => {
+      const instanceList = res.data;
+      this.setState({unfilteredData: instanceList});
     }).catch((error) => {
       console.log(error);
     });
