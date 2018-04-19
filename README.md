@@ -1,4 +1,5 @@
 # canitstreamtome
-a
-Movies, Streaming, Social Media Presence
-a
+
+Find connections between countries, movies and streaming services
+
+
