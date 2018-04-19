@@ -3,7 +3,7 @@
 
 GithubID = kattawar
 RepoName = canitstreamtome
-SHA = 
+SHA = 55bfc3f217ea991a93d3334aef5207aa8b3de773
 
 githubid:
 	@echo "${GithubID}"
