@@ -21,10 +21,11 @@ export class ServicesGrid extends React.Component {
       activeSort:'name',
       activeDir:'asc',
       realPage: 0,
+      totalItems: 24,
       unfilteredData: []
     };
+    this.updateUnfilteredData();
     this.updateData();
-
   }
 
   handleChange = (selectedOption) => {
@@ -46,7 +47,11 @@ export class ServicesGrid extends React.Component {
         }
         this.setState({activeDir: dir}, function () {
           this.setState({activeSort: sort}, function () {
-            this.updateData();
+              this.updateData();
+              this.updateUnfilteredData();
+              if (!this.selectedOptionFilter) {
+                this.setState({data: this.state.unfilteredData})
+              }
           });
         });
       }
@@ -100,9 +105,12 @@ export class ServicesGrid extends React.Component {
             console.log("default");
         }
         this.setState({data: data}, function () {
+          this.setState({totalItems: data.data.length}, function() {});
         });
       } else {
-        this.setState({data: this.state.data}, function () {});
+        this.setState({data: this.state.unfilteredData}, function () {
+          this.setState({totalItems: 24}, function() {});
+        });
       }
   }
 
@@ -115,6 +123,17 @@ export class ServicesGrid extends React.Component {
 
   }
 
+  updateUnfilteredData = () => {
+    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
+
+    axios.get(url).then(res => {
+      const instanceList = res.data;
+      this.setState({unfilteredData: instanceList});
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   updateData = () => {
     let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?pagesize=18&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
 
@@ -125,16 +144,6 @@ export class ServicesGrid extends React.Component {
     }).catch((error) => {
       console.log(error);
     });
-
-    let url2 =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service?sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
-
-    axios.get(url2).then(res => {
-      const instanceList = res.data;
-      this.setState({unfilteredData: instanceList});
-    }).catch((error) => {
-      console.log(error);
-    });
-
   }
 
   render() {
@@ -144,8 +153,6 @@ export class ServicesGrid extends React.Component {
 
     const { selectedOptionFilter } = this.state;
     const valueFilter = selectedOptionFilter && selectedOptionFilter.value;
-
-    var totalItems = 24;
 
     if (this.state.data.data) {
       const instanceGrouped = this.state.data.data;
@@ -231,7 +238,7 @@ export class ServicesGrid extends React.Component {
         </div>
 
         <div className="text-center">
-          <Pagination activePage={this.state.activePage} itemsCountPerPage={18} totalItemsCount={totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
+          <Pagination activePage={this.state.activePage} itemsCountPerPage={18} totalItemsCount={this.state.totalItems} pageRangeDisplayed={5} onChange={this.handlePageChange}/>
         </div>
       </div>);
     }
