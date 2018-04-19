@@ -58,6 +58,13 @@ The primary use case of CanItStreamTo.Me is mainly for the general public, for t
 - Install packages with 'npm install'
 - Run website locally with 'npm start'
 
+- Install python modules using pip
+- 'pip install flask'
+- 'pip install psycopg2'
+- 'python3 __init__.py'
+- The api should now be started. If there are errors you can try changing two commented lines in __init__.py so that it runs on localhost:5000.
+
+
 ## Screenshots
 ![GitHub Logo](/screenshots/s1.png)
 ![GitHub Logo](/screenshots/s2.png)
