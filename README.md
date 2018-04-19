@@ -18,6 +18,9 @@ The primary use case of CanItStreamTo.Me is mainly for the general public, for t
 - Person A has a close friend, Person B, who lives in another country. Person B always has great movie suggestions and Person A wonders what other movies are popular in Person B's country. Person A goes to CanItStreamTo.me and clicks on Person B's country. Person A sees a bunch of movies that are popular in that country and clicks on the first one. Person A sees that he can stream it on netflix or rent it youtube. Luckily Person already has netflix, he watches it and talks to Person B about the movie.
 ## Core Structure
 ## Setup and Running
+Install packeges with 'npm run'
+Run website locally with 'npm start'
+
 ## Screenshots
 ![GitHub Logo](/screenshots/s1.png)
 ![GitHub Logo](/screenshots/s2.png)
