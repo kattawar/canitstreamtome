@@ -16,37 +16,37 @@ The primary use case of CanItStreamTo.Me is mainly for the general public, for t
 ![GitHub Logo](/screenshots/s4.png)
 ## Resources
 ### Team
-**Slack**: We used the messaging tool, Slack, to communicate within our team and also as a way to keep up with the state of our Github. By connecting our Github repo to our slack team we are able to receive Slack message updates of commits, issues, and other events on our Github.
+- **Slack**: We used the messaging tool, Slack, to communicate within our team and also as a way to keep up with the state of our Github. By connecting our Github repo to our slack team we are able to receive Slack message updates of commits, issues, and other events on our Github.
 
-**Github**: We used Github for version control and collaboration. Github allows all of our team members to contribute to one repository. It also allows for version control so that, in the event that something in our code is broken we have working versions we can always go back to.
+- **Github**: We used Github for version control and collaboration. Github allows all of our team members to contribute to one repository. It also allows for version control so that, in the event that something in our code is broken we have working versions we can always go back to.
 
-**GitBook**: We are used GitBook to write our technical report. It allows us to work on different sections of our report concurrently. The chapters also help us divide the parts of the report among our members.
+- **GitBook**: We are used GitBook to write our technical report. It allows us to work on different sections of our report concurrently. The chapters also help us divide the parts of the report among our members.
 
-**NameCheap**: We used NameCheap to get a free domain at the start of the project.
+- **NameCheap**: We used NameCheap to get a free domain at the start of the project.
 ### Back-end
-**Flask**: We use flask to connect our Python code to our website. The python renders the HTML files and flask runs the code to produce the front-end on our website.
+- **Flask**: We use flask to connect our Python code to our website. The python renders the HTML files and flask runs the code to produce the front-end on our website.
 
-**Postman**: We used this for database design and testing.
+- **Postman**: We used this for database design and testing.
 
-**REST Countries**: We got the flag images and details for each country from this API.
+- **REST Countries**: We got the flag images and details for each country from this API.
 
-**pytrends Pseudo API for Google Trends**: We are using this pseudo API to find what countries are searching for each movie or streaming service the most.
+- **pytrends Pseudo API for Google Trends**: We are using this pseudo API to find what countries are searching for each movie or streaming service the most.
 
-**Guidebox API**: Got the information about which streaming services provide which movies from here to add to our database.
+- **Guidebox API**: Got the information about which streaming services provide which movies from here to add to our database.
 
-**themoviedb API**: Got the detail information about each of our movie instances from here for our database.
+- **themoviedb API**: Got the detail information about each of our movie instances from here for our database.
 
 ### Front-end
-**Axios**: We use this to make calls to our API and Github's API simple.
+- **Axios**: We use this to make calls to our API and Github's API simple.
 
-**Create-react-app**: We used this to help create our initial project structure as the TAs recommended.
+- **Create-react-app**: We used this to help create our initial project structure as the TAs recommended.
 
-**S3**: We used S3 to host our front-end.
+- **S3**: We used S3 to host our front-end.
 
-**Selenium**: We are using Selenium to test the GUI of our website.
+- **Selenium**: We are using Selenium to test the GUI of our website.
 
-**Mocha**: We are using Mocha to create unit tests for our front-end.
+- **Mocha**: We are using Mocha to create unit tests for our front-end.
 
-**React**: We are using React combined with JavaScript to create dynamic components on our website.
+- **React**: We are using React combined with JavaScript to create dynamic components on our website.
 
-**Bootstrap**: We used Bootstrap to get our template for the base of our design. We used their one-page-wonder template and made changes to fit our personal taste and the requirements of the project.
+- **Bootstrap**: We used Bootstrap to get our template for the base of our design. We used their one-page-wonder template and made changes to fit our personal taste and the requirements of the project.
