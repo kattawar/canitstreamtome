@@ -17,6 +17,43 @@ The primary use case of CanItStreamTo.Me is mainly for the general public, for t
 - A group of friends get together to watch a movie. They don't know what to watch, but they have a few subscription services between them. They click on a service they are subscribed to and start to browse the movies. They click on a few that seem interesting and come across one that is popular in Country X. Person A is among the group and is originally from Country X. She has been wanting to get more in touch which her Country X side to they decide to watch that movie.
 - Person A has a close friend, Person B, who lives in another country. Person B always has great movie suggestions and Person A wonders what other movies are popular in Person B's country. Person A goes to CanItStreamTo.me and clicks on Person B's country. Person A sees a bunch of movies that are popular in that country and clicks on the first one. Person A sees that he can stream it on netflix or rent it youtube. Luckily Person already has netflix, he watches it and talks to Person B about the movie.
 ## Core Structure
+      canitstreamtome
+      ├── app (api.canitstreamto.me)
+      │   ├── __init__.py
+      │   ├── canitstreamtome_api.py
+      │   ├── canitstreamtome_apiv2.py
+      │   ├── database.py
+      │   └── test.py
+      │
+      ├── backend
+      │   ├── main.py
+      │   └── tests.py
+      │
+      ├── frontend 
+      │   ├── guitests.py
+      │   ├── index.js
+      │   └── tests.js
+      │
+      ├── public
+      │
+      ├── src (canitstreamto.me)
+      │   ├── components
+      │   ├── img
+      │   ├── selenium_tests
+      │   └── index.js
+      │
+      ├── test (front-end tests)
+      │   ├── helpers
+      │   └── tests.js
+      │
+      ├── .babelrc
+      ├── .gitignore
+      ├── Postman.json
+      ├── README.md
+      ├── makefile
+      ├── package-lock.json
+      └── package.json
+
 ## Setup and Running
 - Install packeges with 'npm run'
 - Run website locally with 'npm start'
