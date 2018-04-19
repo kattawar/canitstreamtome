@@ -2,6 +2,13 @@
 
 Find connections between countries, movies and streaming services
 ## Features
+-Our website features several different pages that allow you to gather up to date and relevent info on movies, streaming services, and the popularity of each.
+-Our movies page displays all of the most popular movies and gives you the relevent info about each of them. You can then sort the movies by title, rating, and release date and filter
+the results as well at the same time. We also support filtering on multiple criteria at the same time. Our other pages such as the streaming services and the countries
+also display cards in a similar fashion to the movies and allow to sort and filter on their respective values as well. We also provide a search utility at the top of
+our website that allows you to search all of the data models at once. The searches are case agnostic and partial and we rank the results by how relevent the given field is to the
+data model. When a search is made a page will then be displayed with all of the models that matched the given search query and the given query will be highlighted in the models. You 
+can then navigate through the three different models independently of eachother.
 ## Use Cases
 The primary use case of CanItStreamTo.Me is mainly for the general public, for the many days people wish to watch a movie but don't know where to watch it. In addition, it is vastly helpful in identifying trends and the locations in which these movies are most popular. Through the use of the CanItStreamToMe API, users also can also display the most popular movies and services across countries around the world.
 ### Specific Cases
