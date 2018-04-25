@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask import request,redirect
+from flask_cors import CORS
 import urllib.request
 import json
 import pdb
@@ -9,6 +10,7 @@ import sys
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
 app = Flask(__name__)
+CORS(app)
 app.config['SERVER_NAME']='canitstreamto.me'
 #app.config['SERVER_NAME']='localhost:5000'
 
