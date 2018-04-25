@@ -129,7 +129,7 @@ export class ServicesGrid extends React.Component {
 
   updateData = () => {
     //console.log(this.state.activeDir);
-    let url =`https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url =`http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
     //console.log(url);
 
     axios.get(url).then(res => {
