@@ -93,7 +93,7 @@
 +++
 
 ## What can they do better?
-- More instances per page |
+- More instances per grid page |
 - When filtering if multiple filters are chosen it leads to no results, it would be better if they limited the remaining | filters to pertain to the current filtered data |
 - More instances for each model |
 
