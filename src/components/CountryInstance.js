@@ -85,7 +85,7 @@ if(this.state.countryItem.latitude){
                       }
                     }}>Netflix</Link>
                 </li> :
-                  this.state.streamranks.map(item => <li>
+                  this.state.streamranks.map(item => <li key={item.id}>
                     <Link to={{
                         pathname: `/streaming_service/${item.id}`
                       }}>{item.name}</Link>
@@ -104,7 +104,7 @@ if(this.state.countryItem.latitude){
             <p>
               <ol>
                 {
-                  this.state.movieranks.length === 0 ? null : this.state.movieranks.slice(0, 10).map(item => <li>
+                  this.state.movieranks.length === 0 ? null : this.state.movieranks.slice(0, 10).map(item => <li key={item.id}>
                     <Link to={{
                         pathname: `/movie/${item.id}`
                       }}>{item.name}</Link>

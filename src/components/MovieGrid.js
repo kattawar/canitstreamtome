@@ -238,7 +238,6 @@ export class MovieGrid extends React.Component {
     }
 
     handlePageChange = (pageNumber) => {
-      console.log(`active page is ${pageNumber}`);
       this.setState({
         activePage: pageNumber
       });
@@ -268,7 +267,6 @@ export class MovieGrid extends React.Component {
         const instanceList = res.data;
         this.setState({
           data: instanceList
-        //  console.log(this.state.data);
         });
       }).catch((error) => {
         console.log(error);
@@ -276,10 +274,9 @@ export class MovieGrid extends React.Component {
 
       url = `http://api.canitstreamto.me/v2/movie?pagesize=1300&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
        axios.get(url).then(res => {
-         const test = res.data.data.length;
-         console.log(test);
+         const len = res.data.data.length;
          this.setState({
-           datalength: test
+           datalength: len
          });
        }).catch((error) => {
          console.log(error);
@@ -310,14 +307,10 @@ export class MovieGrid extends React.Component {
         }
 
         const options = create_options
-        const num = this.state.datalength;
-        console.log(num);
-
 
         if (this.state.data.data) {
           const instanceGrouped = this.state.data.data;
           const instanceRows = splitArray(instanceGrouped, 6);
-          //console.log(this.state.data.data);
 
           return (
             <div>

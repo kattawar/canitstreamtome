@@ -119,7 +119,6 @@ export class ServicesGrid extends React.Component {
   }
 
   handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
     this.setState({realPage: pageNumber-1}, function () {
       this.updateData();
@@ -128,9 +127,7 @@ export class ServicesGrid extends React.Component {
   }
 
   updateData = () => {
-    //console.log(this.state.activeDir);
     let url =`http://api.canitstreamto.me/v1/streaming_service?pagesize=24&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
-    //console.log(url);
 
     axios.get(url).then(res => {
       const instanceList = res.data;
@@ -159,8 +156,6 @@ export class ServicesGrid extends React.Component {
       const instanceGrouped = this.state.data.data;
 
       const instanceRows = splitArray(instanceGrouped, 6);
-
-      //console.log(this.state.data.data);
 
       return (<div>
 

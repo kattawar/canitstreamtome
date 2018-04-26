@@ -77,7 +77,7 @@ class MovieInstance extends React.Component {
               <p>
                 <ol>
                   {
-                    this.state.rankings.map(item => <li>
+                    this.state.rankings.map(item => <li key={item.id}>
                       <Link to={{
                           pathname: `/country/${item.id}`
                         }}>{item.country}</Link>
@@ -96,7 +96,7 @@ class MovieInstance extends React.Component {
               <p>
                 <ul>
                 {
-                  this.state.streaming.map(item => <li>
+                  this.state.streaming.map(item => <li key={item.id}>
                     <Link to={{
                         pathname: `/streaming_service/${item.id}`
                       }}>{item.name}</Link>
@@ -112,7 +112,7 @@ class MovieInstance extends React.Component {
           <div className="card">
             <div className="col">
               <div className="embed-responsive embed-responsive-16by9">
-                <iframe title="vid" className="embed-responsive-item" src={this.state.movieUrl} allowfullscreen="allowfullscreen"></iframe>
+                <iframe title="vid" className="embed-responsive-item" src={this.state.movieUrl} allowFullScreen="allowFullScreen"></iframe>
               </div>
             </div>
           </div>
