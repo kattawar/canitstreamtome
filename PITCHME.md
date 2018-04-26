@@ -93,7 +93,6 @@
 +++
 
 ## What can they do better?
-- Could have more data |
 - More instances per page |
 - When filtering if multiple filters are chosen it leads to no results, it would be better if they limited the remaining | filters to pertain to the current filtered data |
 
