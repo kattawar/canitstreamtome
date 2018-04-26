@@ -210,6 +210,10 @@ class About extends React.Component {
           <p>
             <a href="https://kevinsalcedo.gitbooks.io/api/content/">API Documentation</a>
           </p>
+          <p>
+            <a href="http://poptopic.s3-website.us-east-2.amazonaws.com/">D3 Visualization</a>
+          </p>
+
         </div>
       </section>
 
