@@ -89,7 +89,7 @@
 
 ## What puzzles us about their website?
 - Models do not connect to instances of the same model |
-- A song model appears twice with the same name, but has completely different related models on each }
+- A song model appears twice with the same name, but has completely different related models on each |
 - We are not sure why there were so few instances for each model |
 
 ---
