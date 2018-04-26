@@ -1,6 +1,6 @@
-## CanItStreamTo.me
+## canitstreamto.me
 
-### Movie trends and more
+#### Approve Us Inc.
 
 ---
 
