@@ -22,11 +22,11 @@
 
 ## What did we do well?
 
-- Built a powerful and easy to use API with with extensive documentation
-- Our disparate data is useful to many audiences around the world
-- Designed a clean and simple UI
-- All pages are rich with content and provide a fun experience
-- Very useful to a media marketer tracking campaign performance
+- Built a powerful and easy to use API with with extensive documentation |
+- Our disparate data is useful to many audiences around the world |
+- Designed a clean and simple UI |
+- All pages are rich with content and provide a fun experience |
+- Very useful to a media marketer tracking campaign performance |
 
 -
 
@@ -64,8 +64,8 @@
 
 ## What did they do well?
 
-- Stylistic modern design
-- Nice custom logo
+- Stylistic modern design |
+- Nice custom logo |
 
 +++
 
@@ -74,14 +74,13 @@
 +++
 
 ## What can they do better?
-- Could have more data
-- More instances per page
+- Could have more data |
+- More instances per page |
 
 +++
 
 ## What puzzles us about their website?
-
--
+- No models have related instances of the same model |
 
 ---
 
