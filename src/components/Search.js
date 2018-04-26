@@ -34,18 +34,15 @@ class Search extends React.Component {
   }
 
   handlePageChangeMovie = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activeMoviePage: pageNumber});
 
   }
 
   handlePageChangeCountry = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activeCountryPage: pageNumber});
 
   }
   handlePageChangeStream = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activeStreamPage: pageNumber});
 
   }
@@ -78,7 +75,6 @@ class Search extends React.Component {
     let newDictM = {}
     for (let term of queries) {
       let url = `http://api.canitstreamto.me/v2/movie/search?value=${term}`;
-      console.log(url)
       axios.get(url).then(res => {
         let key = Date.now()
         let results = res.data.data;
@@ -141,7 +137,6 @@ class Search extends React.Component {
       let movies = splitArray(movieResult, 3).slice(this.state.activeMoviePage*2 - 2, this.state.activeMoviePage*2);
       let countries = splitArray(countryResult, 3).slice(this.state.activeCountryPage*2 - 2, this.state.activeCountryPage*2);
       let services = splitArray(streamResult, 3).slice(this.state.activeStreamPage*2 - 2, this.state.activeStreamPage*2);
-      console.log(movies);
       return (<div>
         <section>
           <div className="container">
@@ -153,11 +148,11 @@ class Search extends React.Component {
                     <section>
                       {
                         movies.map(
-                          rowList => !rowList
+                          (rowList,id) => !rowList
                           ? null
-                          : <div className="row">
+                          : <div className="row" key={id}>
                             {
-                              rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                              rowList.map((item, i) => <div className="col-sm-4" key={item.id} onClick={this.handleClick}>
                               <div className="movieSearch">
                                 <div className="card">
                                   <Link to={{
@@ -216,11 +211,11 @@ class Search extends React.Component {
                     <section>
                       {
                         countries.map(
-                          rowList => !rowList
+                          (rowList, id) => !rowList
                           ? null
-                          : <div className="row">
+                          : <div className="row" key={id}>
                             {
-                              rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                              rowList.map((item, i) => <div className="col-sm-4" key={item.id} onClick={this.handleClick}>
                                 <div className="card">
                                   <Link to={{
                                       pathname: `/country/${item.id}`
@@ -269,11 +264,11 @@ class Search extends React.Component {
                     <section>
                       {
                         services.map(
-                          rowList => !rowList
+                          (rowList, id) => !rowList
                           ? null
-                          : <div className="row">
+                          : <div className="row" key={id}>
                             {
-                              rowList.map((item, i) => <div className="col-sm-4" onClick={this.handleClick}>
+                              rowList.map((item, i) => <div className="col-sm-4" key={item.id} onClick={this.handleClick}>
                                 <div className="card">
                                   <Link to={{
                                       pathname: `/streaming_service/${item.id}`

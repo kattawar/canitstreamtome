@@ -182,7 +182,6 @@ export class CountriesGrid extends React.Component {
   }
 
   handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
   }
 
