@@ -274,11 +274,11 @@ export class CountriesGrid extends React.Component {
             <div className="container">
               {
                 instanceRows.map(
-                  rowList => !rowList
+                  (rowList, id) => !rowList
                   ? null
-                  : <div className="row">
+                  : <div className="row" key={id}>
                     {
-                      rowList.map((item, i) => <div className="col-sm-2" onClick={this.handleClick}>
+                      rowList.map((item, i) => <div className="col-sm-2" key={item.id} onClick={this.handleClick}>
                         <OverlayTrigger trigger={['hover','focus']}
                           placement={i <= 2 ? "right" : "left"}
                           overlay={<Popover id="popover-trigger-hover-focus">
