@@ -28,8 +28,6 @@
 - All pages are rich with content and provide a fun experience |
 - Very useful to a media marketer tracking campaign performance |
 
--
-
 +++
 
 ## What did we learn?
@@ -52,7 +50,6 @@
 +++
 
 ## What puzzles us?
-
 
 - Asynchronous promise requests |
 - Why our api sometimes randomly crashes |
