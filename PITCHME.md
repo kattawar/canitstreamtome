@@ -16,13 +16,13 @@
 
 +++
 
-### Backend Unit Tests
+# Backend Unit Tests
 
 ![GitHub Logo](/screenshots/postman_ss.PNG) |
 
 +++
 
-### Frontend Unit Tests
+# Frontend Unit Tests
 
 ![GitHub Logo](/screenshots/frontend_test.png) |
 
@@ -56,8 +56,8 @@
 ## What can we do better?
 
 - Project management, be more organized |
-- Find a better way to filter numerical attributes |
 - Calculating pagination |
+- Find a better way to filter numerical attributes |
 - Database data organization |
 
 +++
