@@ -74,23 +74,23 @@
 +++
 
 ## What did we learn from their website?
-- Having a back to top button nested in the bottom of the page is very useful when browsing
-- In the early stages we learned how to display our data in a clean way
-- We learned that preloading search results greatly improves performance
+- Having a back to top button nested in the bottom of the page is very useful when browsing |
+- In the early stages we learned how to display our data in a clean way |
+- We learned that preloading search results greatly improves performance |
 
 +++
 
 ## What can they do better?
-- Could have more data
-- More instances per page
-- When filtering if multiple filters are chosen it leads to no results, it would be better if they limited the remaining filters to pertain to the current filtered data
+- Could have more data |
+- More instances per page |
+- When filtering if multiple filters are chosen it leads to no results, it would be better if they limited the remaining filters to pertain to the current filtered data |
 
 +++
 
 ## What puzzles us about their website?
-- Models do not connect to instances of the same model
-- A song model appears twice with the same name, but has completely different related models on each
-- We are not sure why there were so few instances for each model
+- Models do not connect to instances of the same model |
+- A song model appears twice with the same name, but has completely different related models on each }
+- We are not sure why there were so few instances for each model |
 
 ---
 
