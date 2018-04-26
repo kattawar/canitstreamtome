@@ -46,7 +46,7 @@
 
 - How to wire up data from multiple sources effectively |
 - Learned a lot about best practices for APIs |
-- An Increased understanding of how DNS records are created and resolved |
+- An increased understanding of how DNS records are created and resolved |
 - How to host the several components of a website in AWS |
 - How to design a modern website with REACT |
 
@@ -66,7 +66,7 @@
 
 - Asynchronous promise requests |
 - How cross origin javacript works | 
-- How the DNS tree propogates records throughout |
+- How the DNS tree propagates records throughout |
 - Why our api sometimes randomly crashes |
 
 ---
