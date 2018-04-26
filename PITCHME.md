@@ -107,6 +107,7 @@
 ---
 
 # Visualization
+[Poptopic data graph](http://poptopic.s3-website.us-east-2.amazonaws.com/)
 
 ---
 
