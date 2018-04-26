@@ -22,17 +22,23 @@
 
 ## What did we do well?
 
+- Built a powerful and easy to use API with with extensive documentation
+- Our disparate data is useful to many audiences around the world
+- Designed a clean and simple UI
+- All pages are rich with content and provide a fun experience
+- Very useful to a media marketer tracking campaign performance
+
 -
 
 +++
 
 ## What did we learn?
 
-- How to wire up data from multiple sources effectively
-- Learned a lot about best practices for APIs
-- An Increased understanding of how DNS records are created and resolved
-- How to design a modern website with REACT
-- How to host the several components of a website in AWS
+- How to wire up data from multiple sources effectively |
+- Learned a lot about best practices for APIs |
+- An Increased understanding of how DNS records are created and resolved |
+- How to design a modern website with REACT |
+- How to host the several components of a website in AWS |
 
 +++
 
