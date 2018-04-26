@@ -52,6 +52,8 @@
 
 - Asynchronous promise requests |
 - Why our api sometimes randomly crashes |
+- How the DNS tree propogates records throughout |
+- How cross origin javacript works | 
 
 ---
 
