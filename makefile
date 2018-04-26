@@ -1,9 +1,16 @@
 # Makefile specification
 # ----------------------
 
-#GithubID = kattawar
-#RepoName = canitstreamtome
+GithubID = kattawar
+RepoName = canitstreamtome
+SHA = 55bfc3f217ea991a93d3334aef5207aa8b3de773
 
+githubid:
+	@echo "${GithubID}"
+reponame:
+	@echo "${RepoName}"
+sha:
+	@echo "${SHA}"
 
 # The Makefile should be present in the root of the project.
 # There should be the following commands written:
@@ -37,6 +44,7 @@ frontend:
 # make backend  - runs backend tests
 backend:
 	pip install psycopg2;
+	pip install flask;
 	python backend/tests.py;
 
 # make website  - prints link to a website
