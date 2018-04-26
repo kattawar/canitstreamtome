@@ -93,7 +93,7 @@
 ---
 
 # Visualization
-[link](http://poptopic.s3-website.us-east-2.amazonaws.com/)
+[poptopic data graph](http://poptopic.s3-website.us-east-2.amazonaws.com/)
 
 ---
 
