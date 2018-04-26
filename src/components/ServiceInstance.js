@@ -59,8 +59,8 @@ class ServiceInstance extends React.Component {
             <h4>Pricing</h4>
             <p>
               <ul>
-                {Object.keys(prices).map(tier => (
-                  <li>{tier} : {prices[tier]}</li>
+                {Object.keys(prices).map((tier, id) => (
+                  <li key={id}>{tier} : {prices[tier]}</li>
                 ))}
               </ul>
             </p>
@@ -76,7 +76,7 @@ class ServiceInstance extends React.Component {
             <p>
               <ol>
                 {
-                  this.state.rankings.map(item => <li>
+                  this.state.rankings.map(item => <li key={item.id}>
                     <Link to={{
                         pathname: `/country/${item.id}`
                       }}>{item.country}</Link>
@@ -95,7 +95,7 @@ class ServiceInstance extends React.Component {
             <p>
               <ol>
                 {
-                  this.state.movies.slice(0,10).map(item => <li>
+                  this.state.movies.slice(0,10).map(item => <li key={item.id}>
                     <Link to={{
                         pathname: `/movie/${item.id}`
                       }}>{item.name}</Link>
