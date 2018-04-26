@@ -28,6 +28,12 @@
 
 ## What did we learn?
 
+- How to wire up data from multiple sources effectively
+- Learned a lot about best practices for APIs
+- An Increased understanding of how DNS records are created and resolved
+- How to design a modern website with REACT
+- How to host the several components of a website in AWS
+
 +++
 
 ## What can we do better?
@@ -74,7 +80,7 @@
 
 ---
 
-# Visualization 
+# Visualization
 
 ---?code=sample/go/server.go&lang=golang&title=Golang File
 
