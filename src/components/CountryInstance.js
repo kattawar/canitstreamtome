@@ -13,7 +13,7 @@ class CountryInstance extends React.Component {
 
   componentDidMount() {
     let country = (this.props.location.pathname).split("/country/").pop();
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/${country}`;
+    let url = `http://api.canitstreamto.me/v2/country/${country}`;
     if (country) {
       axios.get(url).then(res => {
         this.setState({countryItem: res.data.data[0]});

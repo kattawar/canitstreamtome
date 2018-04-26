@@ -201,7 +201,7 @@ export class CountriesGrid extends React.Component {
       filters = ""
     }
 
-    let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+    let url = `http://api.canitstreamto.me/v2/country?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
 
     axios.get(url).then(res => {
       const instanceList = res.data;

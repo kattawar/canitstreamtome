@@ -75,18 +75,18 @@ class Search extends React.Component {
   }
 
   updateMovie = (queries) => {
-    let newDict = {}
+    let newDictM = {}
     for (let term of queries) {
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie/search?value=${term}`;
+      let url = `http://api.canitstreamto.me/v2/movie/search?value=${term}`;
       console.log(url)
       axios.get(url).then(res => {
-        let key = 0
+        let key = Date.now()
         let results = res.data.data;
         for (let movie of results) {
-          newDict[key] = movie;
+          newDictM[key] = movie;
           key += 1
         }
-        this.setState({movieResult: Object.values(newDict)});
+        this.setState({movieResult: Object.values(newDictM)});
         this.setState({activeMoviePage: 1});
 
       });
@@ -95,17 +95,17 @@ class Search extends React.Component {
   }
 
   updateCountry = (queries) => {
-    let newDict = {}
+    let newDictC = {}
     for (let term of queries) {
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/country/search?value=${term}`;
+      let url = `http://api.canitstreamto.me/v2/country/search?value=${term}`;
       axios.get(url).then(res => {
-        let key = 0
+        let key = Date.now()
         let results = res.data.data;
         for (let country of results) {
-          newDict[key] = country;
+          newDictC[key] = country;
           key += 1
         }
-        this.setState({countryResult: Object.values(newDict)});
+        this.setState({countryResult: Object.values(newDictC)});
         this.setState({activeCountryPage: 1});
       });
 
@@ -113,17 +113,17 @@ class Search extends React.Component {
   }
 
   updateService = (queries) => {
-    let newDict = {}
+    let newDictS = {}
     for (let term of queries) {
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/streaming_service/search?value=${term}`;
+      let url = `http://api.canitstreamto.me/v2/streaming_service/search?value=${term}`;
       axios.get(url).then(res => {
-        let key = 0
+        let key = Date.now()
         let results = res.data.data;
         for (let service of results) {
-          newDict[key] = service;
+          newDictS[key] = service;
           key += 1
         }
-        this.setState({streamResult: Object.values(newDict)});
+        this.setState({streamResult: Object.values(newDictS)});
         this.setState({activeStreamPage: 1});
       });
 

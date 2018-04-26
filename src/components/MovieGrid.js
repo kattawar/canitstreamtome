@@ -263,7 +263,7 @@ export class MovieGrid extends React.Component {
         filters = ""
       }
 
-      let url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
+      let url = `http://api.canitstreamto.me/v2/movie?pagesize=24&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
       axios.get(url).then(res => {
         const instanceList = res.data;
         this.setState({
@@ -274,7 +274,7 @@ export class MovieGrid extends React.Component {
         console.log(error);
       });
 
-      url = `https://cors-anywhere.herokuapp.com/http://api.canitstreamto.me/v2/movie?pagesize=1300&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
+      url = `http://api.canitstreamto.me/v2/movie?pagesize=1300&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}`;
        axios.get(url).then(res => {
          const test = res.data.data.length;
          console.log(test);
