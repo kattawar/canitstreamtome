@@ -47,6 +47,7 @@
 - Project management, be more organized |
 - Find a better way to filter numerical attributes |
 - Calculating pagination |
+- Scalability |
 
 +++
 
