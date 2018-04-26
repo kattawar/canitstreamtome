@@ -95,13 +95,13 @@
 ## What can they do better?
 - More instances per page |
 - When filtering if multiple filters are chosen it leads to no results, it would be better if they limited the remaining | filters to pertain to the current filtered data |
+- More instances for each model |
 
 +++
 
 ## What puzzles us about their website?
 - Models do not connect to instances of the same model |
 - A song model appears twice with the same name, but has completely different related models on each |
-- We are not sure why there were so few instances for each model |
 
 ---
 
