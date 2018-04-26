@@ -1,27 +1,80 @@
-# Black
+# CanItStreamTo.me
 
-### A GitPitch Presentation Template
-
----
-
-## Tips!
-
-<br>
-
-@fa[arrows gp-tip](Press F to go Fullscreen)
-
-@fa[microphone gp-tip](Press S for Speaker Notes)
+### Movie trends and more
 
 ---
 
-## Template Features
+# The Team
 
+---
+
+# DEMO
+
++++
+
+## Unit test screenshots
+
+---
+
+# Self Critique
+
++++
+
+## What did we do well?
+
+-
+
++++
+
+## What did we learn?
+
++++
+
+## What can we do better?
+
+-
+
++++
+
+## What puzzles us?
+
+-
 - Code Presenting |
 - Repo Source, Static Blocks, GIST |
 - Custom CSS Styling |
 - Slideshow Background Image |
 - Slide-specific Background Images |
 - Custom Logo, TOC, and Footnotes |
+
+---
+
+# Other Critique
+
++++
+
+## What did they do well?
+
+-
+
++++
+
+## What did we learn from their website?
+
++++
+
+## What can they do better?
+
+-
+
++++
+
+## What puzzles us about their website?
+
+-
+
+---
+
+# Visualization 
 
 ---?code=sample/go/server.go&lang=golang&title=Golang File
 
