@@ -72,6 +72,9 @@
 +++
 
 ## What did we learn from their website?
+- Having a back to top button nested in the bottom of the page is very useful when browsing
+- In the early stages we learned how to display our data in a clean way
+- We learned that preloading search results greatly improves performance
 
 +++
 
