@@ -187,7 +187,6 @@ export class CountriesGrid extends React.Component {
   }
 
   updateData = () => {
-    this.setState({activePage: 1});
     var filters = "" + this.state.activeFilters[0]
     var isFirst = true
     for (var filter in this.state.activeFilters) {
@@ -201,18 +200,18 @@ export class CountriesGrid extends React.Component {
       filters = ""
     }
 
+
     let url = `http://api.canitstreamto.me/v2/country?pagesize=1500&filter={${filters}}&sortby=${this.state.activeSort}&sortdir=${this.state.activeDir}&pagenum=${this.state.realPage}`;
 
     axios.get(url).then(res => {
       const instanceList = res.data;
       this.setState({data: instanceList});
-
+      this.setState({activePage: 1});
     }).catch((error) => {
       console.log(error);
     });
 
   }
-
 
   render() {
 

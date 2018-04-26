@@ -13,7 +13,7 @@ class NavBarr extends React.Component {
         <Navbar.Toggle/>
       </Navbar.Header>
       <Navbar.Collapse>
-        <Nav pullLeft="pullLeft">
+        <Nav pullLeft>
           <NavItem eventKey={1}>
             <Link to="/movie">Movies</Link>
           </NavItem>
@@ -27,7 +27,7 @@ class NavBarr extends React.Component {
             <Link to="/about">About Us</Link>
           </NavItem>
         </Nav>
-        <Navbar.Form pullRight="pullRight">
+        <Navbar.Form pullRight>
           <SearchBar/>
         </Navbar.Form>
       </Navbar.Collapse>
