@@ -38,19 +38,17 @@
 
 ## What can we do better?
 
--
+- Project management, be more organized |
+- Find a better way to filter numerical attributes |
+- Calculating pagination |
 
 +++
 
 ## What puzzles us?
 
--
-- Code Presenting |
-- Repo Source, Static Blocks, GIST |
-- Custom CSS Styling |
-- Slideshow Background Image |
-- Slide-specific Background Images |
-- Custom Logo, TOC, and Footnotes |
+
+- Asynchronous promise requests |
+- Why our api sometimes randomly crashes |
 
 ---
 
@@ -60,7 +58,8 @@
 
 ## What did they do well?
 
--
+- Stylistic modern design
+- Nice custom logo
 
 +++
 
@@ -69,8 +68,8 @@
 +++
 
 ## What can they do better?
-
--
+- Could have more data
+- More instances per page
 
 +++
 
