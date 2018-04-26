@@ -15,7 +15,7 @@
 ## Unit test screenshots
 
 ![GitHub Logo](/screenshots/postman_ss.PNG)
-![GitHub Logo](/screenshots/frontend_test.PNG)
+![GitHub Logo](/screenshots/frontend_test.png)
 
 ---
 
