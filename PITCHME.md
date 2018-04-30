@@ -65,7 +65,7 @@
 ## What puzzles us?
 
 - Asynchronous promise requests |
-- How cross origin javacript works | 
+- How cross origin resource sharing works | 
 - How the DNS tree propagates records throughout |
 - Why our api sometimes randomly crashes |
 
